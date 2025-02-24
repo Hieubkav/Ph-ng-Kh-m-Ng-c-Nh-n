@@ -1,3 +1,9 @@
+@php
+
+$setting = App\Models\Setting::first();
+
+    @endphp
+
 <!-- Schedule Section -->
 <div class="w-full bg-gray-50 py-12">
     <div class="container mx-auto px-4">
@@ -7,7 +13,7 @@
 
             <!-- Schedule Image Container -->
             <div class="relative w-full overflow-hidden rounded-2xl shadow-lg cursor-pointer transition-transform duration-300 hover:scale-[1.02]" id="scheduleImage">
-                <img src="{{ asset('images/schedule.webp') }}"
+                <img src="{{config('app.asset_url')}}/storage/{{$setting->image_schedule}}"
                      alt="Lịch khám bệnh"
                      class="w-full h-auto"
                      loading="lazy">

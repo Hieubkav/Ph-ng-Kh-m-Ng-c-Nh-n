@@ -1,21 +1,28 @@
+@php
+$setting = \App\Models\Setting::first();
+
+    @endphp
+
 <div class="bg-gradient-to-r from-gray-50 to-gray-100 shadow-lg">
     <div class="container mx-auto px-4 py-1">
         <div class="flex items-center justify-between">
             <!-- Logo Section (Left) -->
             <div class="flex items-center shrink-0">
-                <img src="{{ asset('images/logo.webp') }}" alt="Logo" class="w-20 h-20">
+                <a href="{{ route('storeFront') }}">
+                <img src="{{config('app.asset_url')}}/storage/{{$setting->logo}}" alt="Logo" class="w-20 h-20">
+                </a>
             </div>
 
             <!-- Hospital Info Section (Center) -->
             <div class="flex-1 flex flex-col items-center justify-center mx-4 text-center">
                 <span class="text-red-600 text-lg font-medium">SỞ Y TẾ TỈNH VĨNH LONG</span>
                 <h1 class="text-3xl md:text-4xl font-bold text-medical-green tracking-wide relative">
-                    PHÒNG KHÁM ĐA KHOA NGỌC NHÂN
+                    {{ $setting->name }}
                     <div class="absolute -inset-1 bg-medical-green/5 blur-sm rounded-lg -z-10"></div>
                 </h1>
                 <div class="relative mt-1">
                     <span class="text-gray-600 font-medium px-4 py-1 rounded-full bg-medical-green/5 inline-block text-sm">
-                        Nhanh chóng - Chất lượng - Hiệu quả cao
+                        {{ $setting->slogan }}
                     </span>
                 </div>
             </div>
@@ -28,7 +35,9 @@
                     </svg>
                     <div class="flex flex-col">
                         <span class="text-xs text-gray-500">Hotline</span>
-                        <span class="font-bold text-medical-green hover:text-medical-green-dark transition-colors duration-200">0270 3777 999</span>
+                        <span class="font-bold text-medical-green hover:text-medical-green-dark transition-colors duration-200">
+                            {{ $setting->hotline }}
+                        </span>
                     </div>
                 </div>
             </div>

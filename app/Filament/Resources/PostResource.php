@@ -5,21 +5,20 @@
     use App\Filament\Resources\PostResource\Pages;
     use App\Filament\Resources\PostResource\RelationManagers;
     use App\Models\Post;
-    use App\Models\CatPost;
     use Filament\Forms;
     use Filament\Forms\Form;
     use Filament\Resources\Resource;
     use Filament\Tables;
     use Filament\Tables\Table;
-    use Illuminate\Support\Facades\Storage;
     use Illuminate\Support\Facades\Auth;
+    use Illuminate\Support\Facades\Storage;
 
     class PostResource extends Resource {
         protected static ?string $model = Post::class;
 
         protected static ?string $navigationIcon = 'heroicon-o-document-text';
         protected static ?string $label = 'Bài viết';
-        protected static ?int $navigationSort = 2;
+        protected static ?int $navigationSort = 1;
 
         public static function form(Form $form): Form {
             return $form
@@ -56,8 +55,14 @@
                             '9:16',
                         ]),
                     Forms\Components\Hidden::make('user_id')
-                        ->default(fn () => Auth::id())
-
+                        ->default(fn() => Auth::id()),
+                    Forms\Components\Select::make('is_hot')
+                        ->label('Tin tức nổi bật')
+                        ->options([
+                            'hot' => 'Tin nổi bật',
+                            'not_hot' => 'Không nổi bật'
+                        ])
+                        ->required()
                 ]);
         }
 
@@ -70,10 +75,17 @@
                         ->sortable(),
                     Tables\Columns\ImageColumn::make('image')
                         ->label('Ảnh'),
+                    Tables\Columns\TextColumn::make('is_hot')
+                        ->label('Tin nổi bật')
+                        ->formatStateUsing(fn (string $state): string => $state === 'hot' ? 'Tin nổi bật' : 'Không nổi bật')
+                        ->color(fn (string $state): string =>
+                            $state === 'hot'
+                                ? 'success' // màu xanh lá cho tin nổi bật
+                                : 'gray' // màu xám cho tin không nổi bật
+                        )
+                        ->alignCenter(),
                     Tables\Columns\TextColumn::make('cat_post.name')
                         ->label('Danh mục'),
-                    Tables\Columns\TextColumn::make('user.name')
-                        ->label('Người tạo'),
                 ])
                 ->filters([
                     //
@@ -92,6 +104,10 @@
             return [
                 //
             ];
+        }
+
+        public static function getNavigationBadge(): ?string {
+            return static::getModel()::count();
         }
 
         public static function getPages(): array {

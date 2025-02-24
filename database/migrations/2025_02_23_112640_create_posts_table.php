@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('content')->nullable();
             $table->string('image')->nullable();
+            $table->enum('is_hot',['hot', 'not_hot'])->default('not_hot');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('cat_post_id');
 

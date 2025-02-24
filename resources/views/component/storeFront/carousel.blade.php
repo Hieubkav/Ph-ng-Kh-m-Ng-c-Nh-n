@@ -1,4 +1,10 @@
-<!-- Medical Clinic Hero Section with Carousel and Hot News -->
+@php
+
+    $carousels = App\Models\Carousel::all();
+
+@endphp
+
+    <!-- Medical Clinic Hero Section with Carousel and Hot News -->
 <div class="container mx-auto px-4 mt-5">
     <div class="flex flex-col md:flex-row gap-6">
         <!-- Main Carousel Section (2/3 width on desktop and tablet) -->
@@ -9,7 +15,8 @@
                     <div class="flex flex-col items-center">
                         <div class="w-16 h-16 relative">
                             <div class="absolute inset-0 border-4 border-medical-green/30 rounded-full"></div>
-                            <div class="absolute inset-0 border-4 border-medical-green border-t-transparent rounded-full animate-spin"></div>
+                            <div
+                                class="absolute inset-0 border-4 border-medical-green border-t-transparent rounded-full animate-spin"></div>
                         </div>
                         <p class="mt-4 text-medical-green font-medium">Đang tải...</p>
                     </div>
@@ -18,59 +25,44 @@
                 <!-- Slides Container -->
                 <div id="slides-container" class="absolute inset-0">
                     <!-- Slides -->
-                    <div class="absolute inset-0 transition-all duration-1000 ease-in-out opacity-0 transform" data-slide="0">
-                        <img src="https://medlatec.vn/media/41391/catalog/banner+web_1920x700+desktop.png"
-                             alt="Dịch vụ khám sức khỏe toàn diện"
-                             class="w-full h-full object-cover"
-                             loading="lazy">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-6 text-white transform transition-transform duration-1000">
-                            <h2 class="text-2xl md:text-3xl font-bold mb-2">Dịch vụ khám sức khỏe toàn diện</h2>
-                            <p class="text-sm md:text-base opacity-90">Chăm sóc sức khỏe chuyên nghiệp với đội ngũ bác sĩ giàu kinh nghiệm</p>
+                    @foreach($carousels as $index => $carousel)
+                        <div class="absolute inset-0 transition-all duration-1000 ease-in-out opacity-0 transform"
+                             data-slide="{{ $index }}">
+                            <img src="{{config('app.asset_url')}}/storage/{{$carousel->image}}"
+                                 alt="{{ $index }}"
+                                 class="w-full h-full object-cover"
+                                 loading="lazy">
                         </div>
-                    </div>
-
-                    <div class="absolute inset-0 transition-all duration-1000 ease-in-out opacity-0 transform" data-slide="1">
-                        <img src="https://medlatec.vn/media/41095/catalog/B%e1%bb%99+banner+2025_Banner+web.jpg"
-                             alt="Trang thiết bị y tế hiện đại"
-                             class="w-full h-full object-cover"
-                             loading="lazy">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-6 text-white transform transition-transform duration-1000">
-                            <h2 class="text-2xl md:text-3xl font-bold mb-2">Trang thiết bị y tế hiện đại</h2>
-                            <p class="text-sm md:text-base opacity-90">Ứng dụng công nghệ tiên tiến trong chẩn đoán và điều trị</p>
-                        </div>
-                    </div>
-
-                    <div class="absolute inset-0 transition-all duration-1000 ease-in-out opacity-0 transform" data-slide="2">
-                        <img src="https://medlatec.vn/media/41101/catalog/Web+2025.jpg"
-                             alt="Đội ngũ y bác sĩ chuyên môn cao"
-                             class="w-full h-full object-cover"
-                             loading="lazy">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-6 text-white transform transition-transform duration-1000">
-                            <h2 class="text-2xl md:text-3xl font-bold mb-2">Đội ngũ y bác sĩ chuyên môn cao</h2>
-                            <p class="text-sm md:text-base opacity-90">Tận tâm chăm sóc sức khỏe cộng đồng</p>
-                        </div>
-                    </div>
+                    @endforeach
 
                     <!-- Navigation Controls -->
-                    <button class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 hover:bg-white text-medical-green flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110 backdrop-blur-sm z-[5] group" id="prev-btn">
-                        <svg class="w-6 h-6 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    <button
+                        class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 hover:bg-white text-medical-green flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110 backdrop-blur-sm z-[5] group"
+                        id="prev-btn">
+                        <svg class="w-6 h-6 transition-transform group-hover:-translate-x-1" fill="none"
+                             stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M15 19l-7-7 7-7"></path>
                         </svg>
                     </button>
-                    <button class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 hover:bg-white text-medical-green flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110 backdrop-blur-sm z-[5] group" id="next-btn">
-                        <svg class="w-6 h-6 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    <button
+                        class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 hover:bg-white text-medical-green flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110 backdrop-blur-sm z-[5] group"
+                        id="next-btn">
+                        <svg class="w-6 h-6 transition-transform group-hover:translate-x-1" fill="none"
+                             stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M9 5l7 7-7 7"></path>
                         </svg>
                     </button>
 
                     <!-- Indicators -->
                     <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-3 z-[5]" id="indicators">
-                        <button class="w-2.5 h-2.5 rounded-full bg-white/50 hover:bg-white transition-all duration-300 hover:scale-125" data-index="0"></button>
-                        <button class="w-2.5 h-2.5 rounded-full bg-white/50 hover:bg-white transition-all duration-300 hover:scale-125" data-index="1"></button>
-                        <button class="w-2.5 h-2.5 rounded-full bg-white/50 hover:bg-white transition-all duration-300 hover:scale-125" data-index="2"></button>
+                        @foreach($carousels as $index => $carousel)
+                            <button
+                                class="w-2.5 h-2.5 rounded-full bg-white/50 hover:bg-white transition-all duration-300 hover:scale-125"
+                                data-index="{{ $index }}">
+                            </button>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -84,7 +76,7 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const slider = {
             container: document.getElementById('slides-container'),
             slides: Array.from(document.querySelectorAll('[data-slide]')),

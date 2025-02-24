@@ -16,6 +16,7 @@
         protected static string $view = 'filament.pages.setting-up';
 
         protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
+        protected static ?int $navigationSort = 8;
 
         protected static ?string $navigationLabel = 'Cài đặt';
 

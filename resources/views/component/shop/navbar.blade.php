@@ -17,7 +17,9 @@
 
             <!-- Desktop menu -->
             <div class="hidden md:flex md:items-center md:space-x-8">
-                <a href="#" class="py-4 px-2 text-white hover:text-medical-green-light hover:border-b-2 hover:border-medical-green-light transition-all duration-300">Trang chủ</a>
+                <a href="{{ route('storeFront') }}" class="py-4 px-2 text-white hover:text-medical-green-light hover:border-b-2 hover:border-medical-green-light transition-all duration-300">
+                    Trang chủ
+                </a>
 
                 <!-- Giới thiệu Dropdown -->
                 <div class="relative group">
@@ -28,8 +30,12 @@
                         </svg>
                     </button>
                     <div class="absolute left-0 mt-0 w-48 bg-medical-green backdrop-blur-sm rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[9999]">
-                        <a href="#" class="block px-4 py-2 text-white hover:bg-medical-green-light hover:text-white transition-colors duration-300">Phòng khám</a>
-                        <a href="#" class="block px-4 py-2 text-white hover:bg-medical-green-light hover:text-white transition-colors duration-300">Bác sĩ chuyên khoa</a>
+                        <a href="{{ route('page',1) }}" class="block px-4 py-2 text-white hover:bg-medical-green-light hover:text-white transition-colors duration-300">
+                            Phòng khám
+                        </a>
+                        <a href="{{ route('page',2) }}" class="block px-4 py-2 text-white hover:bg-medical-green-light hover:text-white transition-colors duration-300">
+                            Bác sĩ chuyên khoa
+                        </a>
                     </div>
                 </div>
 
@@ -42,16 +48,30 @@
                         </svg>
                     </button>
                     <div class="absolute left-0 mt-0 w-48 bg-medical-green backdrop-blur-sm rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[9999]">
-                        <a href="#" class="block px-4 py-2 text-white hover:bg-medical-green-light hover:text-white transition-colors duration-300">Khám chuyên khoa</a>
-                        <a href="#" class="block px-4 py-2 text-white hover:bg-medical-green-light hover:text-white transition-colors duration-300">Khám sức khỏe</a>
-                        <a href="#" class="block px-4 py-2 text-white hover:bg-medical-green-light hover:text-white transition-colors duration-300">Tiêm ngừa</a>
+                        <a href="{{ route('page',3) }}" class="block px-4 py-2 text-white hover:bg-medical-green-light hover:text-white transition-colors duration-300">
+                            Khám chuyên khoa
+                        </a>
+                        <a href="{{ route('page',4) }}" class="block px-4 py-2 text-white hover:bg-medical-green-light hover:text-white transition-colors duration-300">
+                            Khám sức khỏe
+                        </a>
+                        <a href="{{ route('page',5) }}" class="block px-4 py-2 text-white hover:bg-medical-green-light hover:text-white transition-colors duration-300">
+                            Tiêm ngừa
+                        </a>
                     </div>
                 </div>
 
-                <a href="#" class="py-4 px-2 text-white hover:text-medical-green-light hover:border-b-2 hover:border-medical-green-light transition-all duration-300">Tuyển dụng</a>
-                <a href="#" class="py-4 px-2 text-white hover:text-medical-green-light hover:border-b-2 hover:border-medical-green-light transition-all duration-300">Tin tức sự kiện</a>
-                <a href="#" class="py-4 px-2 text-white hover:text-medical-green-light hover:border-b-2 hover:border-medical-green-light transition-all duration-300">An sinh xã hội</a>
-                <a href="#" class="py-4 px-2 text-white hover:text-medical-green-light hover:border-b-2 hover:border-medical-green-light transition-all duration-300">Chi phí khám</a>
+                <a href="{{ route('hiring') }}" class="py-4 px-2 text-white hover:text-medical-green-light hover:border-b-2 hover:border-medical-green-light transition-all duration-300">
+                    Tuyển dụng
+                </a>
+                <a href="{{ route('catPost',1) }}" class="py-4 px-2 text-white hover:text-medical-green-light hover:border-b-2 hover:border-medical-green-light transition-all duration-300">
+                    Tin tức sự kiện
+                </a>
+                <a href="{{ route('catPost',2) }}" class="py-4 px-2 text-white hover:text-medical-green-light hover:border-b-2 hover:border-medical-green-light transition-all duration-300">
+                    An sinh xã hội
+                </a>
+                <a href="{{ route('page',6) }}" class="py-4 px-2 text-white hover:text-medical-green-light hover:border-b-2 hover:border-medical-green-light transition-all duration-300">
+                    Chi phí khám
+                </a>
             </div>
         </div>
 

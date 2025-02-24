@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('content')->nullable();
-            $table->enum('is_hot',['hot','normal'])->default('normal');
             $table->timestamps();
         });
     }

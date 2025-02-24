@@ -24,7 +24,7 @@
 <body class="antialiased">
 
 @include('component.shop.navbar')
-<main class="">
+<main class="bg-gray-100">
     @yield('content')
 </main>
 @include('component.shop.footer')

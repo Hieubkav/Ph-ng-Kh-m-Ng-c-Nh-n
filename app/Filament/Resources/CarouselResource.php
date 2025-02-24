@@ -18,6 +18,7 @@ class CarouselResource extends Resource
 {
     protected static ?string $model = Carousel::class;
     protected static ?string $label = 'Thanh trượt';
+    protected static ?int $navigationSort = 6;
 
     protected static ?string $navigationIcon = 'heroicon-o-squares-2x2';
 
