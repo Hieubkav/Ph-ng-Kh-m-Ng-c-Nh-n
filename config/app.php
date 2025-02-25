@@ -58,7 +58,7 @@ return [
     'url' => env('APP_URL', 'http://localhost'),
 
     'asset_url' => env('ASSET_URL'),
-
+    'livewire_prefix' => env('LIVEWIRE_PREFIX'),
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
