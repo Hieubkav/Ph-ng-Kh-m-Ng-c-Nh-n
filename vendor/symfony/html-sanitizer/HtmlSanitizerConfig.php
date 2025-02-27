@@ -19,15 +19,6 @@ use Symfony\Component\HtmlSanitizer\Visitor\AttributeSanitizer\AttributeSanitize
  */
 class HtmlSanitizerConfig
 {
-    private HtmlSanitizerAction $defaultAction = HtmlSanitizerAction::Drop;
-
-    /**
-     * Elements that should be removed.
-     *
-     * @var array<string, true>
-     */
-    private array $droppedElements = [];
-
     /**
      * Elements that should be removed but their children should be retained.
      *
@@ -106,19 +97,6 @@ class HtmlSanitizerConfig
         $this->attributeSanitizers = [
             new Visitor\AttributeSanitizer\UrlAttributeSanitizer(),
         ];
-    }
-
-    /**
-     * Sets the default action for elements which are not otherwise specifically allowed or blocked.
-     *
-     * Note that a default action of Allow will allow all tags but they will not have any attributes.
-     */
-    public function defaultAction(HtmlSanitizerAction $action): static
-    {
-        $clone = clone $this;
-        $clone->defaultAction = $action;
-
-        return $clone;
     }
 
     /**
@@ -283,8 +261,8 @@ class HtmlSanitizerConfig
     {
         $clone = clone $this;
 
-        // Unblock/undrop the element if necessary
-        unset($clone->blockedElements[$element], $clone->droppedElements[$element]);
+        // Unblock the element is necessary
+        unset($clone->blockedElements[$element]);
 
         $clone->allowedElements[$element] = [];
 
@@ -306,8 +284,8 @@ class HtmlSanitizerConfig
     {
         $clone = clone $this;
 
-        // Disallow/undrop the element if necessary
-        unset($clone->allowedElements[$element], $clone->droppedElements[$element]);
+        // Disallow the element is necessary
+        unset($clone->allowedElements[$element]);
 
         $clone->blockedElements[$element] = true;
 
@@ -322,14 +300,12 @@ class HtmlSanitizerConfig
      *
      * Note: when using an empty configuration, all unknown elements are dropped
      * automatically. This method let you drop elements that were allowed earlier
-     * in the configuration, or explicitly drop some if you changed the default action.
+     * in the configuration.
      */
     public function dropElement(string $element): static
     {
         $clone = clone $this;
         unset($clone->allowedElements[$element], $clone->blockedElements[$element]);
-
-        $clone->droppedElements[$element] = true;
 
         return $clone;
     }
@@ -436,7 +412,7 @@ class HtmlSanitizerConfig
     public function withMaxInputLength(int $maxInputLength): static
     {
         if ($maxInputLength < -1) {
-            throw new \InvalidArgumentException(\sprintf('The maximum input length must be greater than -1, "%d" given.', $maxInputLength));
+            throw new \InvalidArgumentException(sprintf('The maximum input length must be greater than -1, "%d" given.', $maxInputLength));
         }
 
         $clone = clone $this;
@@ -448,11 +424,6 @@ class HtmlSanitizerConfig
     public function getMaxInputLength(): int
     {
         return $this->maxInputLength;
-    }
-
-    public function getDefaultAction(): HtmlSanitizerAction
-    {
-        return $this->defaultAction;
     }
 
     /**
@@ -469,14 +440,6 @@ class HtmlSanitizerConfig
     public function getBlockedElements(): array
     {
         return $this->blockedElements;
-    }
-
-    /**
-     * @return array<string, true>
-     */
-    public function getDroppedElements(): array
-    {
-        return $this->droppedElements;
     }
 
     /**

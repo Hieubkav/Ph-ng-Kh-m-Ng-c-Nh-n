@@ -11,7 +11,6 @@
 
 namespace Symfony\Component\HtmlSanitizer\Visitor;
 
-use Symfony\Component\HtmlSanitizer\HtmlSanitizerAction;
 use Symfony\Component\HtmlSanitizer\HtmlSanitizerConfig;
 use Symfony\Component\HtmlSanitizer\TextSanitizer\StringSanitizer;
 use Symfony\Component\HtmlSanitizer\Visitor\AttributeSanitizer\AttributeSanitizerInterface;
@@ -34,7 +33,18 @@ use Symfony\Component\HtmlSanitizer\Visitor\Node\TextNode;
  */
 final class DomVisitor
 {
-    private HtmlSanitizerAction $defaultAction = HtmlSanitizerAction::Drop;
+    private HtmlSanitizerConfig $config;
+
+    /**
+     * Registry of allowed/blocked elements:
+     * * If an element is present as a key and contains an array, the element should be allowed
+     *   and the array is the list of allowed attributes.
+     * * If an element is present as a key and contains "false", the element should be blocked.
+     * * If an element is not present as a key, the element should be dropped.
+     *
+     * @var array<string, false|array<string, bool>>
+     */
+    private array $elementsConfig;
 
     /**
      * Registry of attributes to forcefully set on nodes, index by element and attribute.
@@ -52,16 +62,12 @@ final class DomVisitor
     private array $attributeSanitizers = [];
 
     /**
-     * @param array<string, HtmlSanitizerAction|array<string, bool>> $elementsConfig Registry of allowed/blocked elements:
-     *                                                                               * If an element is present as a key and contains an array, the element should be allowed
-     *                                                                               and the array is the list of allowed attributes.
-     *                                                                               * If an element is present as a key and contains an HtmlSanitizerAction, that action applies.
-     *                                                                               * If an element is not present as a key, the default action applies.
+     * @param array<string, false|array<string, bool>> $elementsConfig
      */
-    public function __construct(
-        private HtmlSanitizerConfig $config,
-        private array $elementsConfig,
-    ) {
+    public function __construct(HtmlSanitizerConfig $config, array $elementsConfig)
+    {
+        $this->config = $config;
+        $this->elementsConfig = $elementsConfig;
         $this->forcedAttributes = $config->getForcedAttributes();
 
         foreach ($config->getAttributeSanitizers() as $attributeSanitizer) {
@@ -71,8 +77,6 @@ final class DomVisitor
                 }
             }
         }
-
-        $this->defaultAction = $config->getDefaultAction();
     }
 
     public function visit(\DOMDocumentFragment $domNode): ?NodeInterface
@@ -87,45 +91,32 @@ final class DomVisitor
     {
         $nodeName = StringSanitizer::htmlLower($domNode->nodeName);
 
-        // Visit recursively if the node was not dropped
-        if ($this->enterNode($nodeName, $domNode, $cursor)) {
-            $this->visitChildren($domNode, $cursor);
-            $cursor->node = $cursor->node->getParent();
+        // Element should be dropped, including its children
+        if (!\array_key_exists($nodeName, $this->elementsConfig)) {
+            return;
         }
+
+        // Otherwise, visit recursively
+        $this->enterNode($nodeName, $domNode, $cursor);
+        $this->visitChildren($domNode, $cursor);
+        $cursor->node = $cursor->node->getParent();
     }
 
-    private function enterNode(string $domNodeName, \DOMNode $domNode, Cursor $cursor): bool
+    private function enterNode(string $domNodeName, \DOMNode $domNode, Cursor $cursor): void
     {
-        if (!\array_key_exists($domNodeName, $this->elementsConfig)) {
-            $action = $this->defaultAction;
-            $allowedAttributes = [];
-        } else {
-            if (\is_array($this->elementsConfig[$domNodeName])) {
-                $action = HtmlSanitizerAction::Allow;
-                $allowedAttributes = $this->elementsConfig[$domNodeName];
-            } else {
-                $action = $this->elementsConfig[$domNodeName];
-                $allowedAttributes = [];
-            }
-        }
-
-        if (HtmlSanitizerAction::Drop === $action) {
-            return false;
-        }
-
         // Element should be blocked, retaining its children
-        if (HtmlSanitizerAction::Block === $action) {
+        if (false === $this->elementsConfig[$domNodeName]) {
             $node = new BlockedNode($cursor->node);
 
             $cursor->node->addChild($node);
             $cursor->node = $node;
 
-            return true;
+            return;
         }
 
         // Otherwise create the node
         $node = new Node($cursor->node, $domNodeName);
-        $this->setAttributes($domNodeName, $domNode, $node, $allowedAttributes);
+        $this->setAttributes($domNodeName, $domNode, $node, $this->elementsConfig[$domNodeName]);
 
         // Force configured attributes
         foreach ($this->forcedAttributes[$domNodeName] ?? [] as $attribute => $value) {
@@ -134,8 +125,6 @@ final class DomVisitor
 
         $cursor->node->addChild($node);
         $cursor->node = $node;
-
-        return true;
     }
 
     private function visitChildren(\DOMNode $domNode, Cursor $cursor): void

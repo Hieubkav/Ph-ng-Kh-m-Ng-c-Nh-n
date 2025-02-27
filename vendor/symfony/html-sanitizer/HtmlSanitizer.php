@@ -22,6 +22,7 @@ use Symfony\Component\HtmlSanitizer\Visitor\DomVisitor;
  */
 final class HtmlSanitizer implements HtmlSanitizerInterface
 {
+    private HtmlSanitizerConfig $config;
     private ParserInterface $parser;
 
     /**
@@ -29,10 +30,8 @@ final class HtmlSanitizer implements HtmlSanitizerInterface
      */
     private array $domVisitors = [];
 
-    public function __construct(
-        private HtmlSanitizerConfig $config,
-        ?ParserInterface $parser = null,
-    ) {
+    public function __construct(HtmlSanitizerConfig $config, ?ParserInterface $parser = null)
+    {
         $this->config = $config;
         $this->parser = $parser ?? new MastermindsParser();
     }
@@ -103,13 +102,7 @@ final class HtmlSanitizer implements HtmlSanitizerInterface
 
             foreach ($this->config->getBlockedElements() as $blockedElement => $v) {
                 if (\array_key_exists($blockedElement, W3CReference::HEAD_ELEMENTS)) {
-                    $elementsConfig[$blockedElement] = HtmlSanitizerAction::Block;
-                }
-            }
-
-            foreach ($this->config->getDroppedElements() as $droppedElement => $v) {
-                if (\array_key_exists($droppedElement, W3CReference::HEAD_ELEMENTS)) {
-                    $elementsConfig[$droppedElement] = HtmlSanitizerAction::Drop;
+                    $elementsConfig[$blockedElement] = false;
                 }
             }
 
@@ -125,13 +118,7 @@ final class HtmlSanitizer implements HtmlSanitizerInterface
 
         foreach ($this->config->getBlockedElements() as $blockedElement => $v) {
             if (!\array_key_exists($blockedElement, W3CReference::HEAD_ELEMENTS)) {
-                $elementsConfig[$blockedElement] = HtmlSanitizerAction::Block;
-            }
-        }
-
-        foreach ($this->config->getDroppedElements() as $droppedElement => $v) {
-            if (!\array_key_exists($droppedElement, W3CReference::HEAD_ELEMENTS)) {
-                $elementsConfig[$droppedElement] = HtmlSanitizerAction::Drop;
+                $elementsConfig[$blockedElement] = false;
             }
         }
 
