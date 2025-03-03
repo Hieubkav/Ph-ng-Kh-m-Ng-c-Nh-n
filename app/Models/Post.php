@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use SolutionForest\FilamentTree\Concern\ModelTree;
 
 class Post extends Model
 {
     use HasFactory;
+    use ModelTree;
 
     protected $fillable = [
         'name',
@@ -16,6 +18,11 @@ class Post extends Model
         'user_id',
         'cat_post_id',
         'is_hot',
+        "parent_id", "order"
+    ];
+
+    protected $casts = [
+        'parent_id' => 'int'
     ];
 
 	public function user(){

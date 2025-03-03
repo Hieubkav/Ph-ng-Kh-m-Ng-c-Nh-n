@@ -8,6 +8,7 @@ export default {
         "./resources/**/*.vue",
         'node_modules/preline/dist/*.js',
         "./node_modules/flowbite/**/*.js",
+        '<path-to-vendor>/solution-forest/filament-tree/resources/**/*.blade.php',
     ],
     theme: {
         extend: {
