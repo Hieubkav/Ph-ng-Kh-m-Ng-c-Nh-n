@@ -7,7 +7,7 @@
         <div class="flex justify-between">
             <!-- Mobile menu button -->
             <div class="flex md:hidden">
-                <button id="mobileMenuBtn" class="text-white hover:text-medical-green p-4">
+                <button id="mobileMenuBtn" class="text-white  p-4">
                     <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path class="menu-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                         <path class="menu-close hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -16,7 +16,7 @@
             </div>
 
             <!-- Desktop menu -->
-            <div class="hidden md:flex md:items-center md:space-x-8">
+            <div class="hidden md:flex md:items-center md:flex-wrap gap-x-6 gap-y-2 justify-center">
                 <a href="{{ route('storeFront') }}" class="py-4 px-2 text-white hover:text-medical-green-light hover:border-b-2 hover:border-medical-green-light transition-all duration-300">
                     Trang chủ
                 </a>
@@ -29,7 +29,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
-                    <div class="absolute left-0 mt-0 w-48 bg-medical-green backdrop-blur-sm rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[9999]">
+                    <div class="absolute left-0 mt-0 w-48 max-h-[80vh] overflow-y-auto bg-medical-green backdrop-blur-sm rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[9999] scrollbar-thin scrollbar-thumb-medical-green-light scrollbar-track-medical-green">
                         <a href="{{ route('page',1) }}" class="block px-4 py-2 text-white hover:bg-medical-green-light hover:text-white transition-colors duration-300">
                             Phòng khám
                         </a>
@@ -47,7 +47,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
-                    <div class="absolute left-0 mt-0 w-48 bg-medical-green backdrop-blur-sm rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[9999]">
+                    <div class="absolute left-0 mt-0 w-48 max-h-[80vh] overflow-y-auto bg-medical-green backdrop-blur-sm rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[9999] scrollbar-thin scrollbar-thumb-medical-green-light scrollbar-track-medical-green">
                         <a href="{{ route('page',3) }}" class="block px-4 py-2 text-white hover:bg-medical-green-light hover:text-white transition-colors duration-300">
                             Khám chuyên khoa
                         </a>
@@ -76,7 +76,7 @@
         </div>
 
         <!-- Mobile menu panel -->
-        <div id="mobileMenu" class="hidden md:hidden">
+        <div id="mobileMenu" class="hidden md:hidden max-h-[80vh] overflow-y-auto scrollbar-thin scrollbar-thumb-medical-green-light scrollbar-track-medical-green">
             <a href="#" class="block py-2 px-4 text-white hover:bg-medical-green-light hover:text-white transition-colors duration-300">Trang chủ</a>
 
             <!-- Mobile Giới thiệu Dropdown -->
@@ -87,7 +87,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
                 </button>
-                <div class="hidden pl-4 mobile-dropdown-content">
+                <div class="hidden pl-4 mobile-dropdown-content max-h-[60vh] overflow-y-auto">
                     <a href="#" class="block py-2 px-4 text-white hover:bg-medical-green-light hover:text-white transition-colors duration-300">Phòng khám</a>
                     <a href="#" class="block py-2 px-4 text-white hover:bg-medical-green-light hover:text-white transition-colors duration-300">Bác sĩ chuyên khoa</a>
                 </div>
@@ -101,7 +101,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
                 </button>
-                <div class="hidden pl-4 mobile-dropdown-content">
+                <div class="hidden pl-4 mobile-dropdown-content max-h-[60vh] overflow-y-auto">
                     <a href="#" class="block py-2 px-4 text-white hover:bg-medical-green-light hover:text-white transition-colors duration-300">Khám chuyên khoa</a>
                     <a href="#" class="block py-2 px-4 text-white hover:bg-medical-green-light hover:text-white transition-colors duration-300">Khám sức khỏe</a>
                     <a href="#" class="block py-2 px-4 text-white hover:bg-medical-green-light hover:text-white transition-colors duration-300">Tiêm ngừa</a>
