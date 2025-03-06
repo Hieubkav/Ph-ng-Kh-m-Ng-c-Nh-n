@@ -32,4 +32,9 @@ class Post extends Model
 	public function cat_post(){
 		return $this->belongsTo(CatPost::class);
 	}
+
+    public function children()
+    {
+        return $this->hasMany(Post::class, 'parent_id')->orderBy('order');
+    }
 }

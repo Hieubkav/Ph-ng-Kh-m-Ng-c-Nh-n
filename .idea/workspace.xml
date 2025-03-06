@@ -5,54 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8d9c9ce7-ba27-4c6d-aac6-d8792afb4ff9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/DaKhoaNgocNhan.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/DaKhoaNgocNhan.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/994b2f5a-d3df-4022-845e-4dd7e116961f.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/994b2f5a-d3df-4022-845e-4dd7e116961f/storage_v2/_src_/schema/dakhoangocnhan.IMiqFg.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/994b2f5a-d3df-4022-845e-4dd7e116961f/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/994b2f5a-d3df-4022-845e-4dd7e116961f/storage_v2/_src_/schema/mysql.osA4Bg.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/994b2f5a-d3df-4022-845e-4dd7e116961f/storage_v2/_src_/schema/performance_schema.kIw0nw.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Filament/Resources/PostResource/Pages/ListPosts.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Filament/Resources/PostResource/Pages/ListPosts.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Filament/Resources/PostResource/Widgets/Post.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Filament/Resources/PostResource/Widgets/Post.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Post.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Post.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2025_02_23_112640_create_posts_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2025_02_23_112640_create_posts_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/storage/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/storage/uploads/01JMSKCWGSPB7WSMB32891SS2K.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/storage/uploads/01JMSKDCDKQM9MFEBBRR6XP7GR.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/storage/uploads/01JMSKDXXY080DXFRPSEBAKA06.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/storage/uploads/01JMST6FDJEXSVPEVMPCK8ERQ0.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/storage/uploads/01JMST89ZTGVWYFR5T5SZEG18W.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/storage/uploads/01JMTGKZT0TSCFTEQ9DSJ33G48.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/storage/uploads/01JMTGP62PAWETBK8J34VR9SB0.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/storage/uploads/01JMTGRV1DWMM142WR3AK8H1JC.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/storage/uploads/01JMTGXQ5ZQB1SGHZP80Y5BEWF.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/storage/uploads/01JMTX786H5HBVE1GM2P2FDXFP.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/storage/uploads/01JMTX9DAW2GFCR7585N7GV24S.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/storage/uploads/01JMTXAR411Y5815M5X14HW73Y.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/storage/uploads/01JMTXCEEP8B4DZDQZD0N9665T.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/storage/uploads/01JMTXFMHSHQHDZXE2EQZAQSPH.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/storage/uploads/01JMTXH654FB5DKHNAHN8RC1SR.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/storage/uploads/01JMV0Y6RQ4M3PYY2825M28Q40.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/storage/uploads/01JMV13QZGNRX2WXSJNGS45KNE.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/storage/uploads/01JMV1861ZRHZHMY5B1VRKMJXE.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/storage/uploads/01JMV1BB1C9G4WBB1F3DWT6VKD.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/storage/uploads/01JMV1CQ1JY147XFAKVNEBRPNE.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/storage/uploads/01JMV1M2P35JN4CFCSJCXFKKSF.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/storage/uploads/01JMVHTB0CP2MA3P73EB8H3AE4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/storage/uploads/01JMVHYB4BTPFTPYCVRANRQ1C7.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/storage/uploads/01JMVJ4XF94XSGJFP3Y44T912W.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/storage/uploads/01JMVJ95F0DXBBEKK8D0FXQHF0.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/storage/uploads/01JMVJY2R86TN9FCK75RGKGGMQ.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/storage/uploads/01JMW3FVZCQARSEYQBSEX7DHYR.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/component/shop/navbar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/component/shop/navbar.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_files.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_files.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_static.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_static.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vendor/composer/installed.json" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/installed.json" afterDir="false" />
@@ -70,18 +31,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Hieubkav"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Hieubkav&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Hieubkav/Ph-ng-Kh-m-Ng-c-Nh-n.git",
-    "accountId": "28d374cd-bfc0-4ff4-b981-2714103cd266"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Hieubkav/Ph-ng-Kh-m-Ng-c-Nh-n.git&quot;,
+    &quot;accountId&quot;: &quot;28d374cd-bfc0-4ff4-b981-2714103cd266&quot;
   }
-}]]></component>
+}</component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="E:\xampp\php\php.exe">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/sebastian/global-state" />
@@ -227,36 +188,33 @@
       <path value="$PROJECT_DIR$/vendor/filament/widgets" />
       <path value="$PROJECT_DIR$/vendor/sebastian/comparator" />
       <path value="$PROJECT_DIR$/vendor/solution-forest/filament-tree" />
+      <path value="$PROJECT_DIR$/vendor/spatie/pdf-to-image" />
     </include_path>
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2tobs8E9xt1nojZ7PUXcP1rPERt" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "MTFeaturesSettingsConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;MTFeaturesSettingsConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
-    <configuration default="true" type="ComposerRunConfigurationType" factoryName="Composer Script">
-      <option name="pathToComposerJson" value="$PROJECT_DIR$/composer.json" />
-      <method v="2" />
-    </configuration>
     <configuration name="Main" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner configuration_file="$PROJECT_DIR$/phpunit.xml" scope="XML" use_alternative_configuration_file="true" />
       <method v="2" />
@@ -277,7 +235,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1741021580073</updated>
-      <workItem from="1741021582833" duration="3436000" />
+      <workItem from="1741021582833" duration="6391000" />
+      <workItem from="1741067170922" duration="5800000" />
+      <workItem from="1741252921039" duration="5897000" />
     </task>
     <servers />
   </component>

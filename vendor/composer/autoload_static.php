@@ -96,6 +96,7 @@ class ComposerStaticInita03a43237a09587ae2ae6793244292e4
             'Symfony\\Component\\ErrorHandler\\' => 31,
             'Symfony\\Component\\CssSelector\\' => 30,
             'Symfony\\Component\\Console\\' => 26,
+            'Spatie\\PdfToImage\\' => 18,
             'Spatie\\LaravelPackageTools\\' => 27,
             'Spatie\\LaravelIgnition\\' => 23,
             'Spatie\\Invade\\' => 14,
@@ -362,6 +363,10 @@ class ComposerStaticInita03a43237a09587ae2ae6793244292e4
         'Symfony\\Component\\Console\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/console',
+        ),
+        'Spatie\\PdfToImage\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/spatie/pdf-to-image/src',
         ),
         'Spatie\\LaravelPackageTools\\' => 
         array (
@@ -732,6 +737,8 @@ class ComposerStaticInita03a43237a09587ae2ae6793244292e4
         'App\\Filament\\Resources\\PostResource\\Pages\\CreatePost' => __DIR__ . '/../..' . '/app/Filament/Resources/PostResource/Pages/CreatePost.php',
         'App\\Filament\\Resources\\PostResource\\Pages\\EditPost' => __DIR__ . '/../..' . '/app/Filament/Resources/PostResource/Pages/EditPost.php',
         'App\\Filament\\Resources\\PostResource\\Pages\\ListPosts' => __DIR__ . '/../..' . '/app/Filament/Resources/PostResource/Pages/ListPosts.php',
+        'App\\Filament\\Resources\\PostResource\\Pages\\Post' => __DIR__ . '/../..' . '/app/Filament/Resources/PostResource/Pages/Post.php',
+        'App\\Filament\\Resources\\PostResource\\Widgets\\Post' => __DIR__ . '/../..' . '/app/Filament/Resources/PostResource/Widgets/Post.php',
         'App\\Filament\\Resources\\ServiceResource' => __DIR__ . '/../..' . '/app/Filament/Resources/ServiceResource.php',
         'App\\Filament\\Resources\\ServiceResource\\Pages\\CreateService' => __DIR__ . '/../..' . '/app/Filament/Resources/ServiceResource/Pages/CreateService.php',
         'App\\Filament\\Resources\\ServiceResource\\Pages\\EditService' => __DIR__ . '/../..' . '/app/Filament/Resources/ServiceResource/Pages/EditService.php',
@@ -7684,6 +7691,10 @@ class ComposerStaticInita03a43237a09587ae2ae6793244292e4
         'Spatie\\LaravelPackageTools\\Exceptions\\InvalidPackage' => __DIR__ . '/..' . '/spatie/laravel-package-tools/src/Exceptions/InvalidPackage.php',
         'Spatie\\LaravelPackageTools\\Package' => __DIR__ . '/..' . '/spatie/laravel-package-tools/src/Package.php',
         'Spatie\\LaravelPackageTools\\PackageServiceProvider' => __DIR__ . '/..' . '/spatie/laravel-package-tools/src/PackageServiceProvider.php',
+        'Spatie\\PdfToImage\\Exceptions\\InvalidFormat' => __DIR__ . '/..' . '/spatie/pdf-to-image/src/Exceptions/InvalidFormat.php',
+        'Spatie\\PdfToImage\\Exceptions\\PageDoesNotExist' => __DIR__ . '/..' . '/spatie/pdf-to-image/src/Exceptions/PageDoesNotExist.php',
+        'Spatie\\PdfToImage\\Exceptions\\PdfDoesNotExist' => __DIR__ . '/..' . '/spatie/pdf-to-image/src/Exceptions/PdfDoesNotExist.php',
+        'Spatie\\PdfToImage\\Pdf' => __DIR__ . '/..' . '/spatie/pdf-to-image/src/Pdf.php',
         'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
         'Symfony\\Component\\Console\\Application' => __DIR__ . '/..' . '/symfony/console/Application.php',
         'Symfony\\Component\\Console\\Attribute\\AsCommand' => __DIR__ . '/..' . '/symfony/console/Attribute/AsCommand.php',

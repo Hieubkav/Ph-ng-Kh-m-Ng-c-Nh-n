@@ -17,7 +17,7 @@ class Post extends BaseWidget
 
     protected static int $maxDepth = 2;
 
-    protected ?string $treeTitle = 'Post';
+    protected ?string $treeTitle = 'Bài viết';
 
     protected bool $enableTreeTitle = true;
 
@@ -41,7 +41,7 @@ class Post extends BaseWidget
     //     return null;
     // }
 
-    // CUSTOMIZE ACTION OF EACH RECORD, CAN DELETE 
+    // CUSTOMIZE ACTION OF EACH RECORD, CAN DELETE
     // protected function getTreeActions(): array
     // {
     //     return [
@@ -52,7 +52,7 @@ class Post extends BaseWidget
     //         // ViewAction::make(),
     //         // EditAction::make(),
     //         ActionGroup::make([
-    //             
+    //
     //             ViewAction::make(),
     //             EditAction::make(),
     //         ]),
@@ -60,16 +60,16 @@ class Post extends BaseWidget
     //     ];
     // }
     // OR OVERRIDE FOLLOWING METHODS
-    //protected function hasDeleteAction(): bool
-    //{
-    //    return true;
-    //}
-    //protected function hasEditAction(): bool
-    //{
-    //    return true;
-    //}
-    //protected function hasViewAction(): bool
-    //{
-    //    return true;
-    //}
+    protected function hasDeleteAction(): bool
+    {
+        return true;
+    }
+//    protected function hasEditAction(): bool
+//    {
+//        return true;
+//    }
+//    protected function hasViewAction(): bool
+//    {
+//        return true;
+//    }
 }
