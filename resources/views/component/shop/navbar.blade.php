@@ -2,7 +2,7 @@
 @include('partials.shop.navbar.subnav')
 
 @php
-    $topLevelPosts = \App\Models\Post::where('parent_id', -1)->orderBy('order')->get();
+    $menuItems = \App\Models\MenuItem::whereNull('parent_id')->orderBy('order')->with('children')->get();
 @endphp
 
     <!-- Main Navigation -->
@@ -25,45 +25,32 @@
                     Trang chủ
                 </a>
 
-                @foreach($topLevelPosts as $post)
-                    @if($post->children->isNotEmpty())
-                        <!-- Dropdown cho bài viết có con -->
+                @foreach($menuItems as $menuItem)
+                    @if($menuItem->children->isNotEmpty())
+                        <!-- Dropdown menu -->
                         <div class="relative group">
                             <button class="py-4 px-2 text-white group-hover:text-medical-green-light hover:border-b-2 hover:border-medical-green-light transition-all duration-300 inline-flex items-center">
-                                <span>{{ $post->name }}</span>
+                                <span>{{ $menuItem->label }}</span>
                                 <svg class="w-4 h-4 ml-1 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </button>
                             <div class="absolute left-0 mt-0 w-48 max-h-[80vh] overflow-y-auto bg-medical-green backdrop-blur-sm rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[9999] scrollbar-thin scrollbar-thumb-medical-green-light scrollbar-track-medical-green">
-                                @foreach($post->children as $child)
-                                    <a href="{{ route('post', $child->id) }}" class="block px-4 py-2 text-white hover:bg-medical-green-light hover:text-white transition-colors duration-300">
-                                        {{ $child->name }}
+                                @foreach($menuItem->children as $child)
+                                    <a href="{{ $child->getUrl() }}" class="block px-4 py-2 text-white hover:bg-medical-green-light hover:text-white transition-colors duration-300">
+                                        {{ $child->label }}
                                     </a>
                                 @endforeach
                             </div>
                         </div>
                     @else
-                        <!-- Link cho bài viết không có con -->
-                        <a href="{{ route('post', $post->id) }}" class="py-4 px-2 text-white hover:text-medical-green-light hover:border-b-2 hover:border-medical-green-light transition-all duration-300">
-                            {{ $post->name }}
+                        <!-- Single menu item -->
+                        <a href="{{ $menuItem->getUrl() }}" class="py-4 px-2 text-white hover:text-medical-green-light hover:border-b-2 hover:border-medical-green-light transition-all duration-300">
+                            {{ $menuItem->label }}
                         </a>
                     @endif
                 @endforeach
 
-{{--                <!-- Các mục bổ sung (nếu cần) -->--}}
-{{--                <a href="{{ route('hiring') }}" class="py-4 px-2 text-white hover:text-medical-green-light hover:border-b-2 hover:border-medical-green-light transition-all duration-300">--}}
-{{--                    Tuyển dụng--}}
-{{--                </a>--}}
-{{--                <a href="{{ route('catPost', 1) }}" class="py-4 px-2 text-white hover:text-medical-green-light hover:border-b-2 hover:border-medical-green-light transition-all duration-300">--}}
-{{--                    Tin tức sự kiện--}}
-{{--                </a>--}}
-{{--                <a href="{{ route('catPost', 2) }}" class="py-4 px-2 text-white hover:text-medical-green-light hover:border-b-2 hover:border-medical-green-light transition-all duration-300">--}}
-{{--                    An sinh xã hội--}}
-{{--                </a>--}}
-{{--                <a href="{{ route('page', 6) }}" class="py-4 px-2 text-white hover:text-medical-green-light hover:border-b-2 hover:border-medical-green-light transition-all duration-300">--}}
-{{--                    Chi phí khám--}}
-{{--                </a>--}}
             </div>
         </div>
 
@@ -73,45 +60,32 @@
                 Trang chủ
             </a>
 
-            @foreach($topLevelPosts as $post)
-                @if($post->children->isNotEmpty())
-                    <!-- Mobile Dropdown cho bài viết có con -->
+            @foreach($menuItems as $menuItem)
+                @if($menuItem->children->isNotEmpty())
+                    <!-- Mobile dropdown menu -->
                     <div class="relative mobile-dropdown">
                         <button class="flex justify-between items-center w-full py-2 px-4 text-white hover:bg-medical-green-light hover:text-white transition-colors duration-300">
-                            <span>{{ $post->name }}</span>
+                            <span>{{ $menuItem->label }}</span>
                             <svg class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </button>
                         <div class="hidden pl-4 mobile-dropdown-content max-h-[60vh] overflow-y-auto">
-                            @foreach($post->children as $child)
-                                <a href="{{ route('post', $child->id) }}" class="block py-2 px-4 text-white hover:bg-medical-green-light hover:text-white transition-colors duration-300">
-                                    {{ $child->name }}
+                            @foreach($menuItem->children as $child)
+                                <a href="{{ $child->getUrl() }}" class="block py-2 px-4 text-white hover:bg-medical-green-light hover:text-white transition-colors duration-300">
+                                    {{ $child->label }}
                                 </a>
                             @endforeach
                         </div>
                     </div>
                 @else
-                    <!-- Link cho bài viết không có con -->
-                    <a href="{{ route('post', $post->id) }}" class="block py-2 px-4 text-white hover:bg-medical-green-light hover:text-white transition-colors duration-300">
-                        {{ $post->name }}
+                    <!-- Single mobile menu item -->
+                    <a href="{{ $menuItem->getUrl() }}" class="block py-2 px-4 text-white hover:bg-medical-green-light hover:text-white transition-colors duration-300">
+                        {{ $menuItem->label }}
                     </a>
                 @endif
             @endforeach
 
-{{--            <!-- Các mục bổ sung (nếu cần) -->--}}
-{{--            <a href="{{ route('hiring') }}" class="block py-2 px-4 text-white hover:bg-medical-green-light hover:text-white transition-colors duration-300">--}}
-{{--                Tuyển dụng--}}
-{{--            </a>--}}
-{{--            <a href="{{ route('catPost', 1) }}" class="block py-2 px-4 text-white hover:bg-medical-green-light hover:text-white transition-colors duration-300">--}}
-{{--                Tin tức sự kiện--}}
-{{--            </a>--}}
-{{--            <a href="{{ route('catPost', 2) }}" class="block py-2 px-4 text-white hover:bg-medical-green-light hover:text-white transition-colors duration-300">--}}
-{{--                An sinh xã hội--}}
-{{--            </a>--}}
-{{--            <a href="{{ route('page', 6) }}" class="block py-2 px-4 text-white hover:bg-medical-green-light hover:text-white transition-colors duration-300">--}}
-{{--                Chi phí khám--}}
-{{--            </a>--}}
         </div>
     </div>
 </nav>

@@ -16,7 +16,9 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class CatPostResource extends Resource
 {
     protected static ?string $model = CatPost::class;
-    protected static ?string $label = 'Danh Mục Bài Viết';
+    protected static ?string $navigationLabel = 'Chuyên mục tin';
+    protected static ?string $label = 'Chuyên mục tin';
+    protected static ?string $title = 'Chuyên mục tin';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?int $navigationSort = 2;
@@ -26,10 +28,10 @@ class CatPostResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->label('Tên danh mục')
+                    ->label('Tên chuyên mục')
                     ->required(),
                 Forms\Components\Textarea::make('content')
-                    ->label('Nội dung')
+                    ->label('Nội dung chuyên mục')
                     ->rows(3),
             ]);
     }

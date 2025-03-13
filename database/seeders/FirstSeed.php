@@ -5,6 +5,7 @@
     use App\Models\Carousel;
     use App\Models\CatPost;
     use App\Models\Doctor;
+    use App\Models\MenuItem;
     use App\Models\Page;
     use App\Models\Post;
     use App\Models\Service;
@@ -52,12 +53,93 @@
             ]);
 
             Post::create([
-                'name' => 'Bài Viết 1',
-                'content' => 'Nội dung bài viết 1',
+                'name' => 'Giới thiệu',
+                'content' => 'Giới thiệu',
                 'image' => 'uploads//01JMSJ3NWM9EWFD9Q0RNTMDG6F.png',
                 'user_id' => 1,
                 'cat_post_id' => 1,
             ]);
+
+            Post::create([
+                'name' => 'Phòng khám',
+                'content' => '<h1><a href="https://www.google.com/maps/search/Ph%C3%B2ng+Kh%C3%A1m+%C4%90a+Khoa+Ng%E1%BB%8Dc+Nh%C3%A2n+V%C4%A9nh+Long">Phòng Khám Đa Khoa Ngọc Nhân</a></h1><p>Phòng Khám Đa Khoa Ngọc Nhân là một cơ sở y tế tư nhân uy tín tại huyện Trà Ôn, tỉnh Vĩnh Long, chuyên cung cấp các dịch vụ khám, tư vấn, chẩn đoán và điều trị cho nhiều bệnh lý đa dạng.</p><p><strong>Địa chỉ và thông tin liên hệ:</strong></p><ul><li><strong>Địa chỉ:</strong> 168 đường 30/4, khu 6, thị trấn Trà Ôn, huyện Trà Ôn, tỉnh Vĩnh Long</li><li><strong>Số điện thoại:</strong> 0270 3777 999</li><li><strong>Website: pkngocnhan.vn</strong></li></ul><p><strong>Giờ làm việc:</strong></p><ul><li>Thứ Hai đến Thứ Bảy: 07:30 - 17:00</li><li>Chủ Nhật: Đóng cửa</li></ul><p><strong>Dịch vụ cung cấp:</strong></p><ul><li>Khám và điều trị các bệnh lý về tiêu hóa, gan, mật, tim mạch, nội tiết, hô hấp, thận - tiết niệu, nội thần kinh, cơ xương khớp.</li><li>Thực hiện các xét nghiệm cận lâm sàng như siêu âm tổng quát, đo loãng xương, đo điện tim, đo điện não, chụp X-quang và xét nghiệm Elisa.</li></ul><p><strong>Đội ngũ y bác sĩ:</strong> Phòng khám sở hữu đội ngũ y bác sĩ chuyên môn cao, tận tâm và luôn tôn trọng, tư vấn tận tình cho người bệnh.</p><p>Với trang thiết bị hiện đại và dịch vụ chất lượng, Phòng Khám Đa Khoa Ngọc Nhân đã trở thành địa chỉ tin cậy cho người dân trong khu vực và các vùng lân cận khi có nhu cầu chăm sóc sức khỏe.</p><p><br></p>',
+                'image' => 'uploads//01JMSJ3NWM9EWFD9Q0RNTMDG6F.png',
+                'user_id' => 1,
+                'cat_post_id' => 1,
+            ]);
+
+            Post::create([
+                'name' => 'Bác sĩ chuyên khoa',
+                'content' => '<h1><a href="https://www.google.com/maps/search/Ph%C3%B2ng+Kh%C3%A1m+%C4%90a+Khoa+Ng%E1%BB%8Dc+Nh%C3%A2n">Phòng Khám Đa Khoa Ngọc Nhân</a></h1><p>Phòng Khám Đa Khoa Ngọc Nhân tự hào sở hữu đội ngũ bác sĩ chuyên khoa có chuyên môn cao và tận tâm, đảm bảo chất lượng dịch vụ y tế cho cộng đồng. Dưới đây là một số bác sĩ tiêu biểu tại phòng khám:</p><ul><li><strong>TS.BS Dũng</strong>: Giám đốc chuyên môn, chuyên khoa Tim mạch.</li><li><strong>PGS.TS Trần</strong>: Trưởng khoa Nội, chuyên gia Nội khoa.</li><li><strong>BS.CKI Vinh</strong>: Trưởng khoa Ngoại, chuyên về phẫu thuật tổng quát.</li><li><strong>BS.CKI Hoàng</strong>: Trưởng khoa Cấp cứu, chuyên về cấp cứu và hồi sức.</li></ul><p>Với đội ngũ bác sĩ giàu kinh nghiệm và trang thiết bị hiện đại, Phòng Khám Đa Khoa Ngọc Nhân cam kết mang đến dịch vụ chăm sóc sức khỏe chất lượng cao, đáp ứng mọi nhu cầu khám chữa bệnh của người dân.</p><p><br></p>',
+                'image' => 'uploads//01JMSJ3NWM9EWFD9Q0RNTMDG6F.png',
+                'user_id' => 1,
+                'cat_post_id' => 1,
+            ]);
+
+            Post::create([
+                'name' => 'Dịch vụ',
+                'content' => 'dịch vụ',
+                'image' => 'uploads//01JMSJ3NWM9EWFD9Q0RNTMDG6F.png',
+                'user_id' => 1,
+                'cat_post_id' => 1,
+            ]);
+
+            Post::create([
+                'name' => 'Khám chuyên khoa',
+                'content' => '<p>Phòng Khám Đa Khoa Ngọc Nhân cung cấp đa dạng các dịch vụ khám chuyên khoa nhằm đáp ứng nhu cầu chăm sóc sức khỏe của cộng đồng. Các dịch vụ bao gồm:</p><ul><li><strong>Khám sức khỏe tổng quát</strong>: Đánh giá tình trạng sức khỏe chung, phát hiện sớm các vấn đề tiềm ẩn để có biện pháp phòng ngừa và điều trị kịp thời.</li><li><strong>Khám chuyên khoa</strong>: Bao gồm các chuyên khoa như Tim mạch, Hô hấp, Tiêu hóa – Gan mật, Cơ xương khớp, Da liễu, Mắt, Răng Hàm Mặt, Tai Mũi Họng và Phụ khoa.</li><li><strong>Cận lâm sàng</strong>: Thực hiện các xét nghiệm và chẩn đoán hình ảnh như siêu âm, X-quang, điện tim, điện não để hỗ trợ chẩn đoán chính xác.</li><li><strong>Xét nghiệm</strong>: Cung cấp các dịch vụ xét nghiệm máu, nước tiểu và các xét nghiệm chuyên sâu khác.</li><li><strong>Tiêm chủng</strong>: Cung cấp các loại vắc-xin phòng ngừa bệnh cho trẻ em và người lớn.</li><li><strong>Nha khoa</strong>: Chăm sóc và điều trị các vấn đề về răng miệng.</li></ul><p>Với đội ngũ bác sĩ giàu kinh nghiệm và trang thiết bị hiện đại, Phòng Khám Đa Khoa Ngọc Nhân cam kết mang đến dịch vụ chăm sóc sức khỏe chất lượng cao, đáp ứng mọi nhu cầu khám chữa bệnh của người dân.</p>',
+                'image' => 'uploads//01JMSJ3NWM9EWFD9Q0RNTMDG6F.png',
+                'user_id' => 1,
+                'cat_post_id' => 1,
+            ]);
+
+            Post::create([
+                'name' => 'Khám sức khỏe',
+                'content' => 'Khám sức khỏe',
+                'image' => 'uploads//01JMSJ3NWM9EWFD9Q0RNTMDG6F.png',
+                'user_id' => 1,
+                'cat_post_id' => 1,
+            ]);
+
+            Post::create([
+                'name' => 'Tiêm chủng',
+                'content' => 'Tiêm chủng',
+                'image' => 'uploads//01JMSJ3NWM9EWFD9Q0RNTMDG6F.png',
+                'user_id' => 1,
+                'cat_post_id' => 1,
+            ]);
+
+            Post::create([
+                'name' => 'Tuyển dụng',
+                'content' => 'Tuyển dụng',
+                'image' => 'uploads//01JMSJ3NWM9EWFD9Q0RNTMDG6F.png',
+                'user_id' => 1,
+                'cat_post_id' => 1,
+            ]);
+
+            Post::create([
+                'name' => 'Tin tức sự kiện',
+                'content' => 'Tin tức sự kiện',
+                'image' => 'uploads//01JMSJ3NWM9EWFD9Q0RNTMDG6F.png',
+                'user_id' => 1,
+                'cat_post_id' => 1,
+            ]);
+
+            Post::create([
+                'name' => 'An Ninh Xã Hội',
+                'content' => 'An Ninh Xã Hội',
+                'image' => 'uploads//01JMSJ3NWM9EWFD9Q0RNTMDG6F.png',
+                'user_id' => 1,
+                'cat_post_id' => 1,
+            ]);
+
+            Post::create([
+                'name' => 'Chi phí khám bệnh',
+                'content' => 'Chi phí khám bệnh',
+                'image' => 'uploads//01JMSJ3NWM9EWFD9Q0RNTMDG6F.png',
+                'user_id' => 1,
+                'cat_post_id' => 1,
+            ]);
+
 
             Page::create([
                 'name' => 'Giới thiệu phòng khám',
@@ -167,6 +249,95 @@
                 'image' => 'uploads//01JMSKDXXY080DXFRPSEBAKA06.jpg'
             ]);
 
+            // Tạo dữ liệu mẫu cho menu items
+            MenuItem::create([
+                'label' => 'Trang chủ',
+                'type' => 'link',
+                'link' => 'http://127.0.0.1:8000/',
+                'order' => 1,
+            ]);
+
+            MenuItem::create([
+                'label' => 'Giới thiệu',
+                'type' => 'link', 
+                'link' => 'http://127.0.0.1:8000/',
+                'order' => 2,
+            ]);
+
+            MenuItem::create([
+                'parent_id' => 2,
+                'label' => 'Phòng khám',
+                'type' => 'post',
+                'post_id' => 2,
+                'order' => 4,
+            ]);
+
+            MenuItem::create([
+                'parent_id' => 2,
+                'label' => 'Bác sĩ chuyên khoa',
+                'type' => 'post',
+                'post_id' => 3,
+                'order' => 3, 
+            ]);
+
+            MenuItem::create([
+                'label' => 'Dịch vụ',
+                'type' => 'link',
+                'link' => 'http://127.0.0.1:8000/',
+                'order' => 5,
+            ]);
+
+            MenuItem::create([
+                'parent_id' => 5,
+                'label' => 'Khám chuyên khoa',
+                'type' => 'post',
+                'post_id' => 5,
+                'order' => 6,
+            ]);
+
+            MenuItem::create([
+                'parent_id' => 5,
+                'label' => 'Tiêm chủng',
+                'type' => 'post',
+                'post_id' => 7,
+                'order' => 7,
+            ]);
+
+            MenuItem::create([
+                'parent_id' => 5,
+                'label' => 'Khám sức khỏe',
+                'type' => 'post',
+                'post_id' => 6,
+                'order' => 8,
+            ]);
+
+            MenuItem::create([
+                'label' => 'Tuyển dụng',
+                'type' => 'post',
+                'post_id' => 8,
+                'order' => 9,
+            ]);
+
+            MenuItem::create([
+                'label' => 'Tin tức sự kiện',
+                'type' => 'cat',
+                'cat_id' => 1,
+                'order' => 10,
+            ]);
+
+            MenuItem::create([
+                'label' => 'An sinh xã hội',
+                'type' => 'cat',
+                'cat_id' => 2,
+                'order' => 11,
+            ]);
+
+            MenuItem::create([
+                'label' => 'Chi phí khám bệnh',
+                'type' => 'post',
+                'post_id' => 11,
+                'order' => 12,
+            ]);
 
         }
     }

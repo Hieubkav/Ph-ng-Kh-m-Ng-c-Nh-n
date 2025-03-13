@@ -16,11 +16,10 @@ return new class extends Migration
             $table->string('name');
             $table->text('content')->nullable();
             $table->string('image')->nullable();
+            $table->string('pdf')->nullable();
             $table->enum('is_hot',['hot', 'not_hot'])->default('not_hot');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('cat_post_id');
-            $table->integer('parent_id')->default(-1);
-            $table->integer('order')->default(0)->index();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('cat_post_id')->references('id')->on('cat_posts')->onDelete('cascade');

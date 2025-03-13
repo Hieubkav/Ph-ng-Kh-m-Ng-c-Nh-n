@@ -1,7 +1,7 @@
 @php
 
-    // Lấy ra 3 bài viết mới nhất có thuộc tính is_hot = "hot"
-    $hot_posts = App\Models\Post::where('is_hot', 'hot')->orderBy('created_at', 'desc')->take(3)->get();
+    // Lấy ra các bài viết nổi bật
+    $hot_posts = App\Models\Post::where('is_hot', 'hot')->orderBy('created_at', 'desc')->get();
 
 @endphp
 
@@ -13,11 +13,11 @@
 
     <div class="space-y-3 flex-grow flex flex-col justify-between">
         <!-- Hot News Items Container - Equal height distribution -->
-        <div class="space-y-3">
+        <div class="space-y-3 overflow-y-auto" style="max-height: calc(50vw * 0.66 - 4rem)">
             @foreach($hot_posts as $post)
-                <!-- Hot News Item 1 -->
+                <!-- Hot News Item -->
                 <div
-                    class="bg-white rounded-lg shadow hover:shadow-md transition-shadow duration-300 overflow-hidden h-[calc(33.33%-0.5rem)]">
+                    class="bg-white rounded-lg shadow hover:shadow-md transition-shadow duration-300 overflow-hidden h-24">
                     <a href="{{route('post',$post->id)}}" class="flex group">
                         <div class="w-1/3 relative overflow-hidden">
                             <img
@@ -43,3 +43,4 @@
         </div>
     </div>
 </div>
+

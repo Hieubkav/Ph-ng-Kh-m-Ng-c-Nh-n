@@ -5,19 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8d9c9ce7-ba27-4c6d-aac6-d8792afb4ff9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/DaKhoaNgocNhan.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/DaKhoaNgocNhan.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Filament/Resources/PostResource/Widgets/Post.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Filament/Resources/PostResource/Widgets/Post.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Filament/Pages/SettingUp.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Filament/Pages/SettingUp.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Filament/Resources/CarouselResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Filament/Resources/CarouselResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Filament/Resources/CatPostResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Filament/Resources/CatPostResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Filament/Resources/DoctorResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Filament/Resources/DoctorResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Filament/Resources/PageResource.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Filament/Resources/PageResource/Pages/CreatePage.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Filament/Resources/PageResource/Pages/EditPage.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Filament/Resources/PageResource/Pages/ListPages.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Filament/Resources/PostResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Filament/Resources/PostResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Filament/Resources/ServiceResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Filament/Resources/ServiceResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Filament/Resources/UserResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Filament/Resources/UserResource.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Post.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Post.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/component/shop/navbar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/component/shop/navbar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_static.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_static.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/installed.json" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/installed.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/installed.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/installed.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2025_02_23_112640_create_posts_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2025_02_23_112640_create_posts_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/FirstSeed.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/FirstSeed.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/component/post/contentPost.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/component/post/contentPost.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/component/shop/footer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/component/shop/footer.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/partials/shop/navbar/subnav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/shop/navbar/subnav.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/app/livewire-tmp/2EMkni5rAxuZpUFrZplMQAZ3yG78G8-metaRGVLVEdLLnBkZg==-.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/app/livewire-tmp/4j7Y4MZ9SMFrU29FJqNdHdQcAed0JN-metaRGVLVEdLLnBkZg==-.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/app/livewire-tmp/BbMLKkzcpxwtfNB0ei40wKPJa0nfi3-metaRGVLVEdLLnBkZg==-.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/app/livewire-tmp/HEQfUpPyD2W0XbvCmmMdMWJVtGlkm3-metaMjcxMDE3LmpwZw==-.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/app/livewire-tmp/KcT3SuOVERxYl0goFFyr9mO6FRgPSF-metaRGVLVEdLLnBkZg==-.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/app/livewire-tmp/PpK5O3T5R2XsN8voRToZQufWYP08xz-metaRGVLVEdLLnBkZg==-.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/app/livewire-tmp/qDde8aMqMlDeRu1ou4cViOJQVNNoAr-metaRGVLVEdLLnBkZg==-.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/app/livewire-tmp/x4OuecHUhqgNpF3o23TflTIjYepQ4W-metaRGVLVEdLLnBkZg==-.pdf" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -205,6 +218,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/Laravel/Project fanpage/NhaBepAAA&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -212,6 +226,11 @@
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;MTFeaturesSettingsConfigurable&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mariadb&quot;
+    ]
   }
 }</component>
   <component name="RunManager">
@@ -223,7 +242,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-php-predefined-a98d8de5180a-fbeb0b58ac0f-com.jetbrains.php.sharedIndexes-PS-243.24978.50" />
+        <option value="bundled-php-predefined-a98d8de5180a-1ec7b7818973-com.jetbrains.php.sharedIndexes-PS-243.25659.45" />
       </set>
     </attachedChunks>
   </component>
@@ -237,7 +256,10 @@
       <updated>1741021580073</updated>
       <workItem from="1741021582833" duration="6391000" />
       <workItem from="1741067170922" duration="5800000" />
-      <workItem from="1741252921039" duration="5897000" />
+      <workItem from="1741252921039" duration="10192000" />
+      <workItem from="1741319294591" duration="895000" />
+      <workItem from="1741614554108" duration="4484000" />
+      <workItem from="1741625401482" duration="19000" />
     </task>
     <servers />
   </component>

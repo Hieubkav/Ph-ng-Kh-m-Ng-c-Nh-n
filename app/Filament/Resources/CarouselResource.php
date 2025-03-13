@@ -17,8 +17,10 @@ use Illuminate\Support\Facades\Storage;
 class CarouselResource extends Resource
 {
     protected static ?string $model = Carousel::class;
+    protected static ?string $navigationLabel = 'Thanh trượt';
     protected static ?string $label = 'Thanh trượt';
-    protected static ?int $navigationSort = 6;
+    protected static ?string $title = 'Thanh trượt';
+    protected static ?int $navigationSort = 1;
 
     protected static ?string $navigationIcon = 'heroicon-o-squares-2x2';
 
@@ -37,6 +39,16 @@ class CarouselResource extends Resource
                     })
                     ->image()
                     ->imageEditor()
+                    ->acceptedFileTypes([
+                        'image/jpeg',
+                        'image/png',
+                        'image/tiff',
+                        'image/heic',
+                        'image/webp',
+                        'image/svg+xml',
+                        'image/jpg',
+                        'image/tif',
+                    ])
                     ->imageEditorAspectRatios([
                         '16:9',
                         '4:3',

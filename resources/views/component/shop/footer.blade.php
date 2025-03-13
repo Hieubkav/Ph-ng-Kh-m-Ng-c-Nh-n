@@ -8,11 +8,11 @@
     <div class="container mx-auto px-4 py-12">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Thông tin phòng khám -->
-            <div class="space-y-4">
-                <div class="flex items-center space-x-3 mb-6">
-                    <div class="w-10 h-10 bg-gradient-to-r from-medical-green-light to-medical-green rounded-full flex items-center justify-center">
+            <div class="space-y-2">
+                <div class="flex items-center space-x-3 mb-1">
+                    {{-- <div class="w-10 h-10 bg-gradient-to-r from-medical-green-light to-medical-green rounded-full flex items-center justify-center">
                         <img src="{{config('app.asset_url')}}/storage/{{$setting->logo}}" alt="Logo" class="w-10 h-10">
-                    </div>
+                    </div> --}}
                     <h3 class="text-xl font-bold text-gray-200">
                         {{ $setting->name }}
                     </h3>
@@ -77,7 +77,7 @@
     <div class="border-t border-gray-200">
         <div class="container mx-auto px-4 py-4">
             <p class="text-center text-sm">
-                © 2024 Phòng Khám Đa Khoa Ngọc Nhân. Tất cả quyền được bảo lưu.
+                © 2025 Phòng Khám Đa Khoa Ngọc Nhân. Tất cả quyền được bảo lưu.
             </p>
         </div>
     </div>

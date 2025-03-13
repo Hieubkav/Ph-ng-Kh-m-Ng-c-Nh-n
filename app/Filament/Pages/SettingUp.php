@@ -18,9 +18,9 @@
         protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
         protected static ?int $navigationSort = 8;
 
-        protected static ?string $navigationLabel = 'Cài đặt';
+        protected static ?string $navigationLabel = 'Thông tin chung';
 
-        protected static ?string $title = 'Cài đặt';
+        protected static ?string $title = 'Thông tin chung';
 
         public ?array $data = [];
 
