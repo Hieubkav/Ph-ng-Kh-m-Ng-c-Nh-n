@@ -16,3 +16,4 @@
         ->name('hiring');
     Route::get('/services/{id}', [MainController::class, 'services'])
         ->name('services');
+

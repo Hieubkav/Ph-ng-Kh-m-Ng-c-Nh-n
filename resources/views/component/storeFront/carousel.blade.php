@@ -9,7 +9,7 @@
     <div class="flex flex-col md:flex-row gap-6">
         <!-- Main Carousel Section (2/3 width on desktop and tablet) -->
         <div class="md:w-2/3 w-full">
-            <div class="relative overflow-hidden rounded-2xl shadow-2xl bg-gray-100" style="padding-bottom: 50%;">
+            <div class="relative overflow-hidden rounded-2xl shadow-2xl bg-gray-100" style="padding-bottom: calc(3*6rem + 2*0.75rem + 4rem);">
                 <!-- Loading State -->
                 <div id="loading-state" class="absolute inset-0 flex items-center justify-center bg-white z-[5]">
                     <div class="flex flex-col items-center">

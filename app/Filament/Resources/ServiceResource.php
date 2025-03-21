@@ -40,6 +40,7 @@ class ServiceResource extends Resource
                             ->delete($file);
                     })
                     ->image()
+                    ->required()
                     ->imageEditor()
                     ->imageEditorAspectRatios([
                         '16:9',
@@ -47,7 +48,12 @@ class ServiceResource extends Resource
                         '1:1',
                         '3:4',
                         '9:16',
-                    ]),
+                    ])
+                    ->helperText(fn () => new \Illuminate\Support\HtmlString(
+                        'Chỉ chấp nhận các định dạng: <span >jpg, jpeg, png, webp, svg</span>. ' .
+                        'Nếu bạn có file ảnh khác (tif, tiff, heic...), vui lòng chuyển đổi sang PNG tại: ' .
+                        '<a  style="color:red" href="https://convertio.co/vn/png-converter/" target="_blank">convertio.co</a>'
+                    )),
                 Forms\Components\RichEditor::make('description')
                 ->label('Mô tả')
                 ->columnSpanFull(),

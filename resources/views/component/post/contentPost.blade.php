@@ -2,9 +2,9 @@
 $post = App\Models\Post::find($id);
 $category = App\Models\CatPost::find($post->cat_post_id);
 $relatedPosts = App\Models\Post::where('cat_post_id', $post->cat_post_id)
-                              ->where('id', '!=', $post->id)
-                              ->take(3)
-                              ->get();
+                             ->where('id', '!=', $post->id)
+                             ->take(3)
+                             ->get();
 // Get previous and next posts in same category
 $previousPost = App\Models\Post::where('cat_post_id', $post->cat_post_id)->where('id', '<', $post->id)->orderBy('id', 'desc')->first();
 $nextPost = App\Models\Post::where('cat_post_id', $post->cat_post_id)->where('id', '>', $post->id)->orderBy('id', 'asc')->first();
@@ -50,14 +50,16 @@ $nextPost = App\Models\Post::where('cat_post_id', $post->cat_post_id)->where('id
     </header>
 
     <!-- Featured Image -->
-    <div class="rounded-lg overflow-hidden mb-8 shadow-md">
-        <img
-            src="{{config('app.asset_url')}}/storage/{{$post->image}}"
-            alt="{{ $post->name }}"
-            class="w-full h-[300px] sm:h-[400px] object-cover"
-            loading="lazy"
-        >
-    </div>
+    @if($post->show_image === 'show' && $post->image)
+        <div class="rounded-lg overflow-hidden mb-8 shadow-md">
+            <img
+                src="{{config('app.asset_url')}}/storage/{{$post->image}}"
+                alt="{{ $post->name }}"
+                class="w-full h-[300px] sm:h-[400px] object-cover"
+                loading="lazy"
+            >
+        </div>
+    @endif
 
     <!-- Content -->
     <div class="prose prose-lg max-w-none text-gray-700 prose-headings:text-medical-green-dark prose-a:text-medical-green prose-img:rounded-lg prose-img:shadow-md prose-img:mx-auto mb-12">
@@ -122,14 +124,16 @@ $nextPost = App\Models\Post::where('cat_post_id', $post->cat_post_id)->where('id
                     <a href="{{ route('post',$relatedPost->id) }}"
                        class="group block bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all">
                         <!-- Post Image -->
-                        <div class="relative h-48 overflow-hidden bg-gray-100">
-                            <img
-                                src="{{config('app.asset_url')}}/storage/{{$relatedPost->image}}"
-                                alt="{{ $relatedPost->name }}"
-                                class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
-                                loading="lazy"
-                            >
-                        </div>
+                        @if($relatedPost->show_image === 'show' && $relatedPost->image)
+                            <div class="relative h-48 overflow-hidden bg-gray-100">
+                                <img
+                                    src="{{config('app.asset_url')}}/storage/{{$relatedPost->image}}"
+                                    alt="{{ $relatedPost->name }}"
+                                    class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
+                                    loading="lazy"
+                                >
+                            </div>
+                        @endif
 
                         <!-- Post Info -->
                         <div class="p-4">

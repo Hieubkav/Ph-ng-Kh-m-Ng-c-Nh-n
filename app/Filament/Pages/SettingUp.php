@@ -65,36 +65,15 @@
                                 ->label('Ảnh thương hiệu')
                                 ->disk('public')
                                 ->directory('uploads/')
-                                ->deleteUploadedFileUsing(function ($file) {
-                                    Storage::disk('public')
-                                        ->delete($file);
-                                })
+                                ->deleteUploadedFileUsing(fn ($file) => Storage::disk('public')->delete($file))
                                 ->image()
                                 ->imageEditor()
-                                ->imageEditorAspectRatios([
-                                    '16:9',
-                                    '4:3',
-                                    '1:1',
-                                    '3:4',
-                                    '9:16',
-                                ]),
-                            Forms\Components\FileUpload::make('image_schedule')
-                                ->label('Ảnh lịch khám bệnh')
-                                ->disk('public')
-                                ->directory('uploads/')
-                                ->deleteUploadedFileUsing(function ($file) {
-                                    Storage::disk('public')
-                                        ->delete($file);
-                                })
-                                ->image()
-                                ->imageEditor()
-                                ->imageEditorAspectRatios([
-                                    '16:9',
-                                    '4:3',
-                                    '1:1',
-                                    '3:4',
-                                    '9:16',
-                                ]),
+                                ->imageEditorAspectRatios(['16:9', '4:3', '1:1', '3:4', '9:16'])
+                                ->helperText(fn() => new \Illuminate\Support\HtmlString(
+                                    'Chỉ chấp nhận các định dạng: <span>jpg, jpeg, png, webp, svg</span>. ' .
+                                    'Nếu bạn có file ảnh khác (tif, tiff, heic...), vui lòng chuyển đổi sang PNG tại: ' .
+                                    '<a style="color:red" href="https://convertio.co/vn/png-converter/" target="_blank">convertio.co</a>'
+                                )),
                         ]),
 
                     Forms\Components\Section::make('Thông tin liên hệ')
@@ -108,16 +87,6 @@
                             Forms\Components\Textarea::make('google_map')
                                 ->label('Code gg map')
                                 ->rows(3),
-                        ]),
-
-                    Forms\Components\Section::make('Thông tin tuyển dụng')
-                        ->schema([
-                            Forms\Components\Toggle::make('hr_status')
-                                ->label('Trạng thái tuyển dụng')
-                                ->default(false),
-                            Forms\Components\RichEditor::make('hr_content')
-                                ->label('Nội dung tuyển dụng')
-                                ->columnSpanFull(),
                         ]),
                 ])
                 ->statePath('data');

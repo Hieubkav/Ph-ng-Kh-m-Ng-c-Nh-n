@@ -33,7 +33,6 @@
                 'address' => '168 đường 30/4, thị trấn Trà Ôn, huyện Trà Ôn, Vinh Long, Vietnam',
                 'logo' => 'uploads//01JMST6FDJEXSVPEVMPCK8ERQ0.webp',
                 'slogan' => 'Nhanh chóng - Chất lượng - Hiệu quả cao',
-                'image_schedule' => 'uploads//01JMST89ZTGVWYFR5T5SZEG18W.webp',
                 'zalo' => '1900 1234',
                 'facebook' => 'https://www.facebook.com/ngocnhan',
                 'messenger' => 'https://www.messenger.com/ngocnhan',

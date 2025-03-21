@@ -141,7 +141,7 @@ abstract class Grammar extends BaseGrammar
 
         // Once we have the initial portion of the SQL statement we will add on the
         // key name, table name, and referenced columns. These will complete the
-        // shop.blade.php portion of the SQL statement and this SQL will almost be done.
+        // main portion of the SQL statement and this SQL will almost be done.
         $sql .= sprintf('foreign key (%s) references %s (%s)',
             $this->columnize($command->columns),
             $this->wrapTable($command->on),

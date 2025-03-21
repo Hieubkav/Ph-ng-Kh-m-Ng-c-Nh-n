@@ -6,7 +6,7 @@
 @endphp
 
     <!-- Main Navigation -->
-<nav class="bg-medical-green backdrop-blur-sm transition-all duration-300 w-full relative text-xl z-50" id="mainNav">
+<nav class="bg-medical-green backdrop-blur-sm transition-all duration-300 w-full relative text-lg z-50" id="mainNav">
     <div class="container mx-auto px-4">
         <div class="flex justify-between">
             <!-- Mobile menu button -->

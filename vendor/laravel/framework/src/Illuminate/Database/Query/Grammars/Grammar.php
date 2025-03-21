@@ -949,7 +949,7 @@ class Grammar extends BaseGrammar
     }
 
     /**
-     * Compile the "union" queries attached to the shop.blade.php query.
+     * Compile the "union" queries attached to the main query.
      *
      * @param  \Illuminate\Database\Query\Builder  $query
      * @return string

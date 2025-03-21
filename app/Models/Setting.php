@@ -16,13 +16,10 @@ class Setting extends Model
         'address',
         'logo',
         'slogan',
-        'image_schedule',
         'zalo',
         'facebook',
         'messenger',
         'google_map',
         'mst',
-        'hr_status',
-        'hr_content',
     ];
 }

@@ -17,11 +17,13 @@ class Post extends Model
         'pdf',
         'user_id',
         'cat_post_id',
-        'is_hot'
+        'is_hot',
+        'show_image'
     ];
 
     protected $casts = [
-        'is_hot' => 'string'
+        'is_hot' => 'string',
+        'show_image' => 'string'
     ];
 
     public function user()
@@ -41,6 +43,9 @@ class Post extends Model
         static::deleting(function($post) {
             if ($post->pdf) {
                 Storage::disk('public')->delete($post->pdf);
+            }
+            if ($post->image) {
+                Storage::disk('public')->delete($post->image);
             }
         });
     }

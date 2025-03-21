@@ -1750,7 +1750,7 @@ class Builder implements BuilderContract
         if ($callback instanceof Closure) {
             // Once we have the query instance we can simply execute it so it can add all
             // of the sub-select's conditions to itself, and then we can cache it off
-            // in the array of where clauses for the "shop.blade.php" parent query instance.
+            // in the array of where clauses for the "main" parent query instance.
             $callback($query = $this->forSubQuery());
         } else {
             $query = $callback instanceof EloquentBuilder ? $callback->toBase() : $callback;
