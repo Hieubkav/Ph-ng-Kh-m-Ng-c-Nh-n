@@ -1,16 +1,18 @@
 @php
-
-    $services = App\Models\Service::all();
-
+    // Sorting services by order_service in ascending order
+    $services = App\Models\Service::orderBy('order_service', 'asc')->get();
 @endphp
 
 <!-- Service Section -->
 <div class="w-full bg-gray-50 py-16">
     <div class="container mx-auto px-4">
 
-        <h2 class="text-3xl font-bold text-medical-green-dark text-center mb-12" data-aos="fade-up">
-            Dịch vụ y tế
+        <h2 class="text-3xl font-bold text-medical-green-dark text-center " data-aos="fade-up">
+            DỊCH VỤ Y TẾ
         </h2>
+        <div class="text-center text-gray-600 mt-2 max-w-2xl mx-auto text-lg">Khám chữa bệnh, điều trị chuyên khoa, xét nghiệm hiện đại nhất</div>
+        <div
+            class="w-24 h-1 bg-gradient-to-r from-medical-green-light to-medical-green mx-auto my-6 rounded-full"></div>
 
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             @foreach ($services as $service)

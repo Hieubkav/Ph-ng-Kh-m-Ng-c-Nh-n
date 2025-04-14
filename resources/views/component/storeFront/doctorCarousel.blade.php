@@ -12,7 +12,7 @@
         <!-- Section Header -->
         <div class="text-center mb-12" data-aos="fade-up">
             <h2 class="text-3xl font-bold text-medical-green mb-4">
-                Bác sĩ chuyên khoa
+                BÁC SĨ CHUYÊN KHOA
             </h2>
             <p class="text-gray-600 max-w-2xl mx-auto text-lg">
                 Đội ngũ bác sĩ giàu kinh nghiệm, tận tâm với người bệnh và thường xuyên
@@ -34,7 +34,7 @@
                                     <img src="{{config('app.asset_url')}}/storage/{{$doctor->image}}"
                                          alt="{{ $doctor->name }}"
                                          class="w-full h-[280px] object-cover transform group-hover:scale-105 transition-transform duration-500">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                                    <div class="absolute inset-0 "></div>
                                 </div>
                                 <div class="p-6">
                                     <h3 class="text-xl font-bold text-gray-800 mb-2">

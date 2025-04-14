@@ -33,20 +33,40 @@ class CatPostResource extends Resource
                 Forms\Components\Textarea::make('content')
                     ->label('Nội dung chuyên mục')
                     ->rows(3),
+                Forms\Components\Select::make('status')
+                    ->label('Trạng thái')
+                    ->options([
+                        'show' => 'Hiển thị',
+                        'hide' => 'Ẩn'
+                    ])
+                    ->default('show')
+                    ->required(),
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('updated_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                 ->label('Tên danh mục')
                 ->searchable()
                 ->sortable(),
+                Tables\Columns\TextColumn::make('status')
+                ->label('Trạng thái')
+                ->badge()
+                ->formatStateUsing(fn(string $state): string => $state === 'show' ? 'Hiển thị' : 'Ẩn')
+                ->color(fn(string $state): string => $state === 'show' ? 'success' : 'danger')
+                ->alignCenter(),
                 Tables\Columns\TextColumn::make('created_at')
                 ->label('Ngày tạo')
-                ->date('d-m-Y')
+                ->date('d-m-Y'),
+                Tables\Columns\TextColumn::make('posts_count')
+                ->label('Số bài viết')
+                ->counts('posts')
+                ->sortable()
+                ->alignCenter()
             ])
             ->filters([
                 //
@@ -64,7 +84,7 @@ class CatPostResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\PostsRelationManager::class,
         ];
     }
 
@@ -75,5 +95,9 @@ class CatPostResource extends Resource
             'create' => Pages\CreateCatPost::route('/create'),
             'edit' => Pages\EditCatPost::route('/{record}/edit'),
         ];
+    }
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
     }
 }

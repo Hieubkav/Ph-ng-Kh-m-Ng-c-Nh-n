@@ -13,15 +13,16 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Storage;
+use App\Filament\Resources\ServiceResource\RelationManagers\ServicePostsRelationManager;
 
 class ServiceResource extends Resource
 {
     protected static ?string $model = Service::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-wrench';
-    protected static ?string $navigationLabel = 'Dịch vụ';
-    protected static ?string $label = 'Dịch vụ';
-    protected static ?string $title = 'Dịch vụ';
+    protected static ?string $navigationLabel = 'Chuyên mục dịch vụ';
+    protected static ?string $label = 'Chuyên mục dịch vụ';
+    protected static ?string $title = 'Chuyên mục dịch vụ';
     protected static ?int $navigationSort = 5;
 
     public static function form(Form $form): Form
@@ -54,6 +55,11 @@ class ServiceResource extends Resource
                         'Nếu bạn có file ảnh khác (tif, tiff, heic...), vui lòng chuyển đổi sang PNG tại: ' .
                         '<a  style="color:red" href="https://convertio.co/vn/png-converter/" target="_blank">convertio.co</a>'
                     )),
+                Forms\Components\TextInput::make('order_service')
+                    ->label('Thứ tự hiển thị')
+                    ->numeric()
+                    ->default(0)
+                    ->helperText('Giá trị càng nhỏ thì sẽ được hiển thị trước (mặc định là 0)'),
                 Forms\Components\RichEditor::make('description')
                 ->label('Mô tả')
                 ->columnSpanFull(),
@@ -72,7 +78,17 @@ class ServiceResource extends Resource
                     ->sortable(),
                 Tables\Columns\ImageColumn::make('image')
                     ->label('Ảnh dịch vụ'),
+                Tables\Columns\TextColumn::make('order_service')
+                    ->label('Thứ tự hiển thị')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('servicePosts_count')
+                    ->label('Số bài viết')
+                    ->getStateUsing(function ($record) {
+                        return $record->servicePosts()->count();
+                    })
+                    ->sortable(),
             ])
+            ->defaultSort('order_service')
             ->filters([
                 //
             ])
@@ -89,7 +105,7 @@ class ServiceResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ServicePostsRelationManager::class,
         ];
     }
 
@@ -100,5 +116,9 @@ class ServiceResource extends Resource
             'create' => Pages\CreateService::route('/create'),
             'edit' => Pages\EditService::route('/{record}/edit'),
         ];
+    }
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
     }
 }

@@ -9,7 +9,25 @@
     <div class="flex flex-col md:flex-row gap-6">
         <!-- Main Carousel Section (2/3 width on desktop and tablet) -->
         <div class="md:w-2/3 w-full">
-            <div class="relative overflow-hidden rounded-2xl shadow-2xl bg-gray-100" style="padding-bottom: calc(3*6rem + 2*0.75rem + 4rem);">
+            <style>
+                @media (min-width: 768px) { 
+                    .carousel-container { 
+                        height: 400px; /* Chiều cao cố định cho desktop/tablet */ 
+                    } 
+                }
+                @media (max-width: 767px) { 
+                    .carousel-container { 
+                        height: min(calc(100vw * 9/16), 60vh); /* Tỉ lệ khung hình cho mobile */
+                    } 
+                }
+                .carousel-slide-container {
+                    background-color: #F0F4F8; /* Màu nền nhẹ nhàng */
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            </style>
+            <div class="relative overflow-hidden rounded-2xl shadow-2xl bg-gray-100 carousel-container">
                 <!-- Loading State -->
                 <div id="loading-state" class="absolute inset-0 flex items-center justify-center bg-white z-[5]">
                     <div class="flex flex-col items-center">
@@ -26,11 +44,11 @@
                 <div id="slides-container" class="absolute inset-0">
                     <!-- Slides -->
                     @foreach($carousels as $index => $carousel)
-                        <div class="absolute inset-0 transition-all duration-1000 ease-in-out opacity-0 transform"
+                        <div class="absolute inset-0 transition-all duration-1000 ease-in-out opacity-0 transform carousel-slide-container"
                              data-slide="{{ $index }}">
                             <img src="{{config('app.asset_url')}}/storage/{{$carousel->image}}"
                                  alt="{{ $index }}"
-                                 class="w-full h-full object-cover"
+                                 class="w-full h-full object-contain object-center"
                                  loading="lazy">
                         </div>
                     @endforeach
@@ -69,8 +87,10 @@
         </div>
 
         <!-- Hot News Section (1/3 width on desktop and tablet) -->
-        <div class="md:w-1/3 w-full h-full">
-            @include('partials.shop.carousel.hotNew')
+        <div class="md:w-1/3 w-full">
+            <div class="h-full flex flex-col hot-news-container">
+                @include('partials.shop.carousel.hotNew')
+            </div>
         </div>
     </div>
 </div>

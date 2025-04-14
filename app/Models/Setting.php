@@ -21,5 +21,9 @@ class Setting extends Model
         'messenger',
         'google_map',
         'mst',
+       'tmp_pic',
+        'giay_phep',
+        'telephone',
+        
     ];
 }

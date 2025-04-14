@@ -12,6 +12,7 @@ class CatPost extends Model
     protected $fillable = [
         'name',
         'content',
+        'status',
     ];
 
     public function posts()

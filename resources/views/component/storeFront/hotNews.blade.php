@@ -15,7 +15,7 @@
             <!-- News Item 1 -->
             <article class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
                 <div class="relative">
-                    <img src="https://medlatec.vn/med/images/service2.png"
+                    <img src="{{ $settings->tmp_pic }}"
                          alt="Tin tức y tế 1"
                          class="w-full h-48 object-cover">
                     <div class="absolute top-4 right-4 bg-medical-green text-white text-sm px-3 py-1 rounded-full">
@@ -47,7 +47,7 @@
             <!-- News Item 2 -->
             <article class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
                 <div class="relative">
-                    <img src="https://medlatec.vn/med/images/utilities4-3.png"
+                    <img src="{{ $settings->tmp_pic }}"
                          alt="Tin tức y tế 2"
                          class="w-full h-48 object-cover">
                     <div class="absolute top-4 right-4 bg-medical-green text-white text-sm px-3 py-1 rounded-full">
@@ -79,7 +79,7 @@
             <!-- News Item 3 -->
             <article class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
                 <div class="relative">
-                    <img src="https://medlatec.vn/media/44081/content/u+x%c6%a1+t%e1%bb%ad+cung+medlatec+(2).jpg?size=512"
+                    <img src="{{ $settings->tmp_pic }}"
                          alt="Tin tức y tế 3"
                          class="w-full h-48 object-cover">
                     <div class="absolute top-4 right-4 bg-medical-green text-white text-sm px-3 py-1 rounded-full">

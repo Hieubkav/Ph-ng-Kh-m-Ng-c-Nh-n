@@ -16,4 +16,11 @@ class ListMenuItems extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            MenuItemResource\Widgets\MenuItemTree::class
+        ];
+    }
 }

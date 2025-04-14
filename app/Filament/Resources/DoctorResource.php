@@ -38,6 +38,7 @@ class DoctorResource extends Resource
                     ->disk('public')
                     ->directory('uploads/')
                     ->image()
+                    ->required()
                     ->imageEditor()
                     ->imageEditorAspectRatios([
                         '16:9',
@@ -64,6 +65,9 @@ class DoctorResource extends Resource
                     ->sortable(),
                 Tables\Columns\ImageColumn::make('image')
                     ->label('Ảnh bác sĩ'),
+                Tables\Columns\TextColumn::make('description')
+                    ->label('Mô tả bác sĩ')
+                    ->limit(50),
             ])
             ->filters([
                 //
@@ -92,5 +96,9 @@ class DoctorResource extends Resource
             'create' => Pages\CreateDoctor::route('/create'),
             'edit' => Pages\EditDoctor::route('/{record}/edit'),
         ];
+    }
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
     }
 }

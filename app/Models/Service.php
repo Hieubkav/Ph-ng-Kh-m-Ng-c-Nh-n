@@ -13,9 +13,15 @@ class Service extends Model
         'name',
         'description',
         'image',
+        'order_service',
     ];
 
     public function user(){
         return $this->belongsTo(User::class);
+    }
+    
+    public function servicePosts()
+    {
+        return $this->hasMany(ServicePost::class);
     }
 }

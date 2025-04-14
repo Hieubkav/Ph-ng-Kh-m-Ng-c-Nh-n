@@ -19,6 +19,10 @@ class CarouselResource extends Resource
     protected static ?int $navigationSort = 1;
     protected static ?string $navigationIcon = 'heroicon-o-squares-2x2';
 
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
     public static function form(Form $form): Form
     {
         return $form->schema([
@@ -35,6 +39,7 @@ class CarouselResource extends Resource
                     'image/svg+xml',
                     'image/jpg'
                 ])
+                ->imageEditor()
                 ->required()
                 ->helperText(fn () => new \Illuminate\Support\HtmlString(
                     'Chỉ chấp nhận các định dạng: <span >jpg, jpeg, png, webp, svg</span>. ' .

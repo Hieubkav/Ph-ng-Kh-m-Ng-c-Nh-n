@@ -35,4 +35,12 @@ class MainController extends Controller
     {
         return view('shop.services', ['id' => $id]);
     }
+
+    public function servicePost($serviceId, $postId)
+    {
+        return view('shop.servicePost', [
+            'serviceId' => $serviceId,
+            'postId' => $postId
+        ]);
+    }
 }

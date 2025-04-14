@@ -25,9 +25,12 @@ return new class extends Migration
             $table->string('messenger')->nullable();
             $table->text('google_map')->nullable();
             $table->string('mst')->nullable();
+            $table->text('giay_phep')->nullable();
+            $table->text('telephone')->nullable();
             $table->enum('hr_status', ['on', 'off'])->default('off');
             $table->text('hr_content')->nullable();
             $table->timestamps();
+            $table->string('tmp_pic')->nullable();
         });
     }
 

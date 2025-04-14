@@ -1,5 +1,5 @@
 @php
-    $catPosts = App\Models\CatPost::all();
+    $catPosts = App\Models\CatPost::where('status', 'show')->get();
     $postsPerPage = 3; // Giới hạn chỉ hiển thị 3 bài viết
 @endphp
 
@@ -7,10 +7,16 @@
     <div class="container mx-auto px-4">
         <!-- Section Header -->
         <div class="text-center mb-12" data-aos="fade-up">
-            <h2 class="text-3xl font-bold text-medical-green mb-4">Bài viết mới nhất</h2>
-            <div class="w-24 h-1 bg-gradient-to-r from-medical-green-light to-medical-green mx-auto"></div>
+            <h2 class="text-3xl font-bold text-medical-green mb-4">
+                BÀI VIẾT MỚI NHẤT</h2>
+            <div class="text-center text-gray-600 mt-2 max-w-2xl mx-auto text-lg">
+                Cập nhật nhanh các hoạt động, sự kiện nổi bật và thông báo quan trọng từ bệnh viện, giúp người đọc nắm bắt thông tin mới nhất một cách kịp thời và chính xác.
+            </div>
+
+            <div class="w-24 h-1 bg-gradient-to-r from-medical-green-light to-medical-green mx-auto my-6"></div>
         </div>
 
+        @if($catPosts->count() > 0)
         <!-- Tabs Container -->
         <div class="max-w-6xl mx-auto" x-data="{ activeTab: '{{ $catPosts->first()?->id }}' }">
             <!-- Tab Headers -->
@@ -30,49 +36,54 @@
                 <div x-show="activeTab === '{{ $catPost->id }}'"
                      x-transition:enter="transition ease-out duration-300"
                      x-transition:enter-start="opacity-0 transform scale-95"
-                     x-transition:enter-end="opacity-100 transform scale-100"
-                     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    @foreach($catPost->posts->take($postsPerPage) as $post)
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-transform duration-300 hover:-translate-y-1">
-                            <div class="aspect-w-16 aspect-h-9">
-                                @if($post->image && Storage::exists('public/' . $post->image))
-                                    <img src="{{config('app.asset_url')}}/storage/{{$post->image}}"
-                                         alt="{{ $post->name }}"
-                                         class="w-full h-full object-cover"
-                                         loading="lazy">
-                                @else
-                                    <div class="w-full h-full bg-gradient-to-br from-medical-green-light to-medical-green flex items-center justify-center">
-                                        <div class="text-center text-white p-4">
-                                            <svg class="w-12 h-12 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                            </svg>
-                                            <span class="text-sm font-medium">{{ Str::limit($post->name, 30) }}</span>
-                                        </div>
+                     x-transition:enter-end="opacity-100 transform scale-100">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        @foreach($catPost->posts()->orderBy('created_at', 'desc')->take($postsPerPage)->get() as $post)
+                            <div class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-transform duration-300 hover:-translate-y-1">
+                                <div class="h-52 overflow-hidden">
+                                    <div class="w-full h-full relative">
+                                        @if($post->image)
+                                            <img src="{{config('app.asset_url')}}/storage/{{$post->image}}"
+                                                 alt="{{ $post->name }}"
+                                                 class="w-full h-full object-cover transition-opacity duration-300"
+                                                 onerror="this.src='{{config('app.asset_url')}}/storage/{{$settings->tmp_pic ?? ''}}'">
+                                        @else
+                                            @if($settings->tmp_pic)
+                                                <img src="{{config('app.asset_url')}}/storage/{{$settings->tmp_pic}}"
+                                                     alt="Default Image"
+                                                     class="w-full h-full object-cover">
+                                            @else
+                                                <div class="w-full h-full bg-gradient-to-br from-medical-green-light to-medical-green"></div>
+                                            @endif
+                                        @endif
                                     </div>
-                                @endif
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-lg font-semibold mb-2 line-clamp-2">{{ $post->name }}</h3>
+                                    <p class="text-gray-600 text-sm line-clamp-3">{{ $post->description }}</p>
+                                    <a href="{{ route('post', ['id' => $post->id]) }}"
+                                       class="inline-block mt-4 text-medical-green hover:text-medical-green-dark font-medium">
+                                        Xem chi tiết →
+                                    </a>
+                                </div>
                             </div>
-                            <div class="p-6">
-                                <h3 class="text-lg font-semibold mb-2 line-clamp-2">{{ $post->name }}</h3>
-                                <p class="text-gray-600 text-sm line-clamp-3">{{ $post->description }}</p>
-                                <a href="{{ route('post', ['id' => $post->id]) }}"
-                                   class="inline-block mt-4 text-medical-green hover:text-medical-green-dark font-medium">
-                                    Xem chi tiết →
-                                </a>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
+                        @endforeach
+                    </div>
 
-                @if($catPost->posts->count() > $postsPerPage)
                     <div class="text-center mt-8">
                         <a href="{{ route('catPost', ['id' => $catPost->id]) }}"
                            class="inline-block px-6 py-3 bg-medical-green text-white rounded-full hover:bg-medical-green-dark transition-colors duration-300">
                             Xem tất cả bài viết
                         </a>
                     </div>
-                @endif
+                </div>
             @endforeach
         </div>
+        @else
+        <div class="text-center py-12">
+            <p class="text-gray-600 text-lg">Hiện tại không có chuyên mục bài viết nào được hiển thị.</p>
+        </div>
+        @endif
     </div>
 </section>
 

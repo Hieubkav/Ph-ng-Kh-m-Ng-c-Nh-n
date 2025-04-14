@@ -35,9 +35,9 @@ $setting = \App\Models\Setting::first();
                     </svg>
                     <div class="flex flex-col">
                         <span class="text-xs text-gray-500">Hotline</span>
-                        <span class="font-bold text-red-500 text-2xl  hover:text-medical-green-dark transition-colors duration-200">
+                        <a href="tel:{{ $setting->hotline }}" class="font-bold text-red-500 text-2xl hover:text-medical-green-dark transition-colors duration-200">
                             {{ $setting->hotline }}
-                        </span>
+                        </a>
                     </div>
                 </div>
             </div>

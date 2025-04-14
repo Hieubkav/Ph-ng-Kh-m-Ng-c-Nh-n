@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('content')->nullable();
+            $table->enum('status',['show','hide'])->default('show');
             $table->timestamps();
         });
     }

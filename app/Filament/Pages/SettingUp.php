@@ -36,58 +36,114 @@
         {
             return $form
                 ->schema([
-                    Forms\Components\Section::make('Thông tin cơ bản')
-                        ->schema([
-                            Forms\Components\TextInput::make('name')
-                                ->label('Tên tổ chức')
-                                ->required(),
-                            Forms\Components\TextInput::make('hotline')
-                                ->tel()
-                                ->required(),
-                            Forms\Components\TextInput::make('email')
-                                ->email()
-                                ->required(),
-                            Forms\Components\Textarea::make('address')
-                                ->label('Địa chỉ')
-                                ->required()
-                                ->rows(3),
-                            Forms\Components\TextInput::make('slogan')
-                                ->label('Slogan')
-                                ->required(),
-                            Forms\Components\TextInput::make('mst')
-                                ->label('Mã số thuế')
-                                ->required(),
-                        ]),
-
-                    Forms\Components\Section::make('Đa phương tiện')
-                        ->schema([
-                            Forms\Components\FileUpload::make('logo')
-                                ->label('Ảnh thương hiệu')
-                                ->disk('public')
-                                ->directory('uploads/')
-                                ->deleteUploadedFileUsing(fn ($file) => Storage::disk('public')->delete($file))
-                                ->image()
-                                ->imageEditor()
-                                ->imageEditorAspectRatios(['16:9', '4:3', '1:1', '3:4', '9:16'])
-                                ->helperText(fn() => new \Illuminate\Support\HtmlString(
-                                    'Chỉ chấp nhận các định dạng: <span>jpg, jpeg, png, webp, svg</span>. ' .
-                                    'Nếu bạn có file ảnh khác (tif, tiff, heic...), vui lòng chuyển đổi sang PNG tại: ' .
-                                    '<a style="color:red" href="https://convertio.co/vn/png-converter/" target="_blank">convertio.co</a>'
-                                )),
-                        ]),
-
-                    Forms\Components\Section::make('Thông tin liên hệ')
-                        ->schema([
-                            Forms\Components\TextInput::make('zalo')
-                                ->label('Số zalo'),
-                            Forms\Components\TextInput::make('facebook')
-                                ->label('link Facebook'),
-                            Forms\Components\TextInput::make('messenger')
-                                ->label('link Messenger'),
-                            Forms\Components\Textarea::make('google_map')
-                                ->label('Code gg map')
-                                ->rows(3),
-                        ]),
+                    Forms\Components\Tabs::make('Cài đặt')
+                        ->tabs([
+                            Forms\Components\Tabs\Tab::make('Thông tin cơ bản')
+                                ->icon('heroicon-o-information-circle')
+                                ->columns(2)
+                                ->schema([
+                                    Forms\Components\TextInput::make('name')
+                                        ->label('Tên tổ chức')
+                                        ->required()
+                                        ->columnSpan(2),
+                                    Forms\Components\Grid::make(2)
+                                        ->columnSpan(2)
+                                        ->schema([
+                                            Forms\Components\TextInput::make('hotline')
+                                                ->tel()
+                                                ->required(),
+                                            Forms\Components\TextInput::make('email')
+                                                ->email()
+                                                ->required(),
+                                        ]),
+                                    Forms\Components\Textarea::make('address')
+                                        ->label('Địa chỉ')
+                                        ->required()
+                                        ->rows(3)
+                                        ->columnSpan(2),
+                                    Forms\Components\TextInput::make('slogan')
+                                        ->label('Slogan')
+                                        ->required()
+                                        ->columnSpan(2),
+                                    Forms\Components\TextInput::make('mst')
+                                        ->label('Mã số thuế')
+                                        ->required()
+                                        ->columnSpan(2),
+                                    Forms\Components\TextInput::make('giay_phep')
+                                        ->label('Giấy phép kinh doanh')
+                                        ->required()
+                                        ->columnSpan(2),
+                                    Forms\Components\TextInput::make('telephone')
+                                        ->label('Điện thoại')
+                                        ->tel()
+                                        ->required()
+                                        ->columnSpan(2),
+                                ]),
+                            
+                            Forms\Components\Tabs\Tab::make('Hình ảnh')
+                                ->icon('heroicon-o-photo')
+                                ->schema([
+                                    Forms\Components\Section::make('Ảnh thương hiệu')
+                                        ->collapsible()
+                                        ->schema([
+                                            Forms\Components\FileUpload::make('logo')
+                                                ->label('Logo')
+                                                ->disk('public')
+                                                ->directory('uploads/')
+                                                ->deleteUploadedFileUsing(fn ($file) => Storage::disk('public')->delete($file))
+                                                ->image()
+                                                ->imageEditor()
+                                                ->imageEditorAspectRatios(['16:9', '4:3', '1:1', '3:4', '9:16'])
+                                                ->helperText(fn() => new \Illuminate\Support\HtmlString(
+                                                    'Định dạng: <span class="text-primary-600">jpg, jpeg, png, webp, svg</span>'
+                                                )),
+                                        ]),
+                                    Forms\Components\Section::make('Ảnh mặc định')
+                                        ->description('Ảnh này sẽ được sử dụng khi không có ảnh chính')
+                                        ->collapsible()
+                                        ->schema([
+                                            Forms\Components\FileUpload::make('tmp_pic')
+                                                ->label('Ảnh')
+                                                ->disk('public')
+                                                ->directory('uploads/')
+                                                ->deleteUploadedFileUsing(fn ($file) => Storage::disk('public')->delete($file))
+                                                ->image()
+                                                ->imageEditor()
+                                                ->imageEditorAspectRatios(['16:9', '4:3', '1:1', '3:4', '9:16'])
+                                                ->helperText(fn() => new \Illuminate\Support\HtmlString(
+                                                    'Định dạng: <span class="text-primary-600">jpg, jpeg, png, webp, svg</span>'
+                                                )),
+                                        ]),
+                                ]),
+                                
+                            Forms\Components\Tabs\Tab::make('Liên hệ & Mạng xã hội')
+                                ->icon('heroicon-o-chat-bubble-left-ellipsis')
+                                ->schema([
+                                    Forms\Components\Section::make('Zalo & Facebook')
+                                        ->columns(2)
+                                        ->schema([
+                                            Forms\Components\TextInput::make('zalo')
+                                                ->label('Số Zalo')
+                                                ->tel()
+                                                ->prefixIcon('heroicon-m-device-phone-mobile'),
+                                            Forms\Components\TextInput::make('facebook')
+                                                ->label('Facebook')
+                                                ->url()
+                                                ->prefixIcon('heroicon-m-link'),
+                                            Forms\Components\TextInput::make('messenger')
+                                                ->label('Messenger')
+                                                ->url()
+                                                ->prefixIcon('heroicon-m-chat-bubble-left-ellipsis'),
+                                        ]),
+                                    Forms\Components\Section::make('Google Map')
+                                        ->schema([
+                                            Forms\Components\Textarea::make('google_map')
+                                                ->label('Mã nhúng bản đồ')
+                                                ->rows(3)
+                                                ->helperText('Dán mã nhúng (iframe) từ Google Maps'),
+                                        ]),
+                                ]),
+                        ])->contained(false),
                 ])
                 ->statePath('data');
         }

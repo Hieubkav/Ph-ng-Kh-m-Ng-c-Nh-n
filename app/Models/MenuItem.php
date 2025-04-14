@@ -5,9 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use SolutionForest\FilamentTree\Concern\ModelTree;
 
 class MenuItem extends Model
 {
+    use ModelTree;
+
+    const TYPE_LINK = 'link';
+    const TYPE_CAT = 'cat';
+    const TYPE_POST = 'post';
+    
     protected $fillable = [
         'parent_id',
         'label',
@@ -19,18 +26,20 @@ class MenuItem extends Model
     ];
 
     protected $casts = [
-        'type' => 'string',
-        'parent_id' => 'int'
+        'parent_id' => 'integer',
+        'cat_id' => 'integer',
+        'post_id' => 'integer',
+        'order' => 'integer',
     ];
 
     public function parent(): BelongsTo
     {
-        return $this->belongsTo(MenuItem::class, 'parent_id');
+        return $this->belongsTo(self::class, 'parent_id');
     }
 
     public function children(): HasMany
     {
-        return $this->hasMany(MenuItem::class, 'parent_id')->orderBy('order');
+        return $this->hasMany(self::class, 'parent_id')->orderBy('order');
     }
 
     public function cat_post(): BelongsTo
@@ -46,11 +55,36 @@ class MenuItem extends Model
     public function getUrl(): string
     {
         return match($this->type) {
-            'link' => $this->link,
-            'cat' => $this->cat_post ? route('catPost', ['id' => $this->cat_post->id]) : '#',
-            'post' => $this->post ? route('post', ['id' => $this->post->id]) : '#',
+            self::TYPE_LINK => $this->link,
+            self::TYPE_CAT => $this->cat_post ? route('catPost', ['id' => $this->cat_post->id]) : '#',
+            self::TYPE_POST => $this->post ? route('post', ['id' => $this->post->id]) : '#',
             default => '#'
         };
+    }
+
+    public function determineOrderColumnName(): string 
+    {
+        return 'order';
+    }
+
+    public function determineParentColumnName(): string 
+    {
+        return 'parent_id';
+    }
+
+    public function determineTitleColumnName(): string 
+    {
+        return 'label';
+    }
+
+    public static function defaultParentKey()
+    {
+        return null;
+    }
+
+    public static function defaultChildrenKeyName(): string 
+    {
+        return 'children';
     }
 
     public function level(): int

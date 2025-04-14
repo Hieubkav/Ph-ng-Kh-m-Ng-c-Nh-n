@@ -128,19 +128,23 @@ class PostResource extends Resource
                     ->searchable()
                     ->sortable(),
                     
-                Tables\Columns\ImageColumn::make('image')
-                    ->label('Ảnh')
-                    ->circular()
-                    ->visibility(fn ($record) => $record->show_image === 'show'),
+                // Tables\Columns\ImageColumn::make('image')
+                //     ->label('Ảnh')
+                //     ->circular()
+                //     ->visibility(fn ($record) => $record->show_image === 'show'),
                     
-                Tables\Columns\IconColumn::make('show_image')
-                    ->label('Hiển thị ảnh')
-                    ->boolean()
-                    ->trueIcon('heroicon-o-eye')
-                    ->falseIcon('heroicon-o-eye-slash')
-                    ->trueColor('success')
-                    ->falseColor('danger')
-                    ->alignCenter()
+                // Tables\Columns\IconColumn::make('show_image')
+                //     ->label('Hiển thị ảnh')
+                //     ->boolean()
+                //     ->trueIcon('heroicon-o-eye')
+                //     ->falseIcon('heroicon-o-eye-slash')
+                //     ->trueColor('success')
+                //     ->falseColor('danger')
+                //     ->alignCenter()
+                //     ->sortable(),
+
+                Tables\Columns\TextColumn::make('cat_post.name')
+                    ->label('Chuyên mục')
                     ->sortable(),
                     
                 Tables\Columns\TextColumn::make('is_hot')
@@ -149,9 +153,7 @@ class PostResource extends Resource
                     ->color(fn(string $state): string => $state === 'hot' ? 'success' : 'gray')
                     ->alignCenter(),
                     
-                Tables\Columns\TextColumn::make('cat_post.name')
-                    ->label('Chuyên mục')
-                    ->sortable(),
+                
                     
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Ngày tạo')
