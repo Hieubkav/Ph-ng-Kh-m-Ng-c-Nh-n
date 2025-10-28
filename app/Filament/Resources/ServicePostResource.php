@@ -8,7 +8,6 @@ use App\Models\ServicePost;
 use App\Models\Service;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -22,6 +21,7 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
+use FilamentTiptapEditor\TiptapEditor;
 
 class ServicePostResource extends Resource
 {
@@ -58,12 +58,13 @@ class ServicePostResource extends Resource
                             ->required()
                             ->columnSpan(2),
                             
-                        Forms\Components\RichEditor::make('content')
+                        TiptapEditor::make('content')
                             ->label('Nội dung bài viết')
                             ->required()
-                            ->fileAttachmentsDisk('public')
-                            ->fileAttachmentsDirectory('uploads')
-                            ->columnSpan(2),
+                            ->columnSpan(2)
+                            ->profile('default')
+                            ->extraInputAttributes(['style' => 'min-height: 500px'])
+                            ->maxContentWidth('full'),
                     ])->columns(2),
                     
                 Forms\Components\Section::make('Hình ảnh và tài liệu')
@@ -75,6 +76,7 @@ class ServicePostResource extends Resource
                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                             ->directory('uploads')
                             ->maxSize(2048)
+                            ->preserveFilenames()
                             ->helperText('Định dạng: jpg, png, webp. Kích thước tối đa: 2MB')
                             ->columnSpan(1),
                             
@@ -85,9 +87,6 @@ class ServicePostResource extends Resource
                             ->maxSize(10240)
                             ->preserveFilenames()
                             ->directory('uploads/')
-                            ->deleteUploadedFileUsing(function ($file) {
-                                Storage::disk('public')->delete($file);
-                            })
                             ->columnSpan(1),
                             
                         ViewField::make('pdf_buttons')

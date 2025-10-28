@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\ServicePost;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Artisan;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 
@@ -15,6 +16,7 @@ class ServicePostObserver
     public function created(ServicePost $servicePost): void
     {
         $this->convertToWebP($servicePost);
+        $this->clearCache();
     }
 
     /**
@@ -23,6 +25,7 @@ class ServicePostObserver
     public function updated(ServicePost $servicePost): void
     {
         $this->convertToWebP($servicePost);
+        $this->clearCache();
     }
 
     /**
@@ -83,5 +86,15 @@ class ServicePostObserver
         // Cập nhật đường dẫn mới vào cơ sở dữ liệu
         $servicePost->image = $webpPath;
         $servicePost->saveQuietly(); // Không kích hoạt observer lần nữa
+    }
+
+    /**
+     * Clear all caches
+     */
+    private function clearCache(): void
+    {
+        Artisan::call('cache:clear');
+        Artisan::call('config:clear');
+        Artisan::call('view:clear');
     }
 }

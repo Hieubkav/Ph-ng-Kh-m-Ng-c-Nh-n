@@ -3,3 +3,87 @@
 @tailwind components;
 @tailwind utilities;
 @tailwind variants;
+
+/* Custom styles for rich text content */
+.prose {
+    max-width: none !important;
+}
+
+/* Text alignment styles */
+.prose [style*="text-align: left"],
+.prose .text-left {
+    text-align: left !important;
+}
+
+.prose [style*="text-align: center"],
+.prose .text-center {
+    text-align: center !important;
+}
+
+.prose [style*="text-align: right"],
+.prose .text-right {
+    text-align: right !important;
+}
+
+.prose [style*="text-align: justify"],
+.prose .text-justify {
+    text-align: justify !important;
+}
+
+/* Line height styles - preserve inline styles */
+.prose [style*="line-height"] {
+    /* Let inline line-height styles work */
+}
+
+/* Font size preservation - preserve inline styles */
+.prose [style*="font-size"] {
+    /* Let inline font-size styles work */
+}
+
+/* Font family preservation - preserve inline styles */
+.prose [style*="font-family"] {
+    /* Let inline font-family styles work */
+}
+
+/* Color preservation - Allow inline color styles */
+.prose [style*="color"] {
+    /* Let inline color styles work */
+}
+
+/* Preserve all inline styles from TipTap editor */
+.prose * {
+    text-align: inherit;
+}
+
+.prose p[style],
+.prose h1[style],
+.prose h2[style],
+.prose h3[style],
+.prose h4[style],
+.prose h5[style],
+.prose h6[style],
+.prose div[style],
+.prose span[style] {
+    /* Preserve all inline styles */
+}
+
+/* Ensure lists maintain proper alignment */
+.prose ul[style*="text-align"],
+.prose ol[style*="text-align"] {
+    text-align: inherit !important;
+}
+
+.prose ul li,
+.prose ol li {
+    text-align: inherit;
+}
+
+/* Table alignment */
+.prose table {
+    width: 100%;
+}
+
+.prose td[style*="text-align"],
+.prose th[style*="text-align"] {
+    text-align: inherit !important;
+}

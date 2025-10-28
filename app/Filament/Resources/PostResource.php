@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Filament\Forms\Components\ViewField;
+use FilamentTiptapEditor\TiptapEditor;
 
 class PostResource extends Resource
 {
@@ -49,10 +50,13 @@ class PostResource extends Resource
 
                 Forms\Components\Section::make('Nội dung')
                     ->schema([
-                        Forms\Components\RichEditor::make('content')
+                        TiptapEditor::make('content')
                             ->label('Nội dung')
                             ->required()
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->profile('default')
+                            ->extraInputAttributes(['style' => 'min-height: 500px'])
+                            ->maxContentWidth('full'),
                     ]),
 
                 Forms\Components\Section::make('Media')
@@ -61,9 +65,6 @@ class PostResource extends Resource
                             ->label('Ảnh bài viết')
                             ->disk('public')
                             ->directory('uploads/')
-                            ->deleteUploadedFileUsing(function ($file) {
-                                Storage::disk('public')->delete($file);
-                            })
                             ->image()
                             ->imageEditor()
                             ->imageEditorAspectRatios([
@@ -76,7 +77,9 @@ class PostResource extends Resource
                                 'Chỉ chấp nhận các định dạng: <span >jpg, jpeg, png, webp, svg</span>. ' .
                                 'Nếu bạn có file ảnh khác (tif, tiff, heic...), vui lòng chuyển đổi sang PNG tại: ' .
                                 '<a  style="color:red" href="https://convertio.co/vn/png-converter/" target="_blank">convertio.co</a>'
-                            )),
+                            ))
+                            ->preserveFilenames()
+                            ->maxSize(2048),
                             
                         Forms\Components\FileUpload::make('pdf')
                             ->label('File PDF')
@@ -85,9 +88,6 @@ class PostResource extends Resource
                             ->maxSize(1024000)
                             ->preserveFilenames()
                             ->directory('uploads/')
-                            ->deleteUploadedFileUsing(function ($file) {
-                                Storage::disk('public')->delete($file);
-                            })
                             ->columnSpan(1),
                             
                         ViewField::make('pdf_buttons')

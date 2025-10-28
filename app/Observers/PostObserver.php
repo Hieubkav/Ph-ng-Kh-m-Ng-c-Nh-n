@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\Post;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Artisan;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 
@@ -15,6 +16,7 @@ class PostObserver
     public function created(Post $post): void
     {
         $this->convertToWebP($post);
+        $this->clearCache();
     }
 
     /**
@@ -23,6 +25,7 @@ class PostObserver
     public function updated(Post $post): void
     {
         $this->convertToWebP($post);
+        $this->clearCache();
     }
 
     /**
@@ -83,5 +86,15 @@ class PostObserver
         // Cập nhật đường dẫn mới vào cơ sở dữ liệu
         $post->image = $webpPath;
         $post->saveQuietly(); // Không kích hoạt observer lần nữa
+    }
+
+    /**
+     * Clear all caches
+     */
+    private function clearCache(): void
+    {
+        Artisan::call('cache:clear');
+        Artisan::call('config:clear');
+        Artisan::call('view:clear');
     }
 }
