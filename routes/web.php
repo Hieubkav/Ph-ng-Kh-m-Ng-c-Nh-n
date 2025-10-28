@@ -2,6 +2,7 @@
 
     use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\MainController;
+    use App\Http\Controllers\StorageCleanupController;
     use Illuminate\Support\Facades\Artisan;
 
     Route::get('/', [MainController::class, 'storeFront'])
@@ -28,3 +29,8 @@
             return response()->json(['error' => $e->getMessage()], 500);
         }
     });
+
+    // Route để dọn dẹp các file không còn sử dụng (bỏ middleware tạm thời để test)
+    Route::match(['get', 'post'], '/cleanup-storage', [StorageCleanupController::class, 'cleanupUnusedFiles'])
+        // ->middleware(['auth'])  // Đã comment middleware để test
+        ->name('cleanup.storage');

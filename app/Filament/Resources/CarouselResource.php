@@ -31,7 +31,7 @@ class CarouselResource extends Resource
                 ->disk('public')
                 ->directory('uploads')
                 ->image()
-                ->maxSize(51200)
+                ->maxSize(61200)
                 ->acceptedFileTypes([
                     'image/jpeg',
                     'image/png',
@@ -43,6 +43,7 @@ class CarouselResource extends Resource
                 ->required()
                 ->helperText(fn () => new \Illuminate\Support\HtmlString(
                     'Chỉ chấp nhận các định dạng: <span >jpg, jpeg, png, webp, svg</span>. ' .
+                    'Ảnh sẽ tự động được chuyển đổi sang định dạng WebP để tối ưu. ' .
                     'Nếu bạn có file ảnh khác (tif, tiff, heic...), vui lòng chuyển đổi sang PNG tại: ' .
                     '<a  style="color:red" href="https://convertio.co/vn/png-converter/" target="_blank">convertio.co</a>'
                 ))

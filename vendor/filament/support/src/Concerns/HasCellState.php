@@ -4,6 +4,7 @@ namespace Filament\Support\Concerns;
 
 use Closure;
 use Exception;
+use Filament\Tables\Columns\Column;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -76,32 +77,24 @@ trait HasCellState
 
     public function getState(): mixed
     {
-        $record = $this->getRecord();
+        return $this->cacheState(function (): mixed {
+            $state = ($this->getStateUsing !== null) ?
+                $this->evaluate($this->getStateUsing) :
+                $this->getStateFromRecord();
 
-        if (! $record) {
-            return null;
-        }
+            if (is_string($state) && ($separator = $this->getSeparator())) {
+                $state = explode($separator, $state);
+                $state = (count($state) === 1 && blank($state[0])) ?
+                    [] :
+                    $state;
+            }
 
-        if (array_key_exists($record->getKey(), $this->cachedState)) {
-            return $this->cachedState[$record->getKey()];
-        }
+            if (blank($state)) {
+                $state = $this->getDefaultState();
+            }
 
-        $state = ($this->getStateUsing !== null) ?
-            $this->evaluate($this->getStateUsing) :
-            $this->getStateFromRecord();
-
-        if (is_string($state) && ($separator = $this->getSeparator())) {
-            $state = explode($separator, $state);
-            $state = (count($state) === 1 && blank($state[0])) ?
-                [] :
-                $state;
-        }
-
-        if (blank($state)) {
-            $state = $this->getDefaultState();
-        }
-
-        return $this->cachedState[$record->getKey()] = $state;
+            return $state;
+        });
     }
 
     public function getStateFromRecord(): mixed
@@ -138,6 +131,11 @@ trait HasCellState
         }
 
         return $state->all();
+    }
+
+    public function clearCachedState(): void
+    {
+        $this->cachedState = [];
     }
 
     public function separator(string | Closure | null $separator = ','): static
@@ -301,5 +299,30 @@ trait HasCellState
         }
 
         return (string) str($name)->beforeLast('.');
+    }
+
+    protected function cacheState(Closure $state): mixed
+    {
+        $record = $this->getRecord();
+
+        if (! $record) {
+            return null;
+        }
+
+        if ($this instanceof Column) {
+            $recordKey = $this->getLivewire()->getTableRecordKey($record);
+        } else {
+            $recordKey = (string) $record->getKey();
+        }
+
+        if (blank($recordKey)) {
+            return $state();
+        }
+
+        if (array_key_exists($recordKey, $this->cachedState)) {
+            return $this->cachedState[$recordKey];
+        }
+
+        return $this->cachedState[$recordKey] = $state();
     }
 }

@@ -92,17 +92,19 @@ class ScheduleResource extends Resource
                     ->limit(50)
                     ->html(),
                     
-                Tables\Columns\BadgeColumn::make('status')
+                Tables\Columns\TextColumn::make('status')
                     ->label('Trạng thái')
                     ->formatStateUsing(fn (string $state): string => match ($state) {
                         'hidden' => 'Ẩn',
                         'show' => 'Hiển thị',
                         default => $state,
                     })
-                    ->colors([
-                        'danger' => 'hidden',
-                        'success' => 'show',
-                    ]),
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'hidden' => 'danger',
+                        'show' => 'success',
+                        default => 'gray',
+                    }),
                     
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Ngày tạo')
