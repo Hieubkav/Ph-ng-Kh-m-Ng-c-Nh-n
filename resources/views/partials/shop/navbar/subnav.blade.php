@@ -15,13 +15,13 @@ $setting = \App\Models\Setting::first();
 
             <!-- Hospital Info Section (Center) -->
             <div class="flex-1 flex flex-col items-center justify-center mx-4 text-center order-2 md:order-2 mt-4 md:mt-0">
-                <span class="text-red-600 text-xl font-medium">SỞ Y TẾ TỈNH VĨNH LONG</span>
+                <span class="text-red-600 text-xl font-bold">SỞ Y TẾ TỈNH VĨNH LONG</span>
                 <h1 class="text-2xl md:text-4xl font-bold text-medical-green tracking-wide relative">
                     {{ $setting->name }}
                     <div class="absolute -inset-1 bg-medical-green/5 blur-sm rounded-lg -z-10"></div>
                 </h1>
                 <div class="relative mt-1">
-                    <span class="text-gray-600 text-md md:text-xl font-medium px-4 py-1 rounded-full bg-medical-green/5 inline-block ">
+                    <span class="text-blue-600 text-md md:text-xl font-medium px-4 py-1 rounded-full bg-medical-green/5 inline-block ">
                         {{ $setting->slogan }}
                     </span>
                 </div>
