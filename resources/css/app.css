@@ -7,6 +7,18 @@
 /* Custom styles for rich text content */
 .prose {
     max-width: none !important;
+    text-align: left;
+}
+
+.prose p,
+.prose li {
+    line-height: 1.6;
+    margin-top: 0.9em;
+    margin-bottom: 0.9em;
+}
+
+.prose p:last-child {
+    margin-bottom: 0;
 }
 
 /* Text alignment styles */

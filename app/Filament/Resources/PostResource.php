@@ -13,7 +13,8 @@ use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Filament\Forms\Components\ViewField;
-use FilamentTiptapEditor\TiptapEditor;
+use Malzariey\FilamentLexicalEditor\Enums\ToolbarItem;
+use Malzariey\FilamentLexicalEditor\FilamentLexicalEditor;
 
 class PostResource extends Resource
 {
@@ -50,13 +51,45 @@ class PostResource extends Resource
 
                 Forms\Components\Section::make('Nội dung')
                     ->schema([
-                        TiptapEditor::make('content')
+                        FilamentLexicalEditor::make('content')
                             ->label('Nội dung')
                             ->required()
                             ->columnSpanFull()
-                            ->profile('default')
-                            ->extraInputAttributes(['style' => 'min-height: 500px'])
-                            ->maxContentWidth('full'),
+                            ->enabledToolbars([
+                                ToolbarItem::UNDO,
+                                ToolbarItem::REDO,
+                                ToolbarItem::DIVIDER,
+                                ToolbarItem::NORMAL,
+                                ToolbarItem::H1,
+                                ToolbarItem::H2,
+                                ToolbarItem::DIVIDER,
+                                ToolbarItem::BOLD,
+                                ToolbarItem::ITALIC,
+                                ToolbarItem::UNDERLINE,
+                                ToolbarItem::STRIKETHROUGH,
+                                ToolbarItem::DIVIDER,
+                                ToolbarItem::FONT_FAMILY,
+                                ToolbarItem::FONT_SIZE,
+                                ToolbarItem::DIVIDER,
+                                ToolbarItem::TEXT_COLOR,
+                                ToolbarItem::BACKGROUND_COLOR,
+                                ToolbarItem::DIVIDER,
+                                ToolbarItem::LEFT,
+                                ToolbarItem::CENTER,
+                                ToolbarItem::RIGHT,
+                                ToolbarItem::JUSTIFY,
+                                ToolbarItem::DIVIDER,
+                                ToolbarItem::BULLET,
+                                ToolbarItem::NUMBERED,
+                                ToolbarItem::QUOTE,
+                                ToolbarItem::DIVIDER,
+                                ToolbarItem::INDENT,
+                                ToolbarItem::OUTDENT,
+                                ToolbarItem::DIVIDER,
+                                ToolbarItem::HR,
+                                ToolbarItem::IMAGE,
+                                ToolbarItem::CLEAR,
+                            ]),
                     ]),
 
                 Forms\Components\Section::make('Media')
