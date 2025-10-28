@@ -189,6 +189,14 @@ class ServicePostResource extends Resource
                     ->relationship('service', 'name'),
             ])
             ->actions([
+                Tables\Actions\Action::make('view_frontend')
+                    ->label('Xem trang')
+                    ->icon('heroicon-o-arrow-top-right-on-square')
+                    ->url(fn (ServicePost $record): string => route('servicePost', [
+                        'serviceId' => $record->service_id,
+                        'postId' => $record->id,
+                    ]))
+                    ->openUrlInNewTab(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])

@@ -83,7 +83,7 @@ $nextPost = App\Models\Post::where('cat_post_id', $post->cat_post_id)->where('id
     @endif
 
     <!-- Content -->
-    <div class="prose prose-lg max-w-none text-gray-700 prose-headings:text-medical-green-dark prose-a:text-medical-green prose-img:rounded-lg prose-img:shadow-md prose-img:mx-auto mb-12">
+    <div class="lexical-content text-gray-700 mb-12">
         {!! $post->content !!}
     </div>
 

@@ -213,6 +213,11 @@ class PostResource extends Resource
                     ->relationship('cat_post', 'name'),
             ])
             ->actions([
+                Tables\Actions\Action::make('view_frontend')
+                    ->label('Xem trang')
+                    ->icon('heroicon-o-arrow-top-right-on-square')
+                    ->url(fn (Post $record): string => route('post', $record->id))
+                    ->openUrlInNewTab(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
