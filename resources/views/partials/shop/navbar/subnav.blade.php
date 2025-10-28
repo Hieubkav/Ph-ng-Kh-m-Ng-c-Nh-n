@@ -1,7 +1,6 @@
 @php
-$setting = \App\Models\Setting::first();
-
-    @endphp
+    $setting = $settings;
+@endphp
 
 <div class="bg-gradient-to-r from-gray-50 to-gray-100 shadow-lg">
     <div class="container mx-auto px-4 py-1">
@@ -44,3 +43,4 @@ $setting = \App\Models\Setting::first();
         </div>
     </div>
 </div>
+

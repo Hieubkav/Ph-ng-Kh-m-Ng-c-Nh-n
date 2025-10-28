@@ -41,7 +41,7 @@
         }
     </style>
 
-    @filamentStyles
+    @livewireStyles
     @vite('resources/css/app.css')
 </head>
 
@@ -56,8 +56,9 @@
 @include('component.shop.modal')
 
 @livewire('notifications')
+@livewireScripts
 
-@filamentScripts
 @vite('resources/js/app.js')
+@stack('scripts')
 </body>
 </html>

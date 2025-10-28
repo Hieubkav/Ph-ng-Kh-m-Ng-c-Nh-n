@@ -1,5 +1,5 @@
 @php
-$activeSchedule = App\Models\Schedule::where('status', 'show')->latest()->first();
+    $schedule = $activeSchedule ?? null;
 @endphp
 
 <!-- Schedule Section -->
@@ -9,17 +9,17 @@ $activeSchedule = App\Models\Schedule::where('status', 'show')->latest()->first(
             <!-- Section Title -->
             <div class="mb-8">
                 <h2 class="text-3xl font-bold text-medical-green-dark text-center">LỊCH KHÁM BỆNH</h2>
-                <div class="text-center text-gray-600 mt-2 max-w-2xl mx-auto text-lg">{!! $activeSchedule->description !!}</div>
+                <div class="text-center text-gray-600 mt-2 max-w-2xl mx-auto text-lg">{!! $schedule?->description !!}</div>
             </div>
             <div
                 class="w-24 h-1 bg-gradient-to-r from-medical-green-light to-medical-green mx-auto mb-6 rounded-full"></div>
 
-            @if($activeSchedule)
+            @if($schedule)
                 <!-- Schedule Image Container without hover effect -->
                 <div class="w-full overflow-hidden rounded-2xl shadow-xl">
                     <!-- Main Image -->
-                    <img src="{{config('app.asset_url')}}/storage/{{$activeSchedule->url_thumbnail}}"
-                         alt="{{ $activeSchedule->title }}"
+                    <img src="{{config('app.asset_url')}}/storage/{{$schedule->url_thumbnail}}"
+                         alt="{{ $schedule->title }}"
                          class="w-full h-auto"
                          loading="lazy">
                 </div>

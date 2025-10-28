@@ -1,7 +1,6 @@
 @php
-
-    $carousels = App\Models\Carousel::all();
-
+    $carouselItems = ($carousels ?? collect())->values();
+    $hotPostItems = $hotPosts ?? collect();
 @endphp
 
     <!-- Medical Clinic Hero Section with Carousel and Hot News -->
@@ -43,7 +42,7 @@
                 <!-- Slides Container -->
                 <div id="slides-container" class="absolute inset-0">
                     <!-- Slides -->
-                    @foreach($carousels as $index => $carousel)
+                    @foreach($carouselItems as $index => $carousel)
                         <div class="absolute inset-0 transition-all duration-1000 ease-in-out opacity-0 transform carousel-slide-container"
                              data-slide="{{ $index }}">
                             <img src="{{config('app.asset_url')}}/storage/{{$carousel->image}}"
@@ -75,7 +74,7 @@
 
                     <!-- Indicators -->
                     <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-3 z-[5]" id="indicators">
-                        @foreach($carousels as $index => $carousel)
+                        @foreach($carouselItems as $index => $carousel)
                             <button
                                 class="w-2.5 h-2.5 rounded-full bg-white/50 hover:bg-white transition-all duration-300 hover:scale-125"
                                 data-index="{{ $index }}">
@@ -89,7 +88,7 @@
         <!-- Hot News Section (1/3 width on desktop and tablet) -->
         <div class="md:w-1/3 w-full">
             <div class="h-full flex flex-col hot-news-container">
-                @include('partials.shop.carousel.hotNew')
+                @include('partials.shop.carousel.hotNew', ['hotPosts' => $hotPostItems])
             </div>
         </div>
     </div>

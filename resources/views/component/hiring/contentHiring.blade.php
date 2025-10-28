@@ -1,7 +1,5 @@
 @php
-
-    $setting = App\Models\Setting::first();
-
+    $setting = $settings;
 @endphp
 
 <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -43,3 +41,4 @@
         </div>
     @endif
 </div>
+

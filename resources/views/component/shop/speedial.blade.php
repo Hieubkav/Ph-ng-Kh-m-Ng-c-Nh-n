@@ -1,5 +1,5 @@
 @php
-    $setting = \App\Models\Setting::first();
+    $setting = $settings;
 @endphp
 
 <head>
@@ -71,3 +71,4 @@
         });
     }
 </script>
+

@@ -3,8 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Setting;
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\ServiceProvider;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -15,9 +16,9 @@ class ViewServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        // Share settings data for specific views
-        View::composer(['component.*', 'component.post.*', 'partials.*', 'partials.shop.*', 'partials.shop.carousel.*'], function ($view) {
-            $view->with('settings', Setting::first());
-        });
+        // Cache và chia sẻ cấu hình hệ thống cho toàn bộ view
+        $settings = Cache::remember('app.settings', 600, fn () => Setting::query()->first());
+
+        View::share('settings', $settings);
     }
 }

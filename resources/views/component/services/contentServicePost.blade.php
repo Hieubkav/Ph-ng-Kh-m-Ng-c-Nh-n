@@ -2,14 +2,14 @@
 $service = App\Models\Service::find($serviceId);
 $servicePost = App\Models\ServicePost::find($postId);
 
-// Lấy các bài viết liên quan khác (cùng dịch vụ, trừ bài viết hiện tại)
+// L?y c?c b?i vi?t li?n quan kh?c (c?ng d?ch v?, tr? b?i vi?t hi?n t?i)
 $relatedPosts = App\Models\ServicePost::where('service_id', $serviceId)
                 ->where('id', '!=', $postId)
                 ->orderBy('created_at', 'desc')
                 ->limit(3)
                 ->get();
 
-// Lấy bài viết trước và sau trong cùng dịch vụ
+// L?y b?i vi?t tru?c v? sau trong c?ng d?ch v?
 $previousPost = App\Models\ServicePost::where('service_id', $serviceId)
                 ->where('id', '<', $postId)
                 ->orderBy('id', 'desc')
@@ -18,6 +18,7 @@ $nextPost = App\Models\ServicePost::where('service_id', $serviceId)
                 ->where('id', '>', $postId)
                 ->orderBy('id', 'asc')
                 ->first();
+$setting = $settings;
 @endphp
 
 <article class="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
@@ -219,16 +220,16 @@ $nextPost = App\Models\ServicePost::where('service_id', $serviceId)
             <p class="text-white/90 mb-4">Liên hệ với chúng tôi để được tư vấn và đặt lịch khám</p>
 
             <div class="space-y-3">
-                <a href="tel:{{ \App\Models\Setting::first()?->hotline }}"
+                <a href="tel:{{ $setting?->hotline }}"
                    class="flex items-center space-x-2 text-white hover:text-medical-green-light transition-colors">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
                     </svg>
-                    <span>{{ \App\Models\Setting::first()?->hotline }}</span>
+                    <span>{{ $setting?->hotline }}</span>
                 </a>
 
-                @if(\App\Models\Setting::first()?->zalo)
-                    <a href="https://zalo.me/{{ \App\Models\Setting::first()?->zalo }}"
+                @if($setting?->zalo)
+                    <a href="https://zalo.me/{{ $setting?->zalo }}"
                        target="_blank"
                        class="inline-flex items-center px-4 py-2 bg-white text-medical-green-dark rounded-lg hover:bg-gray-50 transition-colors w-full">
                         <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
@@ -238,8 +239,8 @@ $nextPost = App\Models\ServicePost::where('service_id', $serviceId)
                     </a>
                 @endif
 
-                @if(\App\Models\Setting::first()?->messenger)
-                    <a href="{{ \App\Models\Setting::first()?->messenger }}"
+                @if($setting?->messenger)
+                    <a href="{{ $setting?->messenger }}"
                        target="_blank"
                        class="inline-flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors w-full">
                         <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
@@ -252,3 +253,4 @@ $nextPost = App\Models\ServicePost::where('service_id', $serviceId)
         </div>
     </div> --}}
 </article>
+

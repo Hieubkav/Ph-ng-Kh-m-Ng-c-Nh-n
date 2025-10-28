@@ -1,6 +1,5 @@
 @php
-    // Lấy ra các bài viết nổi bật
-    $hot_posts = App\Models\Post::where('is_hot', 'hot')->orderBy('created_at', 'desc')->get();
+    $hot_posts = ($hotPosts ?? collect())->values();
 @endphp
 
 <!-- Hot News Section -->
@@ -122,3 +121,4 @@
         }
     </style>
 @endif
+

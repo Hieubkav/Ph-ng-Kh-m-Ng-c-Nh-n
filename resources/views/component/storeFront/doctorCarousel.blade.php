@@ -1,7 +1,5 @@
 @php
-
-    $doctors = App\Models\Doctor::all();
-
+    $doctorItems = ($doctors ?? collect())->values();
 @endphp
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
@@ -24,9 +22,12 @@
 
         <!-- Doctors Slider -->
         <div class="max-w-6xl mx-auto" data-aos="fade-up">
+            @if($doctorItems->isEmpty())
+                <p class="text-center text-gray-500">Hiện tại chưa có thông tin bác sĩ.</p>
+            @else
             <div class="swiper doctorsSwiper">
                 <div class="swiper-wrapper pb-8">
-                    @foreach ($doctors as $doctor)
+                    @foreach ($doctorItems as $doctor)
                         <!-- Doctor -->
                         <div class="swiper-slide p-4">
                             <div class="bg-white rounded-2xl overflow-hidden shadow-lg group">
@@ -57,6 +58,7 @@
                 </div>
                 <div class="swiper-pagination"></div>
             </div>
+            @endif
         </div>
     </div>
 </section>

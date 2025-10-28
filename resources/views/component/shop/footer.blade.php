@@ -1,5 +1,5 @@
 @php
-    $setting = \App\Models\Setting::first();
+    $setting = $settings;
 @endphp
 
 <footer class="bg-green-500 text-white relative">
@@ -162,3 +162,4 @@
         </div>
     </div>
 </footer>
+

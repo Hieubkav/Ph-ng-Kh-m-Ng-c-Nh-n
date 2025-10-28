@@ -1,9 +1,12 @@
 @extends('layouts.shop')
 
 @section('content')
-    @include('component.storeFront.carousel')
-    @include('component.storeFront.schedule')
-    @include('component.storeFront.service')
-    @include('component.storeFront.doctorCarousel')
-    @include('component.storeFront.post')
+    @include('component.storeFront.carousel', [
+        'carousels' => $carousels,
+        'hotPosts' => $hotPosts,
+    ])
+    @include('component.storeFront.schedule', ['activeSchedule' => $activeSchedule])
+    @include('component.storeFront.service', ['services' => $services])
+    @include('component.storeFront.doctorCarousel', ['doctors' => $doctors])
+    @include('component.storeFront.post', ['catPosts' => $catPosts])
 @endsection

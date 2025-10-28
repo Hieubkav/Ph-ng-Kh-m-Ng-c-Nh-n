@@ -1,6 +1,6 @@
 @php
-    $catPosts = App\Models\CatPost::where('status', 'show')->get();
-    $postsPerPage = 3; // Giới hạn chỉ hiển thị 3 bài viết
+    $categoryItems = ($catPosts ?? collect())->values();
+    $postsPerTab = 3; // Gi?i h?n ch? hi?n th? 3 b�i vi�t
 @endphp
 
 <section class="py-16 bg-gray-50">
@@ -16,12 +16,12 @@
             <div class="w-24 h-1 bg-gradient-to-r from-medical-green-light to-medical-green mx-auto my-6"></div>
         </div>
 
-        @if($catPosts->count() > 0)
+        @if($categoryItems->isNotEmpty())
         <!-- Tabs Container -->
-        <div class="max-w-6xl mx-auto" x-data="{ activeTab: '{{ $catPosts->first()?->id }}' }">
+        <div class="max-w-6xl mx-auto" x-data="{ activeTab: '{{ $categoryItems->first()?->id }}' }">
             <!-- Tab Headers -->
             <div class="flex flex-wrap justify-center mb-8 gap-4" data-aos="fade-up">
-                @foreach($catPosts as $catPost)
+                @foreach($categoryItems as $catPost)
                     <button
                         @click="activeTab = '{{ $catPost->id }}'"
                         :class="{'bg-medical-green text-white': activeTab === '{{ $catPost->id }}', 'bg-gray-200 text-gray-700 hover:bg-gray-300': activeTab !== '{{ $catPost->id }}'}"
@@ -32,13 +32,13 @@
             </div>
 
             <!-- Tab Panels -->
-            @foreach($catPosts as $catPost)
+            @foreach($categoryItems as $catPost)
                 <div x-show="activeTab === '{{ $catPost->id }}'"
                      x-transition:enter="transition ease-out duration-300"
                      x-transition:enter-start="opacity-0 transform scale-95"
                      x-transition:enter-end="opacity-100 transform scale-100">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        @foreach($catPost->posts()->orderBy('created_at', 'desc')->take($postsPerPage)->get() as $post)
+                        @foreach(($catPost->posts ?? collect())->take($postsPerTab) as $post)
                             <div class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-transform duration-300 hover:-translate-y-1">
                                 <div class="h-52 overflow-hidden">
                                     <div class="w-full h-full relative">
@@ -89,3 +89,5 @@
 
 <!-- Alpine.js for tab functionality -->
 <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+
