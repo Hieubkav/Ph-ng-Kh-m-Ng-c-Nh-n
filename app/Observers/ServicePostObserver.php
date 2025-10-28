@@ -3,13 +3,32 @@
 namespace App\Observers;
 
 use App\Models\ServicePost;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Artisan;
-use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
 
 class ServicePostObserver
 {
+    /**
+     * Prepare derived attributes ahead of persistence.
+     */
+    public function creating(ServicePost $servicePost): void
+    {
+        $this->ensureSlug($servicePost);
+        $this->syncOgImage($servicePost);
+    }
+
+    /**
+     * Refresh derived attributes before updates are saved.
+     */
+    public function updating(ServicePost $servicePost): void
+    {
+        $this->ensureSlug($servicePost);
+        $this->syncOgImage($servicePost);
+    }
+
     /**
      * Handle the ServicePost "created" event.
      */
@@ -33,63 +52,108 @@ class ServicePostObserver
      */
     public function deleted(ServicePost $servicePost): void
     {
-        // Xóa file ảnh khi xóa bài viết dịch vụ
         if ($servicePost->image && Storage::disk('public')->exists($servicePost->image)) {
             Storage::disk('public')->delete($servicePost->image);
         }
 
-        // Xóa file PDF nếu có
         if ($servicePost->pdf && Storage::disk('public')->exists($servicePost->pdf)) {
             Storage::disk('public')->delete($servicePost->pdf);
         }
     }
 
     /**
-     * Convert uploaded image to WebP format
+     * Ensure a unique slug exists for the given record.
+     */
+    private function ensureSlug(ServicePost $servicePost): void
+    {
+        if (!$servicePost->name) {
+            return;
+        }
+
+        if (
+            !$servicePost->slug
+            || $servicePost->isDirty('name')
+            || $servicePost->isDirty('service_id')
+        ) {
+            $servicePost->slug = $this->generateUniqueSlug($servicePost);
+        }
+    }
+
+    /**
+     * Generate a slug that is unique within the service scope.
+     */
+    private function generateUniqueSlug(ServicePost $servicePost): string
+    {
+        $baseSlug = Str::slug($servicePost->name) ?: 'bai-viet-dich-vu';
+        if (is_numeric($baseSlug)) {
+            $baseSlug = 'bai-viet-dich-vu-' . $baseSlug;
+        }
+        $slug = $baseSlug;
+        $suffix = 2;
+
+        while (
+            ServicePost::query()
+                ->where('service_id', $servicePost->service_id)
+                ->where('slug', $slug)
+                ->when($servicePost->exists, fn ($query) => $query->where('id', '!=', $servicePost->id))
+                ->exists()
+        ) {
+            $slug = $baseSlug . '-' . $suffix;
+            $suffix++;
+        }
+
+        return $slug;
+    }
+
+    /**
+     * Keep the stored Open Graph image in sync.
+     */
+    private function syncOgImage(ServicePost $servicePost): void
+    {
+        $servicePost->og_image = $servicePost->image ?: null;
+    }
+
+    /**
+     * Convert uploaded images to WebP format when needed.
      */
     private function convertToWebP(ServicePost $servicePost): void
     {
-        // Kiểm tra xem có ảnh không
         if (!$servicePost->image) {
+            $servicePost->og_image = null;
             return;
         }
 
-        // Kiểm tra nếu ảnh đã là WebP thì không cần xử lý
         $extension = pathinfo($servicePost->image, PATHINFO_EXTENSION);
+
         if (strtolower($extension) === 'webp') {
+            $servicePost->og_image = $servicePost->image;
             return;
         }
 
-        // Đường dẫn đầy đủ đến file ảnh
         $imagePath = public_path('storage/' . $servicePost->image);
-        
-        // Kiểm tra file có tồn tại không
+
         if (!file_exists($imagePath)) {
             return;
         }
 
-        // Tạo tên file webp mới
         $webpFilename = pathinfo($servicePost->image, PATHINFO_FILENAME) . '.webp';
-        $webpPath = dirname($servicePost->image) . '/' . $webpFilename;
+        $webpPath = trim(dirname($servicePost->image), '/\\');
+        $webpPath = ($webpPath ? $webpPath . '/' : '') . $webpFilename;
         $fullWebpPath = public_path('storage/' . $webpPath);
 
-        // Sử dụng Intervention Image để chuyển đổi ảnh sang WebP
         $manager = new ImageManager(new Driver());
         $image = $manager->read($imagePath);
-        
-        // Giữ nguyên kích thước, chỉ chuyển đổi định dạng, chất lượng 100%
         $image->toWebp(100)->save($fullWebpPath);
 
-        // Xóa file gốc
         Storage::disk('public')->delete($servicePost->image);
 
-        // Cập nhật đường dẫn mới vào cơ sở dữ liệu
         $servicePost->image = $webpPath;
-        $servicePost->saveQuietly(); // Không kích hoạt observer lần nữa
+        $servicePost->og_image = $webpPath;
+        $servicePost->saveQuietly();
     }
 
     /**
-     * Clear all caches
+     * Clear caches so the frontend reflects the latest changes.
      */
     private function clearCache(): void
     {

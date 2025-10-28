@@ -194,7 +194,7 @@ class ServicePostResource extends Resource
                     ->icon('heroicon-o-arrow-top-right-on-square')
                     ->url(fn (ServicePost $record): string => route('servicePost', [
                         'serviceId' => $record->service_id,
-                        'postId' => $record->id,
+                        'slug' => $record->slug,
                     ]))
                     ->openUrlInNewTab(),
                 Tables\Actions\EditAction::make(),

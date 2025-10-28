@@ -12,8 +12,10 @@ class ServicePost extends Model
 
     protected $fillable = [
         'name',
+        'slug',
         'content',
         'image',
+        'og_image',
         'pdf',
         'service_id',
         'show_image'

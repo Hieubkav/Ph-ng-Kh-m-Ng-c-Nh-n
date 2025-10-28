@@ -216,7 +216,7 @@ class PostResource extends Resource
                 Tables\Actions\Action::make('view_frontend')
                     ->label('Xem trang')
                     ->icon('heroicon-o-arrow-top-right-on-square')
-                    ->url(fn (Post $record): string => route('post', $record->id))
+                    ->url(fn (Post $record): string => route('post', $record->slug))
                     ->openUrlInNewTab(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),

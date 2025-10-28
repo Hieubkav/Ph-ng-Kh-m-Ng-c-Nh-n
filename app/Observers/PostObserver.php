@@ -3,13 +3,32 @@
 namespace App\Observers;
 
 use App\Models\Post;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Artisan;
-use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
 
 class PostObserver
 {
+    /**
+     * Set default values before the model is persisted.
+     */
+    public function creating(Post $post): void
+    {
+        $this->ensureSlug($post);
+        $this->syncOgImage($post);
+    }
+
+    /**
+     * Refresh derived attributes ahead of updates.
+     */
+    public function updating(Post $post): void
+    {
+        $this->ensureSlug($post);
+        $this->syncOgImage($post);
+    }
+
     /**
      * Handle the Post "created" event.
      */
@@ -33,63 +52,103 @@ class PostObserver
      */
     public function deleted(Post $post): void
     {
-        // Xóa file ảnh khi xóa bài viết
         if ($post->image && Storage::disk('public')->exists($post->image)) {
             Storage::disk('public')->delete($post->image);
         }
 
-        // Xóa file PDF nếu có
         if ($post->pdf && Storage::disk('public')->exists($post->pdf)) {
             Storage::disk('public')->delete($post->pdf);
         }
     }
 
     /**
-     * Convert uploaded image to WebP format
+     * Make sure a unique slug is present on the model.
+     */
+    private function ensureSlug(Post $post): void
+    {
+        if (!$post->name) {
+            return;
+        }
+
+        if (!$post->slug || $post->isDirty('name')) {
+            $post->slug = $this->generateUniqueSlug($post);
+        }
+    }
+
+    /**
+     * Generate a unique slug based on the post title.
+     */
+    private function generateUniqueSlug(Post $post): string
+    {
+        $baseSlug = Str::slug($post->name) ?: 'bai-viet';
+        if (is_numeric($baseSlug)) {
+            $baseSlug = 'bai-viet-' . $baseSlug;
+        }
+        $slug = $baseSlug;
+        $suffix = 2;
+
+        while (
+            Post::query()
+                ->where('slug', $slug)
+                ->when($post->exists, fn ($query) => $query->where('id', '!=', $post->id))
+                ->exists()
+        ) {
+            $slug = $baseSlug . '-' . $suffix;
+            $suffix++;
+        }
+
+        return $slug;
+    }
+
+    /**
+     * Keep the stored og_image in sync with the main image.
+     */
+    private function syncOgImage(Post $post): void
+    {
+        $post->og_image = $post->image ?: null;
+    }
+
+    /**
+     * Convert uploaded images to WebP and update the stored paths.
      */
     private function convertToWebP(Post $post): void
     {
-        // Kiểm tra xem có ảnh không
         if (!$post->image) {
+            $post->og_image = null;
             return;
         }
 
-        // Kiểm tra nếu ảnh đã là WebP thì không cần xử lý
         $extension = pathinfo($post->image, PATHINFO_EXTENSION);
+
         if (strtolower($extension) === 'webp') {
+            $post->og_image = $post->image;
             return;
         }
 
-        // Đường dẫn đầy đủ đến file ảnh
         $imagePath = public_path('storage/' . $post->image);
-        
-        // Kiểm tra file có tồn tại không
+
         if (!file_exists($imagePath)) {
             return;
         }
 
-        // Tạo tên file webp mới
         $webpFilename = pathinfo($post->image, PATHINFO_FILENAME) . '.webp';
-        $webpPath = dirname($post->image) . '/' . $webpFilename;
+        $webpPath = trim(dirname($post->image), '/\\');
+        $webpPath = ($webpPath ? $webpPath . '/' : '') . $webpFilename;
         $fullWebpPath = public_path('storage/' . $webpPath);
 
-        // Sử dụng Intervention Image để chuyển đổi ảnh sang WebP
         $manager = new ImageManager(new Driver());
         $image = $manager->read($imagePath);
-        
-        // Giữ nguyên kích thước, chỉ chuyển đổi định dạng, chất lượng 100%
         $image->toWebp(100)->save($fullWebpPath);
 
-        // Xóa file gốc
         Storage::disk('public')->delete($post->image);
 
-        // Cập nhật đường dẫn mới vào cơ sở dữ liệu
         $post->image = $webpPath;
-        $post->saveQuietly(); // Không kích hoạt observer lần nữa
+        $post->og_image = $webpPath;
+        $post->saveQuietly();
     }
 
     /**
-     * Clear all caches
+     * Flush application caches that may hold stale data.
      */
     private function clearCache(): void
     {

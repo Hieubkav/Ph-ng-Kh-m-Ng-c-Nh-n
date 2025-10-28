@@ -1,24 +1,28 @@
 @php
-$service = App\Models\Service::find($serviceId);
-$servicePost = App\Models\ServicePost::find($postId);
+    /** @var \App\Models\ServicePost $servicePost */
+    $servicePost->loadMissing('service');
+    $service = $service ?? $servicePost->service;
 
-// L?y c?c b?i vi?t li?n quan kh?c (c?ng d?ch v?, tr? b?i vi?t hi?n t?i)
-$relatedPosts = App\Models\ServicePost::where('service_id', $serviceId)
-                ->where('id', '!=', $postId)
-                ->orderBy('created_at', 'desc')
-                ->limit(3)
-                ->get();
+    // L?y c?c b?i vi?t li�n quan kh�c (c?ng d?ch v?, tr? b?i vi?t hi?n t?i)
+    $relatedPosts = \App\Models\ServicePost::query()
+        ->where('service_id', $service->id)
+        ->where('id', '!=', $servicePost->id)
+        ->orderByDesc('created_at')
+        ->limit(3)
+        ->get();
 
-// L?y b?i vi?t tru?c v? sau trong c?ng d?ch v?
-$previousPost = App\Models\ServicePost::where('service_id', $serviceId)
-                ->where('id', '<', $postId)
-                ->orderBy('id', 'desc')
-                ->first();
-$nextPost = App\Models\ServicePost::where('service_id', $serviceId)
-                ->where('id', '>', $postId)
-                ->orderBy('id', 'asc')
-                ->first();
-$setting = $settings;
+    // L?y b?i vi?t tru?c v? sau trong c?ng d?ch v?
+    $previousPost = \App\Models\ServicePost::query()
+        ->where('service_id', $service->id)
+        ->where('id', '<', $servicePost->id)
+        ->orderByDesc('id')
+        ->first();
+    $nextPost = \App\Models\ServicePost::query()
+        ->where('service_id', $service->id)
+        ->where('id', '>', $servicePost->id)
+        ->orderBy('id')
+        ->first();
+    $setting = $settings;
 @endphp
 
 <article class="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
@@ -114,7 +118,7 @@ $setting = $settings;
     <!-- Post Navigation -->
     <nav class="flex items-center justify-between border-t border-b border-gray-200 py-4 mb-12">
         @if($previousPost)
-            <a href="{{ route('servicePost', ['serviceId' => $service->id, 'postId' => $previousPost->id]) }}"
+            <a href="{{ route('servicePost', ['serviceId' => $service->id, 'slug' => $previousPost->slug]) }}"
                class="group inline-flex items-center text-sm text-gray-500 hover:text-medical-green transition-colors">
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
@@ -126,7 +130,7 @@ $setting = $settings;
         @endif
 
         @if($nextPost)
-            <a href="{{ route('servicePost', ['serviceId' => $service->id, 'postId' => $nextPost->id]) }}"
+            <a href="{{ route('servicePost', ['serviceId' => $service->id, 'slug' => $nextPost->slug]) }}"
                class="group inline-flex items-center text-sm text-gray-500 hover:text-medical-green transition-colors">
                 <span class="line-clamp-1 max-w-[150px]">{{ $nextPost->name }}</span>
                 <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -144,7 +148,7 @@ $setting = $settings;
             <h2 class="text-2xl font-bold text-medical-green-dark mb-6">Dịch Vụ Liên Quan</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 @foreach($relatedPosts as $relatedPost)
-                    <a href="{{ route('servicePost', ['serviceId' => $service->id, 'postId' => $relatedPost->id]) }}"
+                    <a href="{{ route('servicePost', ['serviceId' => $service->id, 'slug' => $relatedPost->slug]) }}"
                        class="group block bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-lg transition-all duration-300">
                         <!-- Post Image -->
                         @if($relatedPost->show_image === 'show' && $relatedPost->image)

@@ -8,6 +8,7 @@ use App\Models\Doctor;
 use App\Models\Post;
 use App\Models\Schedule;
 use App\Models\Service;
+use App\Models\ServicePost;
 use Illuminate\Http\Request;
 
 class MainController extends Controller
@@ -47,9 +48,16 @@ class MainController extends Controller
         return view('shop.page', ['id' => $id]);
     }
 
-    public function post($id)
+    public function post(string $slug)
     {
-        return view('shop.post', ['id' => $id]);
+        $post = Post::query()
+            ->with('cat_post')
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        return view('shop.post', [
+            'post' => $post,
+        ]);
     }
 
     public function catPost($id)
@@ -67,11 +75,17 @@ class MainController extends Controller
         return view('shop.services', ['id' => $id]);
     }
 
-    public function servicePost($serviceId, $postId)
+    public function servicePost($serviceId, string $slug)
     {
+        $service = Service::query()->findOrFail($serviceId);
+        $servicePost = ServicePost::query()
+            ->where('service_id', $serviceId)
+            ->where('slug', $slug)
+            ->firstOrFail();
+
         return view('shop.servicePost', [
-            'serviceId' => $serviceId,
-            'postId' => $postId
+            'service' => $service,
+            'servicePost' => $servicePost,
         ]);
     }
 }

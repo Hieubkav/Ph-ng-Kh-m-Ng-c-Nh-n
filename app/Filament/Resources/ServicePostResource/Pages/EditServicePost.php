@@ -18,7 +18,7 @@ class EditServicePost extends EditRecord
                 ->icon('heroicon-o-arrow-top-right-on-square')
                 ->url(fn (): string => route('servicePost', [
                     'serviceId' => $this->record->service_id,
-                    'postId' => $this->record->id,
+                    'slug' => $this->record->slug,
                 ]))
                 ->openUrlInNewTab(),
             Actions\DeleteAction::make(),

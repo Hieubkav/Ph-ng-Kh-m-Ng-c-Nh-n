@@ -1,28 +1,40 @@
 @php
-$post = App\Models\Post::find($id);
-$category = App\Models\CatPost::find($post->cat_post_id);
-$relatedPosts = App\Models\Post::where('cat_post_id', $post->cat_post_id)
-                              ->where('id', '!=', $post->id)
-                              ->take(3)
-                              ->get();
-// Get previous and next posts in same category
-$previousPost = App\Models\Post::where('cat_post_id', $post->cat_post_id)->where('id', '<', $post->id)->orderBy('id', 'desc')->first();
-$nextPost = App\Models\Post::where('cat_post_id', $post->cat_post_id)->where('id', '>', $post->id)->orderBy('id', 'asc')->first();
+    /** @var \App\Models\Post $post */
+    $post->loadMissing('cat_post');
+    $category = $post->cat_post ?? \App\Models\CatPost::find($post->cat_post_id);
+    $relatedPosts = \App\Models\Post::query()
+        ->where('cat_post_id', $post->cat_post_id)
+        ->where('id', '!=', $post->id)
+        ->orderByDesc('created_at')
+        ->take(3)
+        ->get();
+    $previousPost = \App\Models\Post::query()
+        ->where('cat_post_id', $post->cat_post_id)
+        ->where('id', '<', $post->id)
+        ->orderByDesc('id')
+        ->first();
+    $nextPost = \App\Models\Post::query()
+        ->where('cat_post_id', $post->cat_post_id)
+        ->where('id', '>', $post->id)
+        ->orderBy('id')
+        ->first();
 @endphp
 
 <article class="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
     <!-- Post Header -->
     <header class="mb-8">
         <!-- Category -->
-        <div class="text-center mb-4">
-            <a href="{{ route('catPost', ['id' => $category->id]) }}"
-               class="inline-flex items-center text-medical-green hover:text-medical-green-dark transition-colors">
-                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
-                </svg>
-                {{ $category->name }}
-            </a>
-        </div>
+        @if($category)
+            <div class="text-center mb-4">
+                <a href="{{ route('catPost', ['id' => $category->id]) }}"
+                   class="inline-flex items-center text-medical-green hover:text-medical-green-dark transition-colors">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                    </svg>
+                    {{ $category->name }}
+                </a>
+            </div>
+        @endif
 
         <!-- Title -->
         <h1 class="text-3xl sm:text-4xl font-bold text-medical-green-dark mb-4 text-center">
@@ -112,7 +124,7 @@ $nextPost = App\Models\Post::where('cat_post_id', $post->cat_post_id)->where('id
     <!-- Post Navigation -->
     <nav class="flex items-center justify-between border-t border-b border-gray-200 py-4 mb-12">
         @if($previousPost)
-            <a href="{{route('post',$previousPost->id)}}"
+            <a href="{{ route('post', $previousPost->slug) }}"
                class="group inline-flex items-center text-sm text-gray-500 hover:text-medical-green transition-colors">
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
@@ -124,7 +136,7 @@ $nextPost = App\Models\Post::where('cat_post_id', $post->cat_post_id)->where('id
         @endif
 
         @if($nextPost)
-            <a href="{{route('post',$nextPost->id)}}"
+            <a href="{{ route('post', $nextPost->slug) }}"
                class="group inline-flex items-center text-sm text-gray-500 hover:text-medical-green transition-colors">
                 <span class="line-clamp-1 max-w-[150px]">{{ $nextPost->name }}</span>
                 <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -142,7 +154,7 @@ $nextPost = App\Models\Post::where('cat_post_id', $post->cat_post_id)->where('id
             <h2 class="text-2xl font-bold text-medical-green-dark mb-6">Bài Viết Liên Quan</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 @foreach($relatedPosts as $relatedPost)
-                    <a href="{{ route('post',$relatedPost->id) }}"
+                    <a href="{{ route('post', $relatedPost->slug) }}"
                        class="group block bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-lg transition-all duration-300">
                         <!-- Post Image -->
                         @if($relatedPost->show_image === 'show')

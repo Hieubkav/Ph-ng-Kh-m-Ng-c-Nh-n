@@ -16,7 +16,7 @@ class EditPost extends EditRecord
             Actions\Action::make('view_frontend')
                 ->label('Xem trang')
                 ->icon('heroicon-o-arrow-top-right-on-square')
-                ->url(fn (): string => route('post', $this->record->id))
+                ->url(fn (): string => route('post', $this->record->slug))
                 ->openUrlInNewTab(),
             Actions\DeleteAction::make(),
         ];

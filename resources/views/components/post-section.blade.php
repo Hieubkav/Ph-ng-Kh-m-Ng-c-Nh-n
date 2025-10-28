@@ -68,7 +68,7 @@
                             <div class="p-6">
                                 <h3 class="text-lg font-semibold mb-2 line-clamp-2">{{ $post->name }}</h3>
                                 <p class="text-gray-600 text-sm line-clamp-3">{{ $post->description }}</p>
-                                <a href="{{ route('post', ['id' => $post->id]) }}"
+                                <a href="{{ route('post', $post->slug) }}"
                                    class="inline-block mt-4 text-medical-green hover:text-medical-green-dark font-medium">
                                     Xem chi tiết →
                                 </a>

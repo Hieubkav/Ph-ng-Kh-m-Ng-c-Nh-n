@@ -15,7 +15,7 @@
                 @foreach($hot_posts as $post)
                     <!-- Hot News Item -->
                     <div class="bg-white rounded-lg shadow hover:shadow-md transition-shadow duration-300 overflow-hidden h-24 mb-3">
-                        <a href="{{route('post',$post->id)}}" class="flex group">
+                        <a href="{{ route('post', $post->slug) }}" class="flex group">
                             <div class="w-1/3 relative overflow-hidden bg-medical-green/5 h-24">
                                 <!-- Fallback UI khi ảnh không load được -->
                                 <div class="absolute inset-0 flex items-center justify-center text-medical-green/80">
@@ -52,7 +52,7 @@
                     @foreach($hot_posts->take(3) as $post)
                         <!-- Clone of first 3 items for smooth infinite scroll -->
                         <div class="bg-white rounded-lg shadow hover:shadow-md transition-shadow duration-300 overflow-hidden h-24 mb-3">
-                            <a href="{{route('post',$post->id)}}" class="flex group">
+                            <a href="{{ route('post', $post->slug) }}" class="flex group">
                                 <div class="w-1/3 relative overflow-hidden bg-medical-green/5 h-24">
                                     <!-- Fallback UI khi ảnh không load được -->
                                     <div class="absolute inset-0 flex items-center justify-center text-medical-green/80">

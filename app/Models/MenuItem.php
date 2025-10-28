@@ -57,7 +57,7 @@ class MenuItem extends Model
         return match($this->type) {
             self::TYPE_LINK => $this->link,
             self::TYPE_CAT => $this->cat_post ? route('catPost', ['id' => $this->cat_post->id]) : '#',
-            self::TYPE_POST => $this->post ? route('post', ['id' => $this->post->id]) : '#',
+            self::TYPE_POST => $this->post ? route('post', $this->post->slug) : '#',
             default => '#'
         };
     }
