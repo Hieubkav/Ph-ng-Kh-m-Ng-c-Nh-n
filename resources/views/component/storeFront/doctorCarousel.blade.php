@@ -7,13 +7,13 @@
     <div class="container mx-auto px-4">
         <!-- Section Header -->
         <div class="text-center mb-12" data-aos="fade-up">
-            <h2 class="text-3xl font-bold text-medical-green mb-4">
+            <h2 class="text-3xl font-bold text-medical-green mb-4 uppercase tracking-wide">
                 BÁC SĨ CHUYÊN KHOA
             </h2>
             <p class="text-gray-600 max-w-2xl mx-auto text-lg">
-                Đội ngũ bác sĩ giàu kinh nghiệm, tận tâm với người bệnh và thường xuyên
-                cập nhật các phương pháp điều trị tiên tiến
+                Điạ nguũ bác sĩ giàu kinh nghiệm, tận tâm với ngườ bệnh và thường xuyên cập nhật các phương pháp điều trị tiên tiến.
             </p>
+
             <div
                 class="w-24 h-1 bg-gradient-to-r from-medical-green-light to-medical-green mx-auto mt-6 rounded-full"></div>
         </div>

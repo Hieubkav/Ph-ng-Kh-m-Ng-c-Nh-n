@@ -9,6 +9,7 @@ use App\Models\Post;
 use App\Models\Schedule;
 use App\Models\Service;
 use App\Models\ServicePost;
+use App\Models\Video;
 use Illuminate\Http\Request;
 
 class MainController extends Controller
@@ -32,6 +33,11 @@ class MainController extends Controller
                 },
             ])
             ->get();
+        $videos = Video::query()
+            ->where('is_active', true)
+            ->orderBy('display_order')
+            ->orderByDesc('created_at')
+            ->get();
 
         return view('shop.storeFront', compact(
             'carousels',
@@ -39,7 +45,8 @@ class MainController extends Controller
             'doctors',
             'activeSchedule',
             'hotPosts',
-            'catPosts'
+            'catPosts',
+            'videos'
         ));
     }
 

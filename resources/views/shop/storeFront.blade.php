@@ -69,5 +69,6 @@
     @include('component.storeFront.schedule', ['activeSchedule' => $activeSchedule])
     @include('component.storeFront.service', ['services' => $services])
     @include('component.storeFront.doctorCarousel', ['doctors' => $doctors])
+    @include('component.storeFront.video', ['videos' => $videos])
     @include('component.storeFront.post', ['catPosts' => $catPosts])
 @endsection

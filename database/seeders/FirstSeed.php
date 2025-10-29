@@ -11,6 +11,7 @@
     use App\Models\Service;
     use App\Models\Setting;
     use App\Models\User;
+    use App\Models\Video;
     use Illuminate\Database\Seeder;
 
     class FirstSeed extends Seeder {
@@ -338,5 +339,47 @@
                 'order' => 12,
             ]);
 
+            Video::insert([
+                [
+                    'title' => 'Phòng Tiêm ngừa chất lượng cao',
+                    'youtube_url' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                    'display_order' => 1,
+                    'is_hot' => true,
+                    'is_active' => true,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+                [
+                    'title' => 'Quy trình khám bệnh',
+                    'youtube_url' => 'https://www.youtube.com/watch?v=oHg5SJYRHA0',
+                    'display_order' => 2,
+                    'is_hot' => false,
+                    'is_active' => true,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+                [
+                    'title' => 'Phòng khám Ngọc Nhân',
+                    'youtube_url' => 'https://www.youtube.com/watch?v=tgbNymZ7vqY',
+                    'display_order' => 3,
+                    'is_hot' => false,
+                    'is_active' => true,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+                [
+                    'title' => 'Khám tổng quát cho người lớn tuổi',
+                    'youtube_url' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                    'display_order' => 4,
+                    'is_hot' => false,
+                    'is_active' => true,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+            ]);
+
         }
     }
+
+
+
