@@ -52,7 +52,7 @@
 @endpush
 
 @section('content')
-    <section class="bg-white py-10">
+    {{-- <section class="bg-white py-10">
         <div class="container mx-auto px-4 text-center max-w-4xl">
             <h1 class="text-3xl sm:text-4xl font-bold text-medical-green-dark">
                 Phòng Khám Đa Khoa Ngọc Nhân - Dịch Vụ Y Tế Chất Lượng Cao
@@ -61,7 +61,7 @@
                 Điểm đến tin cậy cho nhu cầu chăm sóc sức khỏe toàn diện của gia đình bạn, hội tụ đội ngũ bác sĩ chuyên khoa giàu kinh nghiệm và hệ thống thiết bị chuẩn quốc tế.
             </p>
         </div>
-    </section>
+    </section> --}}
     @include('component.storeFront.carousel', [
         'carousels' => $carousels,
         'hotPosts' => $hotPosts,

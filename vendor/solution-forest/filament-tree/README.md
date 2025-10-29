@@ -1,5 +1,5 @@
 > [!IMPORTANT]
-> Please note that we will only be updating to version 2.x, excluding any bug fixes.
+> Please note that we will only be updating to version 2.x or 3.x, excluding any bug fixes.
 
 # Filament Tree
 
@@ -18,6 +18,11 @@ Demo username : demo@solutionforest.net
 Demo password : 12345678
 Auto Reset every hour.
 
+## Supported Filament versions
+| Filament Version | Plugin Version |
+|------------------|----------------|
+| v3               | 2.x.x          |
+| v4               | 3.x.x-beta    |
 
 ## Installation
 
@@ -75,7 +80,8 @@ return [
 ];
 
 ```
-![Screenshot](https://github.com/solutionforest/filament-tree/assets/68211972/d4bc8d33-3448-4cf5-837e-14116e28b4b5)
+
+![Using tree widget on page](https://github.com/user-attachments/assets/b590afeb-6178-4382-a669-2f6d1af4559e)
 
 ## Usage
 
@@ -291,7 +297,7 @@ Define the available "actions" for the tree page using the `getActions()` and `g
 
 The `getActions()` method defines actions that are displayed next to the page's heading:
 ```php
-    use Filament\Pages\Actions\CreateAction;
+    use Filament\Actions\CreateAction;
 
     protected function getActions(): array
     {
@@ -342,11 +348,21 @@ To customize the prefix icon for each record in a tree page, you can use the `ge
 ```php
 public function getTreeRecordIcon(?\Illuminate\Database\Eloquent\Model $record = null): ?string
 {
-    // default null
-    return 'heroicon-o-cake';
+    if ($record->parent_id != -1) {
+        return null; // no icon for child records
+    }
+
+    return match ($record->title) {
+        'Top' => 'heroicon-o-arrow-up',
+        'Bottom' => 'heroicon-o-arrow-down',
+        'Shoes' => 'heroicon-o-shopping-bag',
+        'Accessories' => 'heroicon-o-briefcase',
+        default => null, // no icon for other records
+    };
 }
 ```
-![tree-icon](https://github.com/solutionforest/filament-tree/assets/68525320/6a1ef719-9029-4e91-a20a-515a514c4326)
+
+![Item record on tree](https://github.com/user-attachments/assets/5a3b5b68-39d5-450c-9e7d-3b3c95433bbc)
 
 #### Node collapsed state
 You can customize a collapsed state of the node. If you would like to show your tree initially collapsed you can use:
