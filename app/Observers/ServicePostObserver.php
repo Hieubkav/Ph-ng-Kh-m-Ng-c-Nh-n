@@ -17,7 +17,7 @@ class ServicePostObserver
     public function creating(ServicePost $servicePost): void
     {
         $this->ensureSlug($servicePost);
-        $this->syncOgImage($servicePost);
+        $this->prepareImage($servicePost);
     }
 
     /**
@@ -26,7 +26,7 @@ class ServicePostObserver
     public function updating(ServicePost $servicePost): void
     {
         $this->ensureSlug($servicePost);
-        $this->syncOgImage($servicePost);
+        $this->prepareImage($servicePost);
     }
 
     /**
@@ -34,7 +34,6 @@ class ServicePostObserver
      */
     public function created(ServicePost $servicePost): void
     {
-        $this->convertToWebP($servicePost);
         $this->clearCache();
     }
 
@@ -43,7 +42,6 @@ class ServicePostObserver
      */
     public function updated(ServicePost $servicePost): void
     {
-        $this->convertToWebP($servicePost);
         $this->clearCache();
     }
 
@@ -108,48 +106,69 @@ class ServicePostObserver
     /**
      * Keep the stored Open Graph image in sync.
      */
-    private function syncOgImage(ServicePost $servicePost): void
+    private function prepareImage(ServicePost $servicePost): void
     {
-        $servicePost->og_image = $servicePost->image ?: null;
-    }
+        $originalImage = $servicePost->getOriginal('image');
+        $currentImage = $servicePost->image;
 
-    /**
-     * Convert uploaded images to WebP format when needed.
-     */
-    private function convertToWebP(ServicePost $servicePost): void
-    {
-        if (!$servicePost->image) {
+        if (!$currentImage) {
+            $this->deleteImageIfExists($originalImage);
             $servicePost->og_image = null;
             return;
         }
 
-        $extension = pathinfo($servicePost->image, PATHINFO_EXTENSION);
-
-        if (strtolower($extension) === 'webp') {
-            $servicePost->og_image = $servicePost->image;
+        if (!$servicePost->isDirty('image')) {
+            $servicePost->og_image = $currentImage;
             return;
         }
 
-        $imagePath = public_path('storage/' . $servicePost->image);
+        $convertedPath = $this->convertToWebpPath($currentImage);
 
-        if (!file_exists($imagePath)) {
-            return;
+        if ($convertedPath) {
+            $servicePost->image = $convertedPath;
+            $servicePost->og_image = $convertedPath;
+
+            if ($originalImage && $originalImage !== $currentImage) {
+                $this->deleteImageIfExists($originalImage);
+            }
+        } else {
+            $servicePost->og_image = $currentImage;
+        }
+    }
+
+    private function convertToWebpPath(string $relativePath): ?string
+    {
+        $extension = strtolower(pathinfo($relativePath, PATHINFO_EXTENSION));
+
+        if ($extension === 'webp') {
+            return $relativePath;
         }
 
-        $webpFilename = pathinfo($servicePost->image, PATHINFO_FILENAME) . '.webp';
-        $webpPath = trim(dirname($servicePost->image), '/\\');
-        $webpPath = ($webpPath ? $webpPath . '/' : '') . $webpFilename;
-        $fullWebpPath = public_path('storage/' . $webpPath);
+        $absolutePath = Storage::disk('public')->path($relativePath);
+
+        if (!file_exists($absolutePath)) {
+            return null;
+        }
+
+        $webpFilename = pathinfo($relativePath, PATHINFO_FILENAME) . '.webp';
+        $directory = trim(dirname($relativePath), '/\\');
+        $webpRelativePath = ($directory ? $directory . '/' : '') . $webpFilename;
+        $webpAbsolutePath = Storage::disk('public')->path($webpRelativePath);
 
         $manager = new ImageManager(new Driver());
-        $image = $manager->read($imagePath);
-        $image->toWebp(100)->save($fullWebpPath);
+        $image = $manager->read($absolutePath);
+        $image->toWebp(100)->save($webpAbsolutePath);
 
-        Storage::disk('public')->delete($servicePost->image);
+        Storage::disk('public')->delete($relativePath);
 
-        $servicePost->image = $webpPath;
-        $servicePost->og_image = $webpPath;
-        $servicePost->saveQuietly();
+        return $webpRelativePath;
+    }
+
+    private function deleteImageIfExists(?string $relativePath): void
+    {
+        if ($relativePath && Storage::disk('public')->exists($relativePath)) {
+            Storage::disk('public')->delete($relativePath);
+        }
     }
 
     /**

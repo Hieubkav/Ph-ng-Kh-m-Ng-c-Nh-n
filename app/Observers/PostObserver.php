@@ -17,7 +17,7 @@ class PostObserver
     public function creating(Post $post): void
     {
         $this->ensureSlug($post);
-        $this->syncOgImage($post);
+        $this->prepareImage($post);
     }
 
     /**
@@ -26,7 +26,7 @@ class PostObserver
     public function updating(Post $post): void
     {
         $this->ensureSlug($post);
-        $this->syncOgImage($post);
+        $this->prepareImage($post);
     }
 
     /**
@@ -34,7 +34,6 @@ class PostObserver
      */
     public function created(Post $post): void
     {
-        $this->convertToWebP($post);
         $this->clearCache();
     }
 
@@ -43,7 +42,6 @@ class PostObserver
      */
     public function updated(Post $post): void
     {
-        $this->convertToWebP($post);
         $this->clearCache();
     }
 
@@ -103,48 +101,69 @@ class PostObserver
     /**
      * Keep the stored og_image in sync with the main image.
      */
-    private function syncOgImage(Post $post): void
+    private function prepareImage(Post $post): void
     {
-        $post->og_image = $post->image ?: null;
-    }
+        $originalImage = $post->getOriginal('image');
+        $currentImage = $post->image;
 
-    /**
-     * Convert uploaded images to WebP and update the stored paths.
-     */
-    private function convertToWebP(Post $post): void
-    {
-        if (!$post->image) {
+        if (!$currentImage) {
+            $this->deleteImageIfExists($originalImage);
             $post->og_image = null;
             return;
         }
 
-        $extension = pathinfo($post->image, PATHINFO_EXTENSION);
-
-        if (strtolower($extension) === 'webp') {
-            $post->og_image = $post->image;
+        if (!$post->isDirty('image')) {
+            $post->og_image = $currentImage;
             return;
         }
 
-        $imagePath = public_path('storage/' . $post->image);
+        $convertedPath = $this->convertToWebpPath($currentImage);
 
-        if (!file_exists($imagePath)) {
-            return;
+        if ($convertedPath) {
+            $post->image = $convertedPath;
+            $post->og_image = $convertedPath;
+
+            if ($originalImage && $originalImage !== $currentImage) {
+                $this->deleteImageIfExists($originalImage);
+            }
+        } else {
+            $post->og_image = $currentImage;
+        }
+    }
+
+    private function convertToWebpPath(string $relativePath): ?string
+    {
+        $extension = strtolower(pathinfo($relativePath, PATHINFO_EXTENSION));
+
+        if ($extension === 'webp') {
+            return $relativePath;
         }
 
-        $webpFilename = pathinfo($post->image, PATHINFO_FILENAME) . '.webp';
-        $webpPath = trim(dirname($post->image), '/\\');
-        $webpPath = ($webpPath ? $webpPath . '/' : '') . $webpFilename;
-        $fullWebpPath = public_path('storage/' . $webpPath);
+        $absolutePath = Storage::disk('public')->path($relativePath);
+
+        if (!file_exists($absolutePath)) {
+            return null;
+        }
+
+        $webpFilename = pathinfo($relativePath, PATHINFO_FILENAME) . '.webp';
+        $directory = trim(dirname($relativePath), '/\\');
+        $webpRelativePath = ($directory ? $directory . '/' : '') . $webpFilename;
+        $webpAbsolutePath = Storage::disk('public')->path($webpRelativePath);
 
         $manager = new ImageManager(new Driver());
-        $image = $manager->read($imagePath);
-        $image->toWebp(100)->save($fullWebpPath);
+        $image = $manager->read($absolutePath);
+        $image->toWebp(100)->save($webpAbsolutePath);
 
-        Storage::disk('public')->delete($post->image);
+        Storage::disk('public')->delete($relativePath);
 
-        $post->image = $webpPath;
-        $post->og_image = $webpPath;
-        $post->saveQuietly();
+        return $webpRelativePath;
+    }
+
+    private function deleteImageIfExists(?string $relativePath): void
+    {
+        if ($relativePath && Storage::disk('public')->exists($relativePath)) {
+            Storage::disk('public')->delete($relativePath);
+        }
     }
 
     /**

@@ -57,7 +57,6 @@ class MenuItemTree extends BaseWidget
             ->with(['children' => function ($query) {
                 $query->orderBy('order');
             }])
-            ->whereNull('parent_id')
             ->orderBy('order');
     }
 

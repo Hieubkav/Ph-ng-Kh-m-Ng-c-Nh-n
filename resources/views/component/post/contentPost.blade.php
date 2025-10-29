@@ -59,7 +59,7 @@
     <!-- Featured Image -->
     @if($post->show_image === 'show')
         <div class="rounded-lg overflow-hidden mb-8 shadow-lg group">
-            <div class="relative w-full h-[400px] sm:h-[600px] bg-medical-green/5">
+            <div class="relative w-full h-[400px] sm:h-[600px]">
                 <!-- Fallback UI when image doesn't load -->
                 <div class="absolute inset-0 flex items-center justify-center text-medical-green/80">
                     @if($settings->tmp_pic)
@@ -77,14 +77,14 @@
                 @if($post->image)
                     <img src="{{config('app.asset_url')}}/storage/{{ $post->image }}"
                          alt="{{ $post->name }}"
-                         class="absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:scale-105 opacity-0"
+                         class="absolute inset-0 w-full h-full object-contain transition-opacity duration-500 opacity-0"
                          loading="lazy"
                          onload="this.classList.remove('opacity-0')"
                          onerror="this.classList.add('hidden')">
                 @else
                     <img src="{{config('app.asset_url')}}/storage/{{ $settings->tmp_pic ?? '' }}"
                          alt="{{ $post->name }}"
-                         class="absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:scale-105 opacity-0"
+                         class="absolute inset-0 w-full h-full object-contain transition-opacity duration-500 opacity-0"
                          loading="lazy"
                          onload="this.classList.remove('opacity-0')"
                          onerror="this.classList.add('hidden')">
@@ -117,12 +117,12 @@
                     </a>
                 </div>
             </div>
-            <iframe src="{{config('app.asset_url')}}/storage/{{ $post->pdf }}" class="w-full h-[600px] border rounded-lg shadow-lg"></iframe>
+            <iframe src="{{config('app.asset_url')}}/storage/{{ $post->pdf }}" class="w-full h-[600px] border rounded-lg "></iframe>
         </div>
     @endif
 
     <!-- Post Navigation -->
-    <nav class="flex items-center justify-between border-t border-b border-gray-200 py-4 mb-12">
+    <nav class="flex items-center justify-between py-4 mb-12">
         @if($previousPost)
             <a href="{{ route('post', $previousPost->slug) }}"
                class="group inline-flex items-center text-sm text-gray-500 hover:text-medical-green transition-colors">
@@ -150,7 +150,7 @@
 
     <!-- Related Posts -->
     @if($relatedPosts->count() > 0)
-        <div class="border-t border-gray-200 pt-12">
+        <div class="pt-12">
             <h2 class="text-2xl font-bold text-medical-green-dark mb-6">Bài Viết Liên Quan</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 @foreach($relatedPosts as $relatedPost)
@@ -158,7 +158,7 @@
                        class="group block bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-lg transition-all duration-300">
                         <!-- Post Image -->
                         @if($relatedPost->show_image === 'show')
-                            <div class="relative h-48 overflow-hidden bg-medical-green/5">
+                            <div class="relative h-48 overflow-hidden">
                                 <!-- Fallback UI -->
                                 <div class="absolute inset-0 flex items-center justify-center text-medical-green/80">
                                     @if($settings->tmp_pic)
@@ -176,14 +176,14 @@
                                 @if($relatedPost->image)
                                     <img src="{{config('app.asset_url')}}/storage/{{ $relatedPost->image }}"
                                          alt="{{ $relatedPost->name }}"
-                                         class="absolute inset-0 w-full h-full object-cover transform transition-all duration-300 group-hover:scale-105 opacity-0"
+                                         class="absolute inset-0 w-full h-full object-contain transition-opacity duration-300 opacity-0"
                                          loading="lazy"
                                          onload="this.classList.remove('opacity-0')"
                                          onerror="this.classList.add('hidden')">
                                 @else
                                     <img src="{{config('app.asset_url')}}/storage/{{ $settings->tmp_pic ?? '' }}"
                                          alt="{{ $relatedPost->name }}"
-                                         class="absolute inset-0 w-full h-full object-cover transform transition-all duration-300 group-hover:scale-105 opacity-0"
+                                         class="absolute inset-0 w-full h-full object-contain transition-opacity duration-300 opacity-0"
                                          loading="lazy"
                                          onload="this.classList.remove('opacity-0')"
                                          onerror="this.classList.add('hidden')">
