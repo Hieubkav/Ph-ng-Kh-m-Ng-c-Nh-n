@@ -12,7 +12,7 @@
         </div>
 
         <!-- Tabs Container -->
-        <div class="max-w-6xl mx-auto" x-data="{ activeTab: '{{ $catPosts->first()?->id }}' }">
+        <div class="max-w-8 mx-auto" x-data="{ activeTab: '{{ $catPosts->first()?->id }}' }">
             <!-- Tab Headers -->
             <div class="flex flex-wrap justify-center mb-8 gap-4" data-aos="fade-up">
                 @foreach($catPosts as $catPost)
@@ -38,7 +38,7 @@
                                 @if($post->image)
                                     <img src="{{config('app.asset_url')}}/storage/{{$post->image}}"
                                          alt="{{ $post->name }}"
-                                         class="w-full h-full object-cover"
+                                         class="w-full h-full object-contain object-center"
                                          onerror="this.parentElement.innerHTML = `<div class='w-full h-full bg-gradient-to-br from-medical-green-light to-medical-green flex items-center justify-center p-4'>
                                             <div class='text-center text-white'>
                                                 <div class='flex justify-center items-center mb-3'>

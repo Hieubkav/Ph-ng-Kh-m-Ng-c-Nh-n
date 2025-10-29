@@ -12,6 +12,9 @@ export default {
     ],
     theme: {
         extend: {
+            maxWidth: {
+                '8': '90rem',
+            },
             gridTemplateColumns: {
                 'desktop': 'repeat(3, minmax(0, 1fr))',
                 'tablet': 'repeat(2, minmax(0, 1fr))',
@@ -31,4 +34,3 @@ export default {
     ],
     darkMode: 'class',
 }
-

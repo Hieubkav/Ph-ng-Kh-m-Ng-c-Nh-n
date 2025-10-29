@@ -6,7 +6,7 @@
     $setting = $settings;
 @endphp
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<div class="max-w-8 mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <!-- Service Header -->
     <div class="text-center mb-12">
         <h1 class="text-3xl sm:text-4xl font-bold text-medical-green-dark mb-4">{{ $service->name }}</h1>
@@ -44,7 +44,7 @@
                                 <!-- Actual image with fade-in effect -->
                                 <img src="{{config('app.asset_url')}}/storage/{{ $post->image }}"
                                      alt="{{ $post->name }}"
-                                     class="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-all duration-500 opacity-0"
+                                     class="absolute inset-0 w-full h-full object-contain object-center transform group-hover:scale-105 transition-all duration-500 opacity-0"
                                      loading="lazy"
                                      onload="this.classList.remove('opacity-0')"
                                      onerror="this.src='{{config('app.asset_url')}}/storage/{{$settings->tmp_pic ?? ''}}'; this.classList.remove('opacity-0');">
@@ -62,7 +62,7 @@
                                 <!-- Actual image with fade-in effect -->
                                 <img src="{{config('app.asset_url')}}/storage/{{ $settings->tmp_pic }}"
                                      alt="{{ $post->name }}"
-                                     class="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-all duration-500 opacity-0"
+                                     class="absolute inset-0 w-full h-full object-contain object-center transform group-hover:scale-105 transition-all duration-500 opacity-0"
                                      loading="lazy"
                                      onload="this.classList.remove('opacity-0')"
                                      onerror="this.classList.add('hidden')">

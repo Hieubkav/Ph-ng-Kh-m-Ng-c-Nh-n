@@ -18,7 +18,7 @@
 
         @if($categoryItems->isNotEmpty())
         <!-- Tabs Container -->
-        <div class="max-w-6xl mx-auto" x-data="{ activeTab: '{{ $categoryItems->first()?->id }}' }">
+        <div class="max-w-8 mx-auto" x-data="{ activeTab: '{{ $categoryItems->first()?->id }}' }">
             <!-- Tab Headers -->
             <div class="flex flex-wrap justify-center mb-8 gap-4" data-aos="fade-up">
                 @foreach($categoryItems as $catPost)
@@ -40,18 +40,18 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach(($catPost->posts ?? collect())->take($postsPerTab) as $post)
                             <div class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-transform duration-300 hover:-translate-y-1">
-                                <div class="h-52 overflow-hidden">
-                                    <div class="w-full h-full relative">
+                                <div class="h-52 bg-white">
+                                    <div class="w-full h-full relative flex items-center justify-center">
                                         @if($post->image)
                                             <img src="{{config('app.asset_url')}}/storage/{{$post->image}}"
                                                  alt="{{ $post->name }}"
-                                                 class="w-full h-full object-cover transition-opacity duration-300"
+                                                 class="w-full h-full object-contain object-center transition-opacity duration-300"
                                                  onerror="this.src='{{config('app.asset_url')}}/storage/{{$settings->tmp_pic ?? ''}}'">
                                         @else
                                             @if($settings->tmp_pic)
                                                 <img src="{{config('app.asset_url')}}/storage/{{$settings->tmp_pic}}"
                                                      alt="Default Image"
-                                                     class="w-full h-full object-cover">
+                                                     class="w-full h-full object-contain object-center">
                                             @else
                                                 <div class="w-full h-full bg-gradient-to-br from-medical-green-light to-medical-green"></div>
                                             @endif

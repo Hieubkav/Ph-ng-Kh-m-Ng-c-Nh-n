@@ -20,7 +20,7 @@
         ->first();
 @endphp
 
-<article class="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+<article class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
     <!-- Post Header -->
     <header class="mb-8">
         <!-- Category -->
