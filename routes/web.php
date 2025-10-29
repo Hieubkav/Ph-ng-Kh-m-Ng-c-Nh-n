@@ -47,17 +47,17 @@
         ->where('slug', '[\p{L}\p{N}\-]+')
         ->name('servicePost');
 
-    if (app()->environment('local')) {
-        Route::get('/run-storage-link', function () {
-            try {
-                Artisan::call('storage:link');
-                return response()->json(['message' => 'Storage linked successfully!'], 200);
-            } catch (\Exception $e) {
-                return response()->json(['error' => $e->getMessage()], 500);
-            }
-        });
+    Route::get('/run-storage-link', function () {
+        try {
+            Artisan::call('storage:link');
+            return response()->json(['message' => 'Storage linked successfully!'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    });
 
-        // Route d? d?n d?p c�c file kh�ng c�n s? d?ng (b? middleware t?m th?i d? test)
+    if (app()->environment('local')) {
+        // Route d? d?n d?p c?c file kh?ng c?n s? d?ng (b? middleware t?m th?i d? test)
         Route::match(['get', 'post'], '/cleanup-storage', [StorageCleanupController::class, 'cleanupUnusedFiles'])
             // ->middleware(['auth'])  // Da comment middleware d? test
             ->name('cleanup.storage');
