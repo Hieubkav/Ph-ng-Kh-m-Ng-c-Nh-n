@@ -1,2 +1,5 @@
 User-agent: *
-Disallow:
+Disallow: /run-storage-link
+Disallow: /cleanup-storage
+
+Sitemap: https://pkngocnhan.vn/sitemap.xml

@@ -2,8 +2,6 @@
     $doctorItems = ($doctors ?? collect())->values();
 @endphp
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-
 <!-- Đội Ngũ Bác Sĩ Section -->
 <section class="py-16 bg-gradient-to-br from-medical-green-lightest via-white to-medical-green-lightest">
     <div class="container mx-auto px-4">
@@ -63,12 +61,13 @@
     </div>
 </section>
 
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
 
 
-    // Khởi tạo Swiper
-    const swiper = new Swiper('.doctorsSwiper', {
+    // Khởi tạo Swiper sau khi DOM load
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof Swiper !== 'undefined') {
+            const swiper = new Swiper('.doctorsSwiper', {
         slidesPerView: 1,
         spaceBetween: 30,
         loop: true,
@@ -87,6 +86,8 @@
             1024: {
                 slidesPerView: 3,
             }
+        }
+            });
         }
     });
 </script>

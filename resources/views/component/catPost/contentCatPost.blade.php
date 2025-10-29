@@ -28,11 +28,11 @@ $listPost = App\Models\Post::where('cat_post_id', $catPost->id)
                                 <div class="absolute inset-0 flex items-center justify-center text-medical-green/80">
                                     @if($settings->tmp_pic)
                                         <img src="{{config('app.asset_url')}}/storage/{{ $settings->tmp_pic }}"
-                                             alt="Default Image"
+                                             alt="Placeholder image for {{ $post->name }}"
                                              class="w-8 h-8 object-contain">
                                     @else
                                         <img src="{{ asset('images/logo.webp') }}"
-                                             alt="Default Post Image"
+                                             alt="Brand mark of {{ config('app.name') }}"
                                              class="w-8 h-8 object-contain">
                                     @endif
                                 </div>
@@ -51,7 +51,7 @@ $listPost = App\Models\Post::where('cat_post_id', $catPost->id)
                                 <!-- Fallback UI when image doesn't load -->
                                 <div class="absolute inset-0 flex items-center justify-center text-medical-green/80">
                                     <img src="{{ asset('images/logo.webp') }}"
-                                         alt="Default Post Image"
+                                         alt="Brand mark of {{ config('app.name') }}"
                                          class="w-8 h-8 object-contain">
                                 </div>
 

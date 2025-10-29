@@ -1,8 +1,13 @@
 @php
-$page = App\Models\Page::find($id)
-
+    $page = $page ?? (($id ?? null) ? App\Models\Page::find($id) : null);
 @endphp
 
+@if (!$page)
+    <div class="max-w-4xl mx-auto px-4 py-16 text-center">
+        <h1 class="text-3xl font-bold text-medical-green-dark mb-4">Nội dung đang được cập nhật</h1>
+        <p class="text-gray-600 text-lg">Vui lòng quay lại sau để xem thông tin chi tiết từ Phòng Khám Đa Khoa Ngọc Nhân.</p>
+    </div>
+@else
 <article class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
     <!-- Page Header -->
     <header class="mb-8 text-center">
@@ -26,3 +31,4 @@ $page = App\Models\Page::find($id)
         {!! $page->content !!}
     </div>
 </article>
+@endif

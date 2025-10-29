@@ -1,6 +1,7 @@
 <?php
 
     use App\Http\Controllers\MainController;
+    use App\Http\Controllers\SitemapController;
     use App\Http\Controllers\StorageCleanupController;
     use App\Models\Post;
     use App\Models\ServicePost;
@@ -19,7 +20,7 @@
         ->name('post.legacy');
 
     Route::get('/post/{slug}', [MainController::class, 'post'])
-        ->where('slug', '[-a-zA-Z0-9]+')
+        ->where('slug', '[\p{L}\p{N}\-]+')
         ->name('post');
     Route::get('/catpost/{id}', [MainController::class, 'catPost'])
         ->name('catPost');
@@ -43,19 +44,25 @@
 
     Route::get('/services/{serviceId}/posts/{slug}', [MainController::class, 'servicePost'])
         ->whereNumber('serviceId')
-        ->where('slug', '[-a-zA-Z0-9]+')
+        ->where('slug', '[\p{L}\p{N}\-]+')
         ->name('servicePost');
 
-    Route::get('/run-storage-link', function () {
-        try {
-            Artisan::call('storage:link');
-            return response()->json(['message' => 'Storage linked successfully!'], 200);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    });
+    if (app()->environment('local')) {
+        Route::get('/run-storage-link', function () {
+            try {
+                Artisan::call('storage:link');
+                return response()->json(['message' => 'Storage linked successfully!'], 200);
+            } catch (\Exception $e) {
+                return response()->json(['error' => $e->getMessage()], 500);
+            }
+        });
 
-    // Route để dọn dẹp các file không còn sử dụng (bỏ middleware tạm thời để test)
-    Route::match(['get', 'post'], '/cleanup-storage', [StorageCleanupController::class, 'cleanupUnusedFiles'])
-        // ->middleware(['auth'])  // Đã comment middleware để test
-        ->name('cleanup.storage');
+        // Route d? d?n d?p c�c file kh�ng c�n s? d?ng (b? middleware t?m th?i d? test)
+        Route::match(['get', 'post'], '/cleanup-storage', [StorageCleanupController::class, 'cleanupUnusedFiles'])
+            // ->middleware(['auth'])  // Da comment middleware d? test
+            ->name('cleanup.storage');
+    }
+
+    // Route cho sitemap
+    Route::get('/sitemap.xml', [SitemapController::class, 'index'])
+        ->name('sitemap');

@@ -6,8 +6,8 @@
 <div class="w-full bg-gray-50 py-16">
     <div class="container mx-auto px-4">
 
-        <h2 class="text-3xl font-bold text-medical-green-dark text-center " data-aos="fade-up">
-            DỊCH VỤ Y TẾ
+        <h2 class="text-3xl font-bold text-medical-green-dark text-center" data-aos="fade-up">
+            Dịch Vụ Y Tế
         </h2>
         <div class="text-center text-gray-600 mt-2 max-w-2xl mx-auto text-lg">Khám chữa bệnh, điều trị chuyên khoa, xét nghiệm hiện đại nhất</div>
         <div

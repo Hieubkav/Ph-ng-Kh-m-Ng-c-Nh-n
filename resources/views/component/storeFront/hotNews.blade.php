@@ -16,7 +16,7 @@
             <article class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
                 <div class="relative">
                     <img src="{{ $settings->tmp_pic }}"
-                         alt="Tin tức y tế 1"
+                         alt="Featured news illustration 1 for {{ config('app.name') }}"
                          class="w-full h-48 object-cover">
                     <div class="absolute top-4 right-4 bg-medical-green text-white text-sm px-3 py-1 rounded-full">
                         Mới
@@ -48,7 +48,7 @@
             <article class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
                 <div class="relative">
                     <img src="{{ $settings->tmp_pic }}"
-                         alt="Tin tức y tế 2"
+                         alt="Featured news illustration 2 for {{ config('app.name') }}"
                          class="w-full h-48 object-cover">
                     <div class="absolute top-4 right-4 bg-medical-green text-white text-sm px-3 py-1 rounded-full">
                         Mới
@@ -80,7 +80,7 @@
             <article class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
                 <div class="relative">
                     <img src="{{ $settings->tmp_pic }}"
-                         alt="Tin tức y tế 3"
+                         alt="Featured news illustration 3 for {{ config('app.name') }}"
                          class="w-full h-48 object-cover">
                     <div class="absolute top-4 right-4 bg-medical-green text-white text-sm px-3 py-1 rounded-full">
                         Mới
@@ -120,3 +120,4 @@
         </div>
     </div>
 </section>
+

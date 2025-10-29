@@ -1,11 +1,18 @@
 @php
-    $service = App\Models\Service::find($id);
-    $servicePosts = App\Models\ServicePost::where('service_id', $id)
+    $service = $service ?? App\Models\Service::find($id);
+    $serviceId = $service?->id ?? $id;
+    $servicePosts = $servicePosts ?? App\Models\ServicePost::where('service_id', $serviceId)
         ->orderBy('created_at', 'desc')
         ->get();
     $setting = $settings;
 @endphp
 
+@if (!$service)
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
+        <h1 class="text-3xl sm:text-4xl font-bold text-medical-green-dark mb-4">Dịch vụ không tồn tại</h1>
+        <p class="text-gray-600 text-lg">Vui lòng quay lại sau hoặc liên hệ trực tiếp với phòng khám để được hỗ trợ.</p>
+    </div>
+@else
 <div class="max-w-8 mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <!-- Service Header -->
     <div class="text-center mb-12">
@@ -32,11 +39,11 @@
                                 <div class="absolute inset-0 flex items-center justify-center text-medical-green/80">
                                     @if($settings->tmp_pic)
                                         <img src="{{config('app.asset_url')}}/storage/{{ $settings->tmp_pic }}"
-                                             alt="Default Image"
+                                             alt="Placeholder image for {{ $post->name }}"
                                              class="w-8 h-8 object-contain">
                                     @else
                                         <img src="{{ asset('images/logo.webp') }}"
-                                             alt="Default Post Image"
+                                             alt="Brand mark of {{ config('app.name') }}"
                                              class="w-8 h-8 object-contain">
                                     @endif
                                 </div>
@@ -55,7 +62,7 @@
                                 <!-- Fallback UI when image doesn't load -->
                                 <div class="absolute inset-0 flex items-center justify-center text-medical-green/80">
                                     <img src="{{ asset('images/logo.webp') }}"
-                                         alt="Default Post Image"
+                                         alt="Brand mark of {{ config('app.name') }}"
                                          class="w-8 h-8 object-contain">
                                 </div>
 
@@ -170,4 +177,5 @@
     </div> --}}
 </div>
 
+@endif
 

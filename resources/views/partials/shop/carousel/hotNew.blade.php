@@ -20,9 +20,9 @@
                                 <!-- Fallback UI khi ảnh không load được -->
                                 <div class="absolute inset-0 flex items-center justify-center text-medical-green/80">
                                     @if($settings->tmp_pic)
-                                        <img src="{{config('app.asset_url')}}/storage/{{$settings->tmp_pic}}" alt="Default Image" class="w-16 h-16 object-contain">
+                                        <img src="{{config('app.asset_url')}}/storage/{{$settings->tmp_pic}}" alt="Placeholder image for {{ config('app.name') }}" class="w-16 h-16 object-contain">
                                     @else
-                                        <img src="{{ asset('images/logo.webp') }}" alt="Default Post Image" class="w-8 h-8 object-contain">
+                                        <img src="{{ asset('images/logo.webp') }}" alt="Brand mark of {{ config('app.name') }}" class="w-8 h-8 object-contain">
                                     @endif
                                 </div>
                                 <!-- Actual image with fade-in effect -->
@@ -57,9 +57,9 @@
                                     <!-- Fallback UI khi ảnh không load được -->
                                     <div class="absolute inset-0 flex items-center justify-center text-medical-green/80">
                                         @if($settings->tmp_pic)
-                                            <img src="{{config('app.asset_url')}}/storage/{{$settings->tmp_pic}}" alt="Default Image" class="w-8 h-8 object-contain">
+                                            <img src="{{config('app.asset_url')}}/storage/{{$settings->tmp_pic}}" alt="Placeholder image for {{ config('app.name') }}" class="w-8 h-8 object-contain">
                                         @else
-                                            <img src="{{ asset('images/default-post.png') }}" alt="Default Post Image" class="w-8 h-8 object-contain">
+                                            <img src="{{ asset('images/default-post.png') }}" alt="Brand mark of {{ config('app.name') }}" class="w-8 h-8 object-contain">
                                         @endif
                                     </div>
                                     <!-- Actual image with fade-in effect -->

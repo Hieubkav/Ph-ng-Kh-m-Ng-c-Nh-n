@@ -29,7 +29,14 @@
         'serviceId' => $service->id,
         'slug' => $servicePost->slug,
     ]);
+    
+    $siteUrl = rtrim(config('app.url') ?: url('/'), '/');
+    $logoUrl = asset('images/logo.webp');
+    
+    $pageTitle = $servicePost->name . ' | ' . $service->name . ' | ' . config('app.name');
 @endphp
+
+@section('title', $pageTitle)
 
 @section('meta')
     <link rel="canonical" href="{{ $servicePostUrl }}">
@@ -40,6 +47,35 @@
     <meta property="og:url" content="{{ $servicePostUrl }}">
     <meta property="og:image" content="{{ $ogImage }}">
 @endsection
+
+@push('structured-data')
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "MedicalService",
+    "name": "{{ str_replace('"', '\"', $servicePost->name) }}",
+    "description": "{{ str_replace('"', '\"', $metaDescription) }}",
+    "image": "{{ $ogImage }}",
+    "provider": {
+        "@type": "MedicalOrganization",
+        "name": "Phòng Khám Đa Khoa Ngọc Nhân",
+        "url": "{{ $siteUrl }}",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "{{ $logoUrl }}"
+        }
+    },
+    "url": "{{ $servicePostUrl }}",
+    "serviceType": "{{ str_replace('"', '\"', $service->name) }}",
+    "datePublished": "{{ $servicePost->created_at->toIso8601String() }}",
+    "dateModified": "{{ $servicePost->updated_at->toIso8601String() }}",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{ $servicePostUrl }}"
+    }
+}
+</script>
+@endpush
 
 @section('content')
     @include('component.services.contentServicePost', [

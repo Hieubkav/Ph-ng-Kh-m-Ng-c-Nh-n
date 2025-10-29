@@ -2,7 +2,7 @@
     $setting = $settings;
 @endphp
 
-<head>
+@push('head')
     <style>
         /* Tạo hiệu ứng lắc qua lắc lại */
         /* Tạo hiệu ứng lắc qua lắc lại */
@@ -31,7 +31,7 @@
             animation: rotate 1s infinite linear;
         }
     </style>
-</head>
+@endpush
 
 <section class="relative">
     <div class="fixed bottom-8 right-8 z-20 flex flex-col items-center space-y-2">

@@ -50,7 +50,7 @@
                                         @else
                                             @if($settings->tmp_pic)
                                                 <img src="{{config('app.asset_url')}}/storage/{{$settings->tmp_pic}}"
-                                                     alt="Default Image"
+                                                     alt="Placeholder image for {{ $post->name }}"
                                                      class="w-full h-full object-contain object-center">
                                             @else
                                                 <div class="w-full h-full bg-gradient-to-br from-medical-green-light to-medical-green"></div>
@@ -87,7 +87,6 @@
     </div>
 </section>
 
-<!-- Alpine.js for tab functionality -->
-<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<!-- Alpine.js đã được load từ bundle Vite -->
 
 

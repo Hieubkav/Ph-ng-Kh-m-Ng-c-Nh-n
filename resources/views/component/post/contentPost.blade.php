@@ -64,11 +64,11 @@
                 <div class="absolute inset-0 flex items-center justify-center text-medical-green/80">
                     @if($settings->tmp_pic)
                         <img src="{{config('app.asset_url')}}/storage/{{ $settings->tmp_pic }}"
-                             alt="Default Image"
+                             alt="Placeholder image for {{ $post->name }}"
                              class="w-48 h-48 object-contain">
                     @else
                         <img src="{{ asset('images/logo.webp') }}"
-                             alt="Default Post Image"
+                             alt="Brand mark of {{ config('app.name') }}"
                              class="w-48 h-48 object-contain">
                     @endif
                 </div>
@@ -163,11 +163,11 @@
                                 <div class="absolute inset-0 flex items-center justify-center text-medical-green/80">
                                     @if($settings->tmp_pic)
                                         <img src="{{config('app.asset_url')}}/storage/{{ $settings->tmp_pic }}"
-                                             alt="Default Image"
+                                             alt="Placeholder image for {{ $relatedPost->name }}"
                                              class="w-48 h-48 object-contain">
                                     @else
                                         <img src="{{ asset('images/logo.webp') }}"
-                                             alt="Default Post Image"
+                                             alt="Brand mark of {{ config('app.name') }}"
                                              class="w-48 h-48 object-contain">
                                     @endif
                                 </div>

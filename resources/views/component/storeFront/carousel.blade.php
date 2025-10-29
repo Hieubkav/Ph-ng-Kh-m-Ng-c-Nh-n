@@ -43,10 +43,15 @@
                 <div id="slides-container" class="absolute inset-0">
                     <!-- Slides -->
                     @foreach($carouselItems as $index => $carousel)
+                        @php
+                            $carouselAlt = $carousel->alt_text
+                                ?? $carousel->title
+                                ?? 'Banner ' . config('app.name') . ' ' . ($index + 1);
+                        @endphp
                         <div class="absolute inset-0 transition-all duration-1000 ease-in-out opacity-0 transform carousel-slide-container"
                              data-slide="{{ $index }}">
                             <img src="{{config('app.asset_url')}}/storage/{{$carousel->image}}"
-                                 alt="{{ $index }}"
+                                 alt="{{ $carouselAlt }}"
                                  class="w-full h-full object-contain object-center"
                                  loading="lazy">
                         </div>

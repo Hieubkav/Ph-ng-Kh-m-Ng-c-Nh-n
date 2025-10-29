@@ -91,4 +91,4 @@
 </section>
 
 <!-- Alpine.js for tab functionality -->
-<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<!-- Alpine.js đã được load từ bundle Vite -->
