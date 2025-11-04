@@ -8,7 +8,7 @@
             <!-- Logo Section (Left) -->
             <div class="flex items-center shrink-0 order-1 md:order-1">
                 <a href="{{ route('storeFront') }}">
-                <img src="{{config('app.asset_url')}}/storage/{{$setting->logo}}" alt="Logo" class="w-20 h-20 md:w-32 md:h-32">
+                <img src="{{config('app.asset_url')}}/storage/{{$setting->logo}}" alt="Logo" class="w-20 h-20 md:w-32 md:h-32" loading="lazy">
                 </a>
             </div>
 

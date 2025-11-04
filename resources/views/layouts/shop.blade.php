@@ -13,6 +13,8 @@
         $logoUrl = asset('images/logo.webp');
     @endphp
 
+    <link rel="alternate" hreflang="vi" href="{{ $canonicalUrl }}">
+
     @hasSection('meta')
         @yield('meta')
     @else
@@ -26,6 +28,35 @@
         <meta property="og:image" content="{{ asset('images/banner.webp') }}">
     @endif
 
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@yield('title', config('app.name'))">
+    <meta name="twitter:description" content="@yield('meta-description', 'Phòng Khám Đa Khoa Ngọc Nhân cung cấp dịch vụ y tế toàn diện với đội ngũ bác sĩ giàu kinh nghiệm và trang thiết bị hiện đại.')">
+    <meta name="twitter:image" content="@yield('meta-image', asset('images/banner.webp'))">
+
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "{{ $appName }}",
+          "alternateName": "Phòng khám Ngọc Nhân",
+          "url": "{{ config('app.url') }}",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "{{ $logoUrl }}"
+          },
+          "description": "Phòng Khám Đa Khoa Ngọc Nhân cung cấp dịch vụ y tế toàn diện với đội ngũ bác sĩ giàu kinh nghiệm và trang thiết bị hiện đại",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "TP. Hồ Chí Minh",
+            "addressCountry": "VN"
+          },
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+84-xxx-xxx-xxx",
+            "contactType": "customer service"
+          }
+        }
+    </script>
     <script type="application/ld+json">
         {
           "@context": "https://schema.org",

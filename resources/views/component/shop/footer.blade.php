@@ -99,7 +99,7 @@
                                hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]
                                flex items-center justify-center">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/2023_Facebook_icon.svg/1024px-2023_Facebook_icon.svg.png"
-                            alt="Facebook" class="w-10 h-10" />
+                        alt="Facebook" class="w-10 h-10" loading="lazy" />
                     </a>
 
                     <!-- Zalo Icon -->
@@ -110,7 +110,7 @@
                                hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]
                                flex items-center justify-center">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Icon_of_Zalo.svg/2048px-Icon_of_Zalo.svg.png"
-                            alt="Zalo" class="w-10 h-10" />
+                        alt="Zalo" class="w-10 h-10" loading="lazy" />
                     </a>
                 </div>
             </div>

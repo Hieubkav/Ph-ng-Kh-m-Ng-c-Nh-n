@@ -75,6 +75,32 @@
     }
 }
 </script>
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Trang chủ",
+              "item": "{{ route('storeFront') }}"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "{{ str_replace('\"', '\\\"', $service->name) }}",
+              "item": "{{ route('services', $service->id) }}"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "{{ str_replace('\"', '\\\"', $servicePost->name) }}",
+              "item": "{{ $servicePostUrl }}"
+            }
+          ]
+        }
+    </script>
 @endpush
 
 @section('content')

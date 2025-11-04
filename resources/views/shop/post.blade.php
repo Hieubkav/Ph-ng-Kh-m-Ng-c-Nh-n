@@ -67,6 +67,32 @@
     }
 }
 </script>
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Trang chủ",
+              "item": "{{ route('storeFront') }}"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "{{ $post->cat_post->name ?? 'Bài viết' }}",
+              "item": "{{ $post->cat_post ? route('catPost', $post->cat_post->id) : route('storeFront') }}"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "{{ str_replace('\"', '\\\"', $post->name) }}",
+              "item": "{{ route('post', $post->slug) }}"
+            }
+          ]
+        }
+    </script>
 @endpush
 
 @section('content')

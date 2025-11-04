@@ -21,6 +21,29 @@
     <meta property="og:type" content="website">
 @endsection
 
+@push('structured-data')
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Trang chủ",
+          "item": "{{ route('storeFront') }}"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Tuyển dụng",
+          "item": "{{ url()->current() }}"
+        }
+      ]
+    }
+</script>
+@endpush
+
 @section('content')
     @include('component.hiring.contentHiring')
 @endsection
