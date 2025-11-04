@@ -24,6 +24,8 @@
             <p class="mt-4 text-gray-600 max-w-2xl mx-auto text-lg">
                 Khám phá nhịp sống và hình ảnh nổi bật của phòng khám.
             </p>
+
+            <div class="w-24 h-1 bg-gradient-to-r from-medical-green-light to-medical-green mx-auto my-6"></div>
         </div>
 
         <div class="bg-white rounded-2xl shadow border border-green-100 overflow-hidden text-left">

@@ -11,7 +11,7 @@
                 BÁC SĨ CHUYÊN KHOA
             </h2>
             <p class="text-gray-600 max-w-2xl mx-auto text-lg">
-                Điạ nguũ bác sĩ giàu kinh nghiệm, tận tâm với ngườ bệnh và thường xuyên cập nhật các phương pháp điều trị tiên tiến.
+                Đội ngũ bác sĩ giàu kinh nghiệm, tận tâm với người bệnh và thường xuyên cập nhật các phương pháp điều trị tiên tiến.
             </p>
 
             <div

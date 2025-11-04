@@ -10,7 +10,7 @@
             <h2 class="text-3xl font-bold text-medical-green mb-4">
                 BÀI VIẾT MỚI NHẤT</h2>
             <div class="text-center text-gray-600 mt-2 max-w-2xl mx-auto text-lg">
-                Cập nhật nhanh các hoạt động, sự kiện nổi bật và thông báo quan trọng từ bệnh viện, giúp người đọc nắm bắt thông tin mới nhất một cách kịp thời và chính xác.
+                Cập nhật nhanh các hoạt động, sự kiện nổi bật và thông báo quan trọng từ phòng khám
             </div>
 
             <div class="w-24 h-1 bg-gradient-to-r from-medical-green-light to-medical-green mx-auto my-6"></div>
