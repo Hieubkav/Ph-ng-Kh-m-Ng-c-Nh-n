@@ -6,7 +6,7 @@
 <section class="py-16 bg-gray-50">
     <div class="container mx-auto px-4">
         <!-- Section Header -->
-        <div class="text-center mb-12" data-aos="fade-up">
+        <div class="text-center mb-12">
             <h2 class="text-3xl font-bold text-medical-green mb-4">
                 BÀI VIẾT MỚI NHẤT</h2>
             <div class="text-center text-gray-600 mt-2 max-w-2xl mx-auto text-lg">
@@ -20,7 +20,7 @@
         <!-- Tabs Container -->
         <div class="max-w-8 mx-auto" x-data="{ activeTab: '{{ $categoryItems->first()?->id }}' }">
             <!-- Tab Headers -->
-            <div class="flex flex-wrap justify-center mb-8 gap-4" data-aos="fade-up">
+            <div class="flex flex-wrap justify-center mb-8 gap-4">
                 @foreach($categoryItems as $catPost)
                     <button
                         @click="activeTab = '{{ $catPost->id }}'"
@@ -46,12 +46,14 @@
                                             <img src="{{config('app.asset_url')}}/storage/{{$post->image}}"
                                                  alt="{{ $post->name }}"
                                                  class="w-full h-full object-contain object-center transition-opacity duration-300"
+                                                  loading="lazy"
                                                  onerror="this.src='{{config('app.asset_url')}}/storage/{{$settings->tmp_pic ?? ''}}'">
                                         @else
                                             @if($settings->tmp_pic)
                                                 <img src="{{config('app.asset_url')}}/storage/{{$settings->tmp_pic}}"
-                                                     alt="Placeholder image for {{ $post->name }}"
-                                                     class="w-full h-full object-contain object-center">
+                                                alt="Placeholder image for {{ $post->name }}"
+                                                class="w-full h-full object-contain object-center"
+                                                      loading="lazy">
                                             @else
                                                 <div class="w-full h-full bg-gradient-to-br from-medical-green-light to-medical-green"></div>
                                             @endif

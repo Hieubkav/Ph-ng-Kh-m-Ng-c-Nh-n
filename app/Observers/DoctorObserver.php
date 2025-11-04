@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Doctor;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
@@ -10,30 +11,33 @@ use Intervention\Image\Drivers\Gd\Driver;
 class DoctorObserver
 {
     /**
-     * Handle the Doctor "created" event.
-     */
+    * Handle the Doctor "created" event.
+    */
     public function created(Doctor $doctor): void
     {
-        $this->convertToWebP($doctor);
+    $this->convertToWebP($doctor);
+        Cache::forget('storefront_doctors');
     }
 
     /**
-     * Handle the Doctor "updated" event.
-     */
+    * Handle the Doctor "updated" event.
+    */
     public function updated(Doctor $doctor): void
     {
-        $this->convertToWebP($doctor);
+    $this->convertToWebP($doctor);
+        Cache::forget('storefront_doctors');
     }
 
     /**
-     * Handle the Doctor "deleted" event.
-     */
+    * Handle the Doctor "deleted" event.
+    */
     public function deleted(Doctor $doctor): void
     {
-        // Xóa file ảnh khi xóa bác sĩ
-        if ($doctor->image && Storage::disk('public')->exists($doctor->image)) {
-            Storage::disk('public')->delete($doctor->image);
-        }
+    // Xóa file ảnh khi xóa bác sĩ
+    if ($doctor->image && Storage::disk('public')->exists($doctor->image)) {
+    Storage::disk('public')->delete($doctor->image);
+    }
+        Cache::forget('storefront_doctors');
     }
 
     /**

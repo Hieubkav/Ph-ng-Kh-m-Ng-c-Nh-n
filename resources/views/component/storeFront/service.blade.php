@@ -6,7 +6,7 @@
 <div class="w-full bg-gray-50 py-16">
     <div class="container mx-auto px-4">
 
-        <h2 class="text-3xl font-bold text-medical-green-dark text-center" data-aos="fade-up">
+        <h2 class="text-3xl font-bold text-medical-green-dark text-center">
             DỊCH VỤ Y TẾ
         </h2>
         <div class="text-center text-gray-600 mt-2 max-w-2xl mx-auto text-lg">Khám chữa bệnh, điều trị chuyên khoa, xét nghiệm hiện đại nhất</div>
@@ -16,9 +16,7 @@
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             @forelse ($serviceItems as $service)
             <!-- Service Card -->
-            <div class="bg-white rounded-2xl shadow-lg overflow-hidden group hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
-                 data-aos="fade-up"
-                 data-aos-delay="100">
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden group hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
                 <!-- Image Container with Better Proportion -->
                 <div class="bg-gradient-to-br from-medical-green-light/10 to-medical-green/10 p-8 flex items-center justify-center">
                     <div class="relative">

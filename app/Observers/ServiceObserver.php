@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Service;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
@@ -10,19 +11,21 @@ use Intervention\Image\Drivers\Gd\Driver;
 class ServiceObserver
 {
     /**
-     * Handle the Service "created" event.
-     */
+    * Handle the Service "created" event.
+    */
     public function created(Service $service): void
     {
-        $this->convertToWebP($service);
+    $this->convertToWebP($service);
+        Cache::forget('storefront_services');
     }
 
     /**
-     * Handle the Service "updated" event.
+    * Handle the Service "updated" event.
      */
     public function updated(Service $service): void
     {
         $this->convertToWebP($service);
+        Cache::forget('storefront_services');
     }
 
     /**
@@ -30,10 +33,11 @@ class ServiceObserver
      */
     public function deleted(Service $service): void
     {
-        // Xóa file ảnh khi xóa dịch vụ
-        if ($service->image && Storage::disk('public')->exists($service->image)) {
+    // Xóa file ảnh khi xóa dịch vụ
+    if ($service->image && Storage::disk('public')->exists($service->image)) {
             Storage::disk('public')->delete($service->image);
         }
+        Cache::forget('storefront_services');
     }
 
     /**

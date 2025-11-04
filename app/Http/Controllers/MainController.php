@@ -11,33 +11,54 @@ use App\Models\Service;
 use App\Models\ServicePost;
 use App\Models\Video;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class MainController extends Controller
 {
     public function storeFront()
     {
-        $carousels = Carousel::query()->orderByDesc('created_at')->get();
-        $services = Service::query()->orderBy('order_service')->get();
-        $doctors = Doctor::all();
-        $activeSchedule = Schedule::query()->where('status', 'show')->latest()->first();
-        $hotPosts = Post::query()
-            ->where('is_hot', 'hot')
-            ->orderByDesc('created_at')
-            ->get();
-        $catPosts = CatPost::query()
-            ->where('status', 'show')
-            ->with([
-                'posts' => function ($query) {
-                    $query->orderByDesc('created_at')
-                        ->limit(3);
-                },
-            ])
-            ->get();
-        $videos = Video::query()
-            ->where('is_active', true)
-            ->orderBy('display_order')
-            ->orderByDesc('created_at')
-            ->get();
+        $carousels = Cache::remember('storefront_carousels', 3600, function () {
+            return Carousel::query()->orderByDesc('created_at')->get();
+        });
+
+        $services = Cache::remember('storefront_services', 3600, function () {
+            return Service::query()->orderBy('order_service')->get();
+        });
+
+        $doctors = Cache::remember('storefront_doctors', 3600, function () {
+            return Doctor::all();
+        });
+
+        $activeSchedule = Cache::remember('storefront_active_schedule', 3600, function () {
+            return Schedule::query()->where('status', 'show')->latest()->first();
+        });
+
+        $hotPosts = Cache::remember('storefront_hot_posts', 3600, function () {
+            return Post::query()
+                ->where('is_hot', 'hot')
+                ->orderByDesc('created_at')
+                ->get();
+        });
+
+        $catPosts = Cache::remember('storefront_cat_posts', 3600, function () {
+            return CatPost::query()
+                ->where('status', 'show')
+                ->with([
+                    'posts' => function ($query) {
+                        $query->orderByDesc('created_at')
+                            ->limit(3);
+                    },
+                ])
+                ->get();
+        });
+
+        $videos = Cache::remember('storefront_videos', 3600, function () {
+            return Video::query()
+                ->where('is_active', true)
+                ->orderBy('display_order')
+                ->orderByDesc('created_at')
+                ->get();
+        });
 
         return view('shop.storeFront', compact(
             'carousels',

@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Schedule;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
@@ -10,19 +11,21 @@ use Intervention\Image\Drivers\Gd\Driver;
 class ScheduleObserver
 {
     /**
-     * Handle the Schedule "created" event.
-     */
+    * Handle the Schedule "created" event.
+    */
     public function created(Schedule $schedule): void
     {
-        $this->convertToWebP($schedule);
+    $this->convertToWebP($schedule);
+        Cache::forget('storefront_active_schedule');
     }
 
     /**
-     * Handle the Schedule "updated" event.
+    * Handle the Schedule "updated" event.
      */
     public function updated(Schedule $schedule): void
     {
         $this->convertToWebP($schedule);
+        Cache::forget('storefront_active_schedule');
     }
 
     /**
@@ -30,10 +33,11 @@ class ScheduleObserver
      */
     public function deleted(Schedule $schedule): void
     {
-        // Xóa file ảnh khi xóa lịch khám
-        if ($schedule->url_thumbnail && Storage::disk('public')->exists($schedule->url_thumbnail)) {
+    // Xóa file ảnh khi xóa lịch khám
+    if ($schedule->url_thumbnail && Storage::disk('public')->exists($schedule->url_thumbnail)) {
             Storage::disk('public')->delete($schedule->url_thumbnail);
         }
+        Cache::forget('storefront_active_schedule');
     }
 
     /**

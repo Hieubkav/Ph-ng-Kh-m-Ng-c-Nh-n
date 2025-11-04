@@ -6,7 +6,7 @@
 <section class="py-16 bg-gradient-to-br from-medical-green-lightest via-white to-medical-green-lightest">
     <div class="container mx-auto px-4">
         <!-- Section Header -->
-        <div class="text-center mb-12" data-aos="fade-up">
+        <div class="text-center mb-12">
             <h2 class="text-3xl font-bold text-medical-green mb-4 uppercase tracking-wide">
                 BÁC SĨ CHUYÊN KHOA
             </h2>
@@ -19,7 +19,7 @@
         </div>
 
         <!-- Doctors Slider -->
-        <div class="max-w-6xl mx-auto" data-aos="fade-up">
+        <div class="max-w-6xl mx-auto">
             @if($doctorItems->isEmpty())
                 <p class="text-center text-gray-500">Hiện tại chưa có thông tin bác sĩ.</p>
             @else

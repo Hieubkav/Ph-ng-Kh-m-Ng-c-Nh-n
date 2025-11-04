@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\Post;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Drivers\Gd\Driver;
@@ -167,12 +168,11 @@ class PostObserver
     }
 
     /**
-     * Flush application caches that may hold stale data.
-     */
+    * Flush storefront caches that may hold stale data.
+    */
     private function clearCache(): void
     {
-        Artisan::call('cache:clear');
-        Artisan::call('config:clear');
-        Artisan::call('view:clear');
+    Cache::forget('storefront_hot_posts');
+    Cache::forget('storefront_cat_posts');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Carousel;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
@@ -10,19 +11,21 @@ use Intervention\Image\Drivers\Gd\Driver;
 class CarouselObserver
 {
     /**
-     * Handle the Carousel "created" event.
-     */
+    * Handle the Carousel "created" event.
+    */
     public function created(Carousel $carousel): void
     {
-        $this->convertToWebP($carousel);
+    $this->convertToWebP($carousel);
+        Cache::forget('storefront_carousels');
     }
 
     /**
-     * Handle the Carousel "updated" event.
-     */
+    * Handle the Carousel "updated" event.
+    */
     public function updated(Carousel $carousel): void
     {
-        $this->convertToWebP($carousel);
+    $this->convertToWebP($carousel);
+        Cache::forget('storefront_carousels');
     }
 
     /**
