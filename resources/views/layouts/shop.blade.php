@@ -47,7 +47,7 @@
           "description": "Phòng Khám Đa Khoa Ngọc Nhân cung cấp dịch vụ y tế toàn diện với đội ngũ bác sĩ giàu kinh nghiệm và trang thiết bị hiện đại",
           "address": {
             "@type": "PostalAddress",
-            "addressLocality": "TP. Hồ Chí Minh",
+            "addressLocality": "Trà Ôn, Vĩnh Long",
             "addressCountry": "VN"
           },
           "contactPoint": {

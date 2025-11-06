@@ -5,7 +5,7 @@
 @section('meta')
     @php $currentUrl = url()->current(); @endphp
     <link rel="canonical" href="{{ $currentUrl }}">
-    <meta name="description" content="Phòng Khám Đa Khoa Ngọc Nhân cung cấp dịch vụ y tế toàn diện, đội ngũ bác sĩ giàu kinh nghiệm và trang thiết bị hiện đại tại TP. Hồ Chí Minh.">
+    <meta name="description" content="Phòng Khám Đa Khoa Ngọc Nhân cung cấp dịch vụ y tế toàn diện, đội ngũ bác sĩ giàu kinh nghiệm và trang thiết bị hiện đại tại Trà Ôn, Vĩnh Long.">
     <meta name="keywords" content="Phòng Khám Đa Khoa Ngọc Nhân, dịch vụ y tế, bác sĩ chuyên khoa, khám chữa bệnh, phòng khám uy tín">
     <meta property="og:title" content="Phòng Khám Đa Khoa Ngọc Nhân - Dịch Vụ Y Tế Chất Lượng Cao">
     <meta property="og:description" content="Khám chữa bệnh đa khoa, chẩn đoán chuyên sâu và chăm sóc sức khỏe trọn gói tại Phòng Khám Đa Khoa Ngọc Nhân.">
@@ -29,7 +29,7 @@
     "description": "Phòng Khám Đa Khoa Ngọc Nhân cung cấp dịch vụ y tế toàn diện với đội ngũ bác sĩ giàu kinh nghiệm và trang thiết bị hiện đại",
     "address": {
         "@type": "PostalAddress",
-        "addressLocality": "TP. Hồ Chí Minh",
+        "addressLocality": "Trà Ôn, Vĩnh Long",
         "addressCountry": "VN"
     },
     "medicalSpecialty": [
