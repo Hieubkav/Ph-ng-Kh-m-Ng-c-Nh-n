@@ -29,7 +29,6 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->brandName('Đa Khoa Ngọc Nhân')
-            ->profile(isSimple: false)
             ->login()
             ->colors([
                 'primary' => Color::Green,
