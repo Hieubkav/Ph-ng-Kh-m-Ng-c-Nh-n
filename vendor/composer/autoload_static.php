@@ -476,8 +476,8 @@ class ComposerStaticInit4bbf5cfb3a0045d0f160be0f0cd42d91
         ),
         'Nette\\' => 
         array (
-            0 => __DIR__ . '/..' . '/nette/utils/src',
-            1 => __DIR__ . '/..' . '/nette/schema/src',
+            0 => __DIR__ . '/..' . '/nette/schema/src',
+            1 => __DIR__ . '/..' . '/nette/utils/src',
         ),
         'Monolog\\' => 
         array (
@@ -726,6 +726,7 @@ class ComposerStaticInit4bbf5cfb3a0045d0f160be0f0cd42d91
         'AnourValar\\EloquentSerialize\\Grammars\\QueryBuilderGrammar' => __DIR__ . '/..' . '/anourvalar/eloquent-serialize/src/Grammars/QueryBuilderGrammar.php',
         'AnourValar\\EloquentSerialize\\Package' => __DIR__ . '/..' . '/anourvalar/eloquent-serialize/src/Package.php',
         'AnourValar\\EloquentSerialize\\Service' => __DIR__ . '/..' . '/anourvalar/eloquent-serialize/src/Service.php',
+        'App\\Console\\Commands\\CleanUnusedImages' => __DIR__ . '/../..' . '/app/Console/Commands/CleanUnusedImages.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Filament\\Pages\\SettingUp' => __DIR__ . '/../..' . '/app/Filament/Pages/SettingUp.php',
@@ -773,6 +774,7 @@ class ComposerStaticInit4bbf5cfb3a0045d0f160be0f0cd42d91
         'App\\Filament\\Resources\\VideoResource\\Pages\\CreateVideo' => __DIR__ . '/../..' . '/app/Filament/Resources/VideoResource/Pages/CreateVideo.php',
         'App\\Filament\\Resources\\VideoResource\\Pages\\EditVideo' => __DIR__ . '/../..' . '/app/Filament/Resources/VideoResource/Pages/EditVideo.php',
         'App\\Filament\\Resources\\VideoResource\\Pages\\ListVideos' => __DIR__ . '/../..' . '/app/Filament/Resources/VideoResource/Pages/ListVideos.php',
+        'App\\Helpers\\TiptapConfig' => __DIR__ . '/../..' . '/app/Helpers/TiptapConfig.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\MainController' => __DIR__ . '/../..' . '/app/Http/Controllers/MainController.php',
         'App\\Http\\Controllers\\SitemapController' => __DIR__ . '/../..' . '/app/Http/Controllers/SitemapController.php',
@@ -781,6 +783,7 @@ class ComposerStaticInit4bbf5cfb3a0045d0f160be0f0cd42d91
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
         'App\\Http\\Middleware\\GzipMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/GzipMiddleware.php',
+        'App\\Http\\Middleware\\ImprovedGzipMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/ImprovedGzipMiddleware.php',
         'App\\Http\\Middleware\\PreventRequestsDuringMaintenance' => __DIR__ . '/../..' . '/app/Http/Middleware/PreventRequestsDuringMaintenance.php',
         'App\\Http\\Middleware\\RedirectIfAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectIfAuthenticated.php',
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
@@ -814,6 +817,7 @@ class ComposerStaticInit4bbf5cfb3a0045d0f160be0f0cd42d91
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\Filament\\AdminPanelProvider' => __DIR__ . '/../..' . '/app/Providers/Filament/AdminPanelProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
+        'App\\Providers\\TiptapServiceProvider' => __DIR__ . '/../..' . '/app/Providers/TiptapServiceProvider.php',
         'App\\Providers\\ViewServiceProvider' => __DIR__ . '/../..' . '/app/Providers/ViewServiceProvider.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'BladeUI\\Heroicons\\BladeHeroiconsServiceProvider' => __DIR__ . '/..' . '/blade-ui-kit/blade-heroicons/src/BladeHeroiconsServiceProvider.php',

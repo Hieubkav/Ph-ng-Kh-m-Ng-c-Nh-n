@@ -3,176 +3,216 @@
 namespace App\Observers;
 
 use App\Models\Post;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use Intervention\Image\Drivers\Gd\Driver;
-use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\Log;
 
 class PostObserver
 {
     /**
-     * Set default values before the model is persisted.
+     * Handle the Post "creating" event.
      */
     public function creating(Post $post): void
     {
-        $this->ensureSlug($post);
-        $this->prepareImage($post);
+        // Tự động tạo slug nếu chưa có
+        if (empty($post->slug)) {
+            $post->slug = \Str::slug($post->name);
+        }
     }
 
     /**
-     * Refresh derived attributes ahead of updates.
+     * Handle the Post "updating" event.
+     * Xóa ảnh cũ khi có ảnh mới được upload
      */
     public function updating(Post $post): void
     {
-        $this->ensureSlug($post);
-        $this->prepareImage($post);
-    }
+        // Lấy dữ liệu cũ từ database
+        $oldPost = Post::find($post->id);
+        
+        if (!$oldPost) {
+            return;
+        }
 
-    /**
-     * Handle the Post "created" event.
-     */
-    public function created(Post $post): void
-    {
-        $this->clearCache();
-    }
+        // Xử lý ảnh chính (image)
+        if ($post->image !== $oldPost->image) {
+            $this->deleteOldImage($oldPost->image);
+            Log::info("Deleted old image for Post ID {$post->id}: {$oldPost->image}");
+        }
 
-    /**
-     * Handle the Post "updated" event.
-     */
-    public function updated(Post $post): void
-    {
-        $this->clearCache();
+        // Xử lý file PDF
+        if ($post->pdf !== $oldPost->pdf) {
+            $this->deleteOldImage($oldPost->pdf);
+            Log::info("Deleted old PDF for Post ID {$post->id}: {$oldPost->pdf}");
+        }
+
+        // Xử lý ảnh trong content editor
+        $this->handleContentImages($oldPost->content, $post->content);
     }
 
     /**
      * Handle the Post "deleted" event.
+     * Xóa tất cả ảnh khi xóa bài viết
      */
     public function deleted(Post $post): void
     {
-        if ($post->image && Storage::disk('public')->exists($post->image)) {
-            Storage::disk('public')->delete($post->image);
+        // Xóa ảnh chính
+        if ($post->image) {
+            $this->deleteOldImage($post->image);
+            Log::info("Deleted image for deleted Post ID {$post->id}: {$post->image}");
         }
 
-        if ($post->pdf && Storage::disk('public')->exists($post->pdf)) {
-            Storage::disk('public')->delete($post->pdf);
+        // Xóa file PDF
+        if ($post->pdf) {
+            $this->deleteOldImage($post->pdf);
+            Log::info("Deleted PDF for deleted Post ID {$post->id}: {$post->pdf}");
         }
+
+        // Xóa tất cả ảnh trong content
+        $this->deleteContentImages($post->content);
     }
 
     /**
-     * Make sure a unique slug is present on the model.
+     * Handle the Post "restored" event.
      */
-    private function ensureSlug(Post $post): void
+    public function restored(Post $post): void
     {
-        if (!$post->name) {
-            return;
-        }
-
-        if (!$post->slug || $post->isDirty('name')) {
-            $post->slug = $this->generateUniqueSlug($post);
-        }
+        Log::info("Post ID {$post->id} has been restored");
     }
 
     /**
-     * Generate a unique slug based on the post title.
+     * Handle the Post "force deleted" event.
      */
-    private function generateUniqueSlug(Post $post): string
+    public function forceDeleted(Post $post): void
     {
-        $baseSlug = Str::slug($post->name) ?: 'bai-viet';
-        if (is_numeric($baseSlug)) {
-            $baseSlug = 'bai-viet-' . $baseSlug;
-        }
-        $slug = $baseSlug;
-        $suffix = 2;
-
-        while (
-            Post::query()
-                ->where('slug', $slug)
-                ->when($post->exists, fn ($query) => $query->where('id', '!=', $post->id))
-                ->exists()
-        ) {
-            $slug = $baseSlug . '-' . $suffix;
-            $suffix++;
-        }
-
-        return $slug;
+        // Giống như deleted nhưng cho force delete
+        $this->deleted($post);
     }
 
     /**
-     * Keep the stored og_image in sync with the main image.
+     * Xóa file ảnh cũ từ storage
      */
-    private function prepareImage(Post $post): void
+    private function deleteOldImage(?string $path): void
     {
-        $originalImage = $post->getOriginal('image');
-        $currentImage = $post->image;
-
-        if (!$currentImage) {
-            $this->deleteImageIfExists($originalImage);
-            $post->og_image = null;
+        if (!$path) {
             return;
         }
 
-        if (!$post->isDirty('image')) {
-            $post->og_image = $currentImage;
-            return;
-        }
-
-        $convertedPath = $this->convertToWebpPath($currentImage);
-
-        if ($convertedPath) {
-            $post->image = $convertedPath;
-            $post->og_image = $convertedPath;
-
-            if ($originalImage && $originalImage !== $currentImage) {
-                $this->deleteImageIfExists($originalImage);
+        try {
+            // Kiểm tra xem file có tồn tại không
+            if (Storage::disk('public')->exists($path)) {
+                Storage::disk('public')->delete($path);
+                Log::info("Successfully deleted file: {$path}");
+            } else {
+                Log::warning("File not found for deletion: {$path}");
             }
-        } else {
-            $post->og_image = $currentImage;
-        }
-    }
-
-    private function convertToWebpPath(string $relativePath): ?string
-    {
-        $extension = strtolower(pathinfo($relativePath, PATHINFO_EXTENSION));
-
-        if ($extension === 'webp') {
-            return $relativePath;
-        }
-
-        $absolutePath = Storage::disk('public')->path($relativePath);
-
-        if (!file_exists($absolutePath)) {
-            return null;
-        }
-
-        $webpFilename = pathinfo($relativePath, PATHINFO_FILENAME) . '.webp';
-        $directory = trim(dirname($relativePath), '/\\');
-        $webpRelativePath = ($directory ? $directory . '/' : '') . $webpFilename;
-        $webpAbsolutePath = Storage::disk('public')->path($webpRelativePath);
-
-        $manager = new ImageManager(new Driver());
-        $image = $manager->read($absolutePath);
-        $image->toWebp(100)->save($webpAbsolutePath);
-
-        Storage::disk('public')->delete($relativePath);
-
-        return $webpRelativePath;
-    }
-
-    private function deleteImageIfExists(?string $relativePath): void
-    {
-        if ($relativePath && Storage::disk('public')->exists($relativePath)) {
-            Storage::disk('public')->delete($relativePath);
+        } catch (\Exception $e) {
+            Log::error("Error deleting file {$path}: " . $e->getMessage());
         }
     }
 
     /**
-    * Flush storefront caches that may hold stale data.
-    */
-    private function clearCache(): void
+     * Xử lý ảnh trong content editor khi update
+     * So sánh content cũ và mới để xóa ảnh không còn sử dụng
+     */
+    private function handleContentImages(?string $oldContent, ?string $newContent): void
     {
-    Cache::forget('storefront_hot_posts');
-    Cache::forget('storefront_cat_posts');
+        if (!$oldContent) {
+            return;
+        }
+
+        // Lấy danh sách ảnh từ content cũ
+        $oldImages = $this->extractImagesFromContent($oldContent);
+        
+        // Lấy danh sách ảnh từ content mới
+        $newImages = $this->extractImagesFromContent($newContent ?? '');
+        
+        // Tìm ảnh không còn được sử dụng
+        $imagesToDelete = array_diff($oldImages, $newImages);
+        
+        foreach ($imagesToDelete as $image) {
+            // Chỉ xóa ảnh từ uploads/content (ảnh của editor)
+            if (str_contains($image, 'uploads/content/')) {
+                $this->deleteOldImage($image);
+                Log::info("Deleted unused content image: {$image}");
+            }
+        }
+    }
+
+    /**
+     * Xóa tất cả ảnh trong content khi xóa bài viết
+     */
+    private function deleteContentImages(?string $content): void
+    {
+        if (!$content) {
+            return;
+        }
+
+        $images = $this->extractImagesFromContent($content);
+        
+        foreach ($images as $image) {
+            // Chỉ xóa ảnh từ uploads/content (ảnh của editor)
+            if (str_contains($image, 'uploads/content/')) {
+                $this->deleteOldImage($image);
+                Log::info("Deleted content image: {$image}");
+            }
+        }
+    }
+
+    /**
+     * Trích xuất danh sách ảnh từ HTML content
+     */
+    private function extractImagesFromContent(string $content): array
+    {
+        $images = [];
+        
+        // Tìm tất cả src của img tags
+        preg_match_all('/<img[^>]+src=[\'"]([^\'"]+)[\'"][^>]*>/i', $content, $matches);
+        
+        if (!empty($matches[1])) {
+            foreach ($matches[1] as $src) {
+                // Lấy path tương đối từ URL
+                $path = $this->getRelativePathFromUrl($src);
+                if ($path) {
+                    $images[] = $path;
+                }
+            }
+        }
+
+        // Tìm ảnh trong data-url attributes (TipTap có thể dùng)
+        preg_match_all('/data-url=[\'"]([^\'"]+)[\'"]/', $content, $dataMatches);
+        
+        if (!empty($dataMatches[1])) {
+            foreach ($dataMatches[1] as $src) {
+                $path = $this->getRelativePathFromUrl($src);
+                if ($path) {
+                    $images[] = $path;
+                }
+            }
+        }
+
+        return array_unique($images);
+    }
+
+    /**
+     * Chuyển URL thành path tương đối cho storage
+     */
+    private function getRelativePathFromUrl(string $url): ?string
+    {
+        // Xóa domain nếu có
+        $url = str_replace(config('app.url'), '', $url);
+        $url = str_replace(url('/'), '', $url);
+        
+        // Xóa /storage/ prefix
+        $url = preg_replace('/^\/storage\//', '', $url);
+        $url = preg_replace('/^storage\//', '', $url);
+        
+        // Chỉ xử lý ảnh trong uploads/
+        if (str_contains($url, 'uploads/')) {
+            // Lấy phần sau uploads/
+            if (preg_match('/uploads\/.*/', $url, $matches)) {
+                return $matches[0];
+            }
+        }
+        
+        return null;
     }
 }

@@ -21,8 +21,8 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
-use Malzariey\FilamentLexicalEditor\Enums\ToolbarItem;
 use Malzariey\FilamentLexicalEditor\FilamentLexicalEditor;
+use Malzariey\FilamentLexicalEditor\Enums\ToolbarItem;
 
 class ServicePostResource extends Resource
 {
@@ -70,6 +70,7 @@ class ServicePostResource extends Resource
                                 ToolbarItem::NORMAL,
                                 ToolbarItem::H1,
                                 ToolbarItem::H2,
+                                ToolbarItem::H3,
                                 ToolbarItem::DIVIDER,
                                 ToolbarItem::BOLD,
                                 ToolbarItem::ITALIC,
@@ -97,7 +98,8 @@ class ServicePostResource extends Resource
                                 ToolbarItem::HR,
                                 ToolbarItem::IMAGE,
                                 ToolbarItem::CLEAR,
-                            ]),
+                            ])
+                            ->helperText('💡 Lưu ý: Để căn lề (trái/giữa/phải/đều) cho một cụm chữ, bạn cần XUỐNG DÒNG (Enter) trước và sau cụm chữ đó. Editor đã có sẵn các font: Arial, Georgia, Impact, Tahoma, Times New Roman, Verdana.'),
                     ])->columns(2),
                     
                 Forms\Components\Section::make('Hình ảnh và tài liệu')
@@ -108,9 +110,9 @@ class ServicePostResource extends Resource
                             ->image()
                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                             ->directory('uploads')
-                            ->maxSize(2048)
+                            ->maxSize(5120)
                             ->preserveFilenames()
-                            ->helperText('Định dạng: jpg, png, webp. Kích thước tối đa: 2MB')
+                            ->helperText('Định dạng: jpg, png, webp. Kích thước tối đa: 5MB')
                             ->columnSpan(1),
                             
                         Forms\Components\FileUpload::make('pdf')

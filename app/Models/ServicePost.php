@@ -30,17 +30,19 @@ class ServicePost extends Model
         return $this->belongsTo(Service::class);
     }
 
-    protected static function boot()
+    /**
+     * Get the image URL
+     */
+    public function getImageUrlAttribute(): ?string
     {
-        parent::boot();
+        return $this->image ? Storage::disk('public')->url($this->image) : null;
+    }
 
-        static::deleting(function($servicePost) {
-            if ($servicePost->pdf) {
-                Storage::disk('public')->delete($servicePost->pdf);
-            }
-            if ($servicePost->image) {
-                Storage::disk('public')->delete($servicePost->image);
-            }
-        });
+    /**
+     * Get the PDF URL
+     */
+    public function getPdfUrlAttribute(): ?string
+    {
+        return $this->pdf ? Storage::disk('public')->url($this->pdf) : null;
     }
 }

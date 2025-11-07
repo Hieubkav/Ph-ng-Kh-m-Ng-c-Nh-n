@@ -38,17 +38,19 @@ class Post extends Model
         return $this->belongsTo(CatPost::class);
     }
 
-    protected static function boot()
+    /**
+     * Get the image URL
+     */
+    public function getImageUrlAttribute(): ?string
     {
-        parent::boot();
+        return $this->image ? Storage::disk('public')->url($this->image) : null;
+    }
 
-        static::deleting(function($post) {
-            if ($post->pdf) {
-                Storage::disk('public')->delete($post->pdf);
-            }
-            if ($post->image) {
-                Storage::disk('public')->delete($post->image);
-            }
-        });
+    /**
+     * Get the PDF URL
+     */
+    public function getPdfUrlAttribute(): ?string
+    {
+        return $this->pdf ? Storage::disk('public')->url($this->pdf) : null;
     }
 }

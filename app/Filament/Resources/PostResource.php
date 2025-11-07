@@ -13,8 +13,8 @@ use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Filament\Forms\Components\ViewField;
-use Malzariey\FilamentLexicalEditor\Enums\ToolbarItem;
 use Malzariey\FilamentLexicalEditor\FilamentLexicalEditor;
+use Malzariey\FilamentLexicalEditor\Enums\ToolbarItem;
 
 class PostResource extends Resource
 {
@@ -62,6 +62,7 @@ class PostResource extends Resource
                                 ToolbarItem::NORMAL,
                                 ToolbarItem::H1,
                                 ToolbarItem::H2,
+                                ToolbarItem::H3,
                                 ToolbarItem::DIVIDER,
                                 ToolbarItem::BOLD,
                                 ToolbarItem::ITALIC,
@@ -89,7 +90,8 @@ class PostResource extends Resource
                                 ToolbarItem::HR,
                                 ToolbarItem::IMAGE,
                                 ToolbarItem::CLEAR,
-                            ]),
+                            ])
+                            ->helperText('💡 Lưu ý: Để căn lề (trái/giữa/phải/đều) cho một cụm chữ, bạn cần XUỐNG DÒNG (Enter) trước và sau cụm chữ đó. Editor đã có sẵn các font: Arial, Georgia, Impact, Tahoma, Times New Roman, Verdana.'),
                     ]),
 
                 Forms\Components\Section::make('Media')
@@ -100,11 +102,7 @@ class PostResource extends Resource
                             ->directory('uploads/')
                             ->image()
                             ->imageEditor()
-                            ->imageEditorAspectRatios([
-                                '16:9',
-                                '4:3',
-                                '1:1',
-                            ])
+                            ->imageEditorAspectRatios(['16:9', '4:3', '1:1'])
                             ->columnSpan(1)
                             ->helperText(fn () => new \Illuminate\Support\HtmlString(
                                 'Chỉ chấp nhận các định dạng: <span >jpg, jpeg, png, webp, svg</span>. ' .
@@ -112,7 +110,7 @@ class PostResource extends Resource
                                 '<a  style="color:red" href="https://convertio.co/vn/png-converter/" target="_blank">convertio.co</a>'
                             ))
                             ->preserveFilenames()
-                            ->maxSize(2048),
+                            ->maxSize(5120),
                             
                         Forms\Components\FileUpload::make('pdf')
                             ->label('File PDF')
