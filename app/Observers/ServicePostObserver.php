@@ -20,6 +20,17 @@ class ServicePostObserver
     }
 
     /**
+     * Handle the ServicePost "saving" event.
+     * Convert base64 images trong content sang storage files
+     */
+    public function saving(ServicePost $servicePost): void
+    {
+        if ($servicePost->content) {
+            $servicePost->content = $this->convertBase64ToStorage($servicePost->content);
+        }
+    }
+
+    /**
      * Handle the ServicePost "updating" event.
      * Xóa ảnh cũ khi có ảnh mới được upload
      */
@@ -214,5 +225,89 @@ class ServicePostObserver
         }
         
         return null;
+    }
+
+    /**
+     * Convert tất cả base64 images trong content sang storage files
+     */
+    private function convertBase64ToStorage(string $content): string
+    {
+        // Tìm tất cả base64 images trong content
+        // Pattern: data:image/{type};base64,{data}
+        preg_match_all('/data:image\/(png|jpg|jpeg|gif|webp|svg\+xml);base64,([A-Za-z0-9+\/=]+)/i', $content, $matches, PREG_SET_ORDER);
+        
+        if (empty($matches)) {
+            return $content;
+        }
+
+        $convertedCount = 0;
+        
+        foreach ($matches as $match) {
+            $fullBase64 = $match[0]; // Full base64 string
+            $extension = $match[1]; // Image type
+            $base64Data = $match[2]; // Base64 encoded data
+            
+            // Xử lý extension đặc biệt
+            if ($extension === 'svg+xml') {
+                $extension = 'svg';
+            }
+            
+            try {
+                // Convert base64 thành file và lưu vào storage
+                $filePath = $this->saveBase64AsFile($base64Data, $extension);
+                
+                // Tạo URL cho file
+                $fileUrl = Storage::disk('public')->url($filePath);
+                
+                // Thay thế base64 bằng URL trong content
+                $content = str_replace($fullBase64, $fileUrl, $content);
+                
+                $convertedCount++;
+                Log::info("Converted base64 image to storage (ServicePost): {$filePath}");
+                
+            } catch (\Exception $e) {
+                Log::error("Failed to convert base64 image (ServicePost): " . $e->getMessage());
+                // Tiếp tục với ảnh tiếp theo nếu có lỗi
+                continue;
+            }
+        }
+        
+        if ($convertedCount > 0) {
+            Log::info("Successfully converted {$convertedCount} base64 images to storage (ServicePost)");
+        }
+        
+        return $content;
+    }
+
+    /**
+     * Lưu base64 data thành file trong storage
+     */
+    private function saveBase64AsFile(string $base64Data, string $extension): string
+    {
+        // Decode base64 data
+        $imageData = base64_decode($base64Data);
+        
+        if ($imageData === false) {
+            throw new \Exception("Failed to decode base64 data");
+        }
+        
+        // Tạo tên file unique với prefix service-lexical
+        $filename = 'service-lexical-' . time() . '-' . uniqid() . '.' . $extension;
+        $path = 'uploads/service-content/' . $filename;
+        
+        // Tạo thư mục nếu chưa tồn tại
+        $directory = dirname($path);
+        if (!Storage::disk('public')->exists($directory)) {
+            Storage::disk('public')->makeDirectory($directory);
+        }
+        
+        // Lưu file vào storage
+        $saved = Storage::disk('public')->put($path, $imageData);
+        
+        if (!$saved) {
+            throw new \Exception("Failed to save file to storage");
+        }
+        
+        return $path;
     }
 }
