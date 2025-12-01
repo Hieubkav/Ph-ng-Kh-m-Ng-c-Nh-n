@@ -148,35 +148,25 @@ class ServicePostResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('image')
+                    ->label('Ảnh')
+                    ->disk('public')
+                    ->circular()
+                    ->visibility(fn ($record) => $record->show_image === 'show'),
+                    
                 Tables\Columns\TextColumn::make('name')
                     ->label('Tiêu đề')
                     ->searchable()
                     ->sortable(),
                     
-                // Tables\Columns\ImageColumn::make('image')
-                //     ->label('Ảnh')
-                //     ->disk('public')
-                //     ->circular()
-                //     ->visibility(fn ($record) => $record->show_image === 'show'),
-                    
-                // Tables\Columns\IconColumn::make('show_image')
-                //     ->label('Hiển thị ảnh')
-                //     ->boolean()
-                //     ->trueIcon('heroicon-o-eye')
-                //     ->falseIcon('heroicon-o-eye-slash')
-                //     ->trueColor('success')
-                //     ->falseColor('danger')
-                //     ->alignCenter()
-                //     ->sortable(),
-                    
                 Tables\Columns\TextColumn::make('service.name')
                     ->label('Dịch vụ')
                     ->sortable(),
                     
-                Tables\Columns\TextColumn::make('created_at')
-                    ->label('Ngày tạo')
-                    ->date('d-m-Y')
-                    ->sortable(),
+                // Tables\Columns\TextColumn::make('created_at')
+                //     ->label('Ngày tạo')
+                //     ->date('d-m-Y')
+                //     ->sortable(),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('show_image')
