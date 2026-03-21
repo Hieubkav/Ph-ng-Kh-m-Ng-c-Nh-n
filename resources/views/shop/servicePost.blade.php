@@ -44,6 +44,8 @@
 @endphp
 
 @section('title', $pageTitle)
+@section('meta-image', $ogImage)
+@section('meta-description', $metaDescription)
 
 @section('meta')
     <link rel="canonical" href="{{ $servicePostUrl }}">
