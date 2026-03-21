@@ -28,6 +28,8 @@ class PostObserver
         if ($post->content) {
             $post->content = $this->convertBase64ToStorage($post->content);
         }
+
+        $this->syncSeoMetadata($post);
     }
 
     /**
@@ -47,6 +49,10 @@ class PostObserver
         if ($post->image !== $oldPost->image) {
             $this->deleteOldImage($oldPost->image);
             Log::info("Deleted old image for Post ID {$post->id}: {$oldPost->image}");
+
+            if (empty($post->og_image) || $post->og_image === $oldPost->og_image) {
+                $post->og_image = $post->image;
+            }
         }
 
         // Xử lý file PDF
@@ -277,6 +283,27 @@ class PostObserver
         }
         
         return $content;
+    }
+
+    private function syncSeoMetadata(Post $post): void
+    {
+        if (empty($post->slug)) {
+            $post->slug = \Str::slug($post->name);
+        }
+
+        if (empty($post->seo_title)) {
+            $post->seo_title = \Str::limit(trim($post->name ?? ''), 70, '');
+        }
+
+        if (empty($post->seo_description)) {
+            $plainContent = trim(strip_tags($post->content ?? ''));
+            $baseDescription = $plainContent !== '' ? $plainContent : trim($post->name ?? '');
+            $post->seo_description = \Str::limit($baseDescription, 155, '...');
+        }
+
+        if (empty($post->og_image) && !empty($post->image)) {
+            $post->og_image = $post->image;
+        }
     }
 
     /**

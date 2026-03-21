@@ -15,16 +15,23 @@
             : asset('storage/' . $normalized);
     };
 
-    $ogImage = $storageUrl($post->og_image)
+    $ogImage = $storageUrl($post->og_image ?: $post->image)
         ?? $storageUrl($settings?->tmp_pic)
         ?? asset('images/banner.webp');
 
-    $metaDescription = trim(\Illuminate\Support\Str::limit(strip_tags($post->content ?? ''), 155, '...'));
+    $metaTitle = trim($post->seo_title ?? '') !== ''
+        ? $post->seo_title
+        : $post->name;
+
+    $metaDescription = trim($post->seo_description ?? '');
+    if ($metaDescription === '') {
+        $metaDescription = trim(\Illuminate\Support\Str::limit(strip_tags($post->content ?? ''), 155, '...'));
+    }
     if ($metaDescription === '') {
         $metaDescription = $settings?->slogan ?? config('app.name');
     }
     
-    $pageTitle = $post->name . ' | ' . config('app.name');
+    $pageTitle = $metaTitle . ' | ' . config('app.name');
 @endphp
 
 @section('title', $pageTitle)
@@ -33,7 +40,7 @@
     <link rel="canonical" href="{{ route('post', $post->slug) }}">
     <meta name="description" content="{{ $metaDescription }}">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="{{ $post->name }}">
+    <meta property="og:title" content="{{ $metaTitle }}">
     <meta property="og:description" content="{{ $metaDescription }}">
     <meta property="og:url" content="{{ route('post', $post->slug) }}">
     <meta property="og:image" content="{{ $ogImage }}">
@@ -44,7 +51,7 @@
 {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": "{{ str_replace('"', '\"', $post->name) }}",
+    "headline": "{{ str_replace('"', '\"', $metaTitle) }}",
     "description": "{{ str_replace('"', '\"', $metaDescription) }}",
     "image": "{{ $ogImage }}",
     "author": {

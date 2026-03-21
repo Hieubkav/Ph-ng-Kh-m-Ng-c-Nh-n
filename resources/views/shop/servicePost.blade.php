@@ -16,11 +16,18 @@
             : asset('storage/' . $normalized);
     };
 
-    $ogImage = $storageUrl($servicePost->og_image)
+    $ogImage = $storageUrl($servicePost->og_image ?: $servicePost->image)
         ?? $storageUrl($settings?->tmp_pic)
         ?? asset('images/banner.webp');
 
-    $metaDescription = trim(\Illuminate\Support\Str::limit(strip_tags($servicePost->content ?? ''), 155, '...'));
+    $metaTitle = trim($servicePost->seo_title ?? '') !== ''
+        ? $servicePost->seo_title
+        : $servicePost->name;
+
+    $metaDescription = trim($servicePost->seo_description ?? '');
+    if ($metaDescription === '') {
+        $metaDescription = trim(\Illuminate\Support\Str::limit(strip_tags($servicePost->content ?? ''), 155, '...'));
+    }
     if ($metaDescription === '') {
         $metaDescription = $settings?->slogan ?? config('app.name');
     }
@@ -33,7 +40,7 @@
     $siteUrl = rtrim(config('app.url') ?: url('/'), '/');
     $logoUrl = asset('images/logo.webp');
     
-    $pageTitle = $servicePost->name . ' | ' . $service->name . ' | ' . config('app.name');
+    $pageTitle = $metaTitle . ' | ' . $service->name . ' | ' . config('app.name');
 @endphp
 
 @section('title', $pageTitle)
@@ -42,7 +49,7 @@
     <link rel="canonical" href="{{ $servicePostUrl }}">
     <meta name="description" content="{{ $metaDescription }}">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="{{ $servicePost->name }}">
+    <meta property="og:title" content="{{ $metaTitle }}">
     <meta property="og:description" content="{{ $metaDescription }}">
     <meta property="og:url" content="{{ $servicePostUrl }}">
     <meta property="og:image" content="{{ $ogImage }}">
@@ -53,7 +60,7 @@
 {
     "@context": "https://schema.org",
     "@type": "MedicalService",
-    "name": "{{ str_replace('"', '\"', $servicePost->name) }}",
+    "name": "{{ str_replace('"', '\"', $metaTitle) }}",
     "description": "{{ str_replace('"', '\"', $metaDescription) }}",
     "image": "{{ $ogImage }}",
     "provider": {

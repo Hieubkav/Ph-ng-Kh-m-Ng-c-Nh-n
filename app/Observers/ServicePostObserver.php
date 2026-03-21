@@ -28,6 +28,8 @@ class ServicePostObserver
         if ($servicePost->content) {
             $servicePost->content = $this->convertBase64ToStorage($servicePost->content);
         }
+
+        $this->syncSeoMetadata($servicePost);
     }
 
     /**
@@ -47,6 +49,10 @@ class ServicePostObserver
         if ($servicePost->image !== $oldServicePost->image) {
             $this->deleteOldImage($oldServicePost->image);
             Log::info("Deleted old image for ServicePost ID {$servicePost->id}: {$oldServicePost->image}");
+
+            if (empty($servicePost->og_image) || $servicePost->og_image === $oldServicePost->og_image) {
+                $servicePost->og_image = $servicePost->image;
+            }
         }
 
         // Xử lý file PDF
@@ -309,5 +315,26 @@ class ServicePostObserver
         }
         
         return $path;
+    }
+
+    private function syncSeoMetadata(ServicePost $servicePost): void
+    {
+        if (empty($servicePost->slug)) {
+            $servicePost->slug = \Str::slug($servicePost->name);
+        }
+
+        if (empty($servicePost->seo_title)) {
+            $servicePost->seo_title = \Str::limit(trim($servicePost->name ?? ''), 70, '');
+        }
+
+        if (empty($servicePost->seo_description)) {
+            $plainContent = trim(strip_tags($servicePost->content ?? ''));
+            $baseDescription = $plainContent !== '' ? $plainContent : trim($servicePost->name ?? '');
+            $servicePost->seo_description = \Str::limit($baseDescription, 155, '...');
+        }
+
+        if (empty($servicePost->og_image) && !empty($servicePost->image)) {
+            $servicePost->og_image = $servicePost->image;
+        }
     }
 }
