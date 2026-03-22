@@ -98,8 +98,10 @@
                                transform hover:scale-110 transition-all duration-300
                                hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]
                                flex items-center justify-center">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/2023_Facebook_icon.svg/1024px-2023_Facebook_icon.svg.png"
-                        alt="Facebook" class="w-10 h-10" loading="lazy" />
+                        <svg viewBox="0 0 24 24" class="w-10 h-10" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="12" fill="#1877F2" />
+                            <path fill="#FFFFFF" d="M13.5 8.5h2V6h-2.4C10.99 6 9.5 7.3 9.5 9.6V11H7v2.5h2.5V20h3v-6.5H15l.5-2.5H12.5V9.8c0-.8.2-1.3 1-1.3z" />
+                        </svg>
                     </a>
 
                     <!-- Zalo Icon -->
