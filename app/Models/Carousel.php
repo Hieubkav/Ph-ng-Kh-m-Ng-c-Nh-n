@@ -8,3 +8,4 @@ class Carousel extends Model
 {
     protected $fillable = ['image'];
 }
+// oke đã commit ci cd
