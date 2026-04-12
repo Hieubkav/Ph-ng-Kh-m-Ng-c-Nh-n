@@ -43,7 +43,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftp
           port: 21
-          server-dir: /home/nhthakpy/pkngocnhan.vn/
+          server-dir: /home/nhthakpy/pkngocnhan/
           exclude: |
             **/.git*
             **/.git*/**
