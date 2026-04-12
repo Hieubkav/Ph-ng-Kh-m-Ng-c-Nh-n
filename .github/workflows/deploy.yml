@@ -38,12 +38,12 @@ jobs:
       - name: Deploy files to NhanHoa FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ secrets.FTP_SERVER }}
+          server: share-dedi04.nhanhoa.com
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftp
+          protocol: ftps
           port: 21
-          server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          server-dir: /home/nhthakpy/pkngocnhan.vn/
           exclude: |
             **/.git*
             **/.git*/**
