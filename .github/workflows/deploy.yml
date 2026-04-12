@@ -41,7 +41,7 @@ jobs:
           server: share-dedi04.nhanhoa.com
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
+          protocol: ftp
           port: 21
           server-dir: /home/nhthakpy/pkngocnhan.vn/
           exclude: |
